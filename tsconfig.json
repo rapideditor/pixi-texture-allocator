@@ -1,0 +1,23 @@
+{
+  "include": ["src/*"],
+  "exclude": ["node_modules", "dist"],
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "module": "ES2020",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "resolveJsonModule": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": false,
+    "target": "ES6",
+    "strict":true,
+  },
+  "module": "commonjs"
+}
