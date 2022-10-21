@@ -1,0 +1,404 @@
+{
+  "inputs": {
+    "node_modules/@pixi/constants/dist/esm/constants.mjs": {
+      "bytes": 10264,
+      "imports": []
+    },
+    "node_modules/@pixi/settings/dist/esm/settings.mjs": {
+      "bytes": 6872,
+      "imports": [
+        {
+          "path": "node_modules/@pixi/constants/dist/esm/constants.mjs",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "node_modules/@pixi/extensions/dist/esm/extensions.mjs": {
+      "bytes": 3206,
+      "imports": []
+    },
+    "node_modules/@pixi/math/dist/esm/math.mjs": {
+      "bytes": 22406,
+      "imports": []
+    },
+    "node_modules/@pixi/runner/dist/esm/runner.mjs": {
+      "bytes": 1723,
+      "imports": []
+    },
+    "node_modules/@pixi/ticker/dist/esm/ticker.mjs": {
+      "bytes": 7920,
+      "imports": [
+        {
+          "path": "node_modules/@pixi/settings/dist/esm/settings.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/extensions/dist/esm/extensions.mjs",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "node_modules/eventemitter3/index.js": {
+      "bytes": 9141,
+      "imports": []
+    },
+    "node_modules/earcut/src/earcut.js": {
+      "bytes": 20816,
+      "imports": []
+    },
+    "node_modules/url/node_modules/punycode/punycode.js": {
+      "bytes": 14649,
+      "imports": []
+    },
+    "node_modules/url/util.js": {
+      "bytes": 314,
+      "imports": []
+    },
+    "node_modules/querystring/decode.js": {
+      "bytes": 2399,
+      "imports": []
+    },
+    "node_modules/querystring/encode.js": {
+      "bytes": 2090,
+      "imports": []
+    },
+    "node_modules/querystring/index.js": {
+      "bytes": 127,
+      "imports": [
+        {
+          "path": "node_modules/querystring/decode.js",
+          "kind": "require-call"
+        },
+        {
+          "path": "node_modules/querystring/encode.js",
+          "kind": "require-call"
+        }
+      ]
+    },
+    "node_modules/url/url.js": {
+      "bytes": 23317,
+      "imports": [
+        {
+          "path": "node_modules/url/node_modules/punycode/punycode.js",
+          "kind": "require-call"
+        },
+        {
+          "path": "node_modules/url/util.js",
+          "kind": "require-call"
+        },
+        {
+          "path": "node_modules/querystring/index.js",
+          "kind": "require-call"
+        }
+      ]
+    },
+    "node_modules/@pixi/utils/dist/esm/utils.mjs": {
+      "bytes": 30506,
+      "imports": [
+        {
+          "path": "node_modules/@pixi/settings/dist/esm/settings.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/settings/dist/esm/settings.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/eventemitter3/index.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/earcut/src/earcut.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/url/url.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/constants/dist/esm/constants.mjs",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "node_modules/@pixi/core/dist/esm/core.mjs": {
+      "bytes": 228836,
+      "imports": [
+        {
+          "path": "node_modules/@pixi/settings/dist/esm/settings.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/settings/dist/esm/settings.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/constants/dist/esm/constants.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/constants/dist/esm/constants.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/extensions/dist/esm/extensions.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/extensions/dist/esm/extensions.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/math/dist/esm/math.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/math/dist/esm/math.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/runner/dist/esm/runner.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/runner/dist/esm/runner.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/ticker/dist/esm/ticker.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/ticker/dist/esm/ticker.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/utils/dist/esm/utils.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/utils/dist/esm/utils.mjs",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "src/AtlasResource.ts": {
+      "bytes": 3889,
+      "imports": [
+        {
+          "path": "node_modules/@pixi/constants/dist/esm/constants.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/core/dist/esm/core.mjs",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "node_modules/@pixi-essentials/area-allocator/lib/area-allocator.es.js": {
+      "bytes": 17943,
+      "imports": [
+        {
+          "path": "node_modules/@pixi/math/dist/esm/math.mjs",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "src/TextureAllocator.ts": {
+      "bytes": 7039,
+      "imports": [
+        {
+          "path": "node_modules/@pixi/core/dist/esm/core.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi-essentials/area-allocator/lib/area-allocator.es.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/math/dist/esm/math.mjs",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "src/AtlasAllocator.ts": {
+      "bytes": 3399,
+      "imports": [
+        {
+          "path": "src/AtlasResource.ts",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/core/dist/esm/core.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi-essentials/area-allocator/lib/area-allocator.es.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "src/TextureAllocator.ts",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "src/CanvasTextureAllocator.ts": {
+      "bytes": 951,
+      "imports": [
+        {
+          "path": "node_modules/@pixi-essentials/area-allocator/lib/area-allocator.es.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/core/dist/esm/core.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "src/TextureAllocator.ts",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "src/RenderTextureAllocator.ts": {
+      "bytes": 1255,
+      "imports": [
+        {
+          "path": "node_modules/@pixi/core/dist/esm/core.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi-essentials/area-allocator/lib/area-allocator.es.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "src/TextureAllocator.ts",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "src/TextureSlab.ts": {
+      "bytes": 1000,
+      "imports": []
+    },
+    "src/index.ts": {
+      "bytes": 217,
+      "imports": [
+        {
+          "path": "src/AtlasAllocator.ts",
+          "kind": "import-statement"
+        },
+        {
+          "path": "src/AtlasResource.ts",
+          "kind": "import-statement"
+        },
+        {
+          "path": "src/CanvasTextureAllocator.ts",
+          "kind": "import-statement"
+        },
+        {
+          "path": "src/RenderTextureAllocator.ts",
+          "kind": "import-statement"
+        },
+        {
+          "path": "src/TextureAllocator.ts",
+          "kind": "import-statement"
+        },
+        {
+          "path": "src/TextureSlab.ts",
+          "kind": "import-statement"
+        }
+      ]
+    }
+  },
+  "outputs": {
+    "dist/texture-allocator.mjs.map": {
+      "imports": [],
+      "exports": [],
+      "inputs": {},
+      "bytes": 1042237
+    },
+    "dist/texture-allocator.mjs": {
+      "imports": [],
+      "exports": [
+        "AtlasAllocator",
+        "AtlasResource",
+        "CanvasTextureAllocator",
+        "RenderTextureAllocator",
+        "TextureAllocator"
+      ],
+      "entryPoint": "src/index.ts",
+      "inputs": {
+        "node_modules/eventemitter3/index.js": {
+          "bytesInOutput": 6359
+        },
+        "node_modules/earcut/src/earcut.js": {
+          "bytesInOutput": 16162
+        },
+        "node_modules/url/node_modules/punycode/punycode.js": {
+          "bytesInOutput": 8388
+        },
+        "node_modules/url/util.js": {
+          "bytesInOutput": 459
+        },
+        "node_modules/querystring/decode.js": {
+          "bytesInOutput": 1295
+        },
+        "node_modules/querystring/encode.js": {
+          "bytesInOutput": 1180
+        },
+        "node_modules/querystring/index.js": {
+          "bytesInOutput": 228
+        },
+        "node_modules/url/url.js": {
+          "bytesInOutput": 17592
+        },
+        "node_modules/@pixi/constants/dist/esm/constants.mjs": {
+          "bytesInOutput": 9140
+        },
+        "node_modules/@pixi/settings/dist/esm/settings.mjs": {
+          "bytesInOutput": 5755
+        },
+        "node_modules/@pixi/core/dist/esm/core.mjs": {
+          "bytesInOutput": 224928
+        },
+        "node_modules/@pixi/extensions/dist/esm/extensions.mjs": {
+          "bytesInOutput": 2932
+        },
+        "node_modules/@pixi/math/dist/esm/math.mjs": {
+          "bytesInOutput": 17846
+        },
+        "node_modules/@pixi/runner/dist/esm/runner.mjs": {
+          "bytesInOutput": 1488
+        },
+        "node_modules/@pixi/ticker/dist/esm/ticker.mjs": {
+          "bytesInOutput": 7568
+        },
+        "node_modules/@pixi/utils/dist/esm/utils.mjs": {
+          "bytesInOutput": 11908
+        },
+        "src/AtlasResource.ts": {
+          "bytesInOutput": 1223
+        },
+        "node_modules/@pixi-essentials/area-allocator/lib/area-allocator.es.js": {
+          "bytesInOutput": 9764
+        },
+        "src/TextureAllocator.ts": {
+          "bytesInOutput": 2908
+        },
+        "src/AtlasAllocator.ts": {
+          "bytesInOutput": 1641
+        },
+        "src/index.ts": {
+          "bytesInOutput": 0
+        },
+        "src/CanvasTextureAllocator.ts": {
+          "bytesInOutput": 445
+        },
+        "src/RenderTextureAllocator.ts": {
+          "bytesInOutput": 410
+        }
+      },
+      "bytes": 353760
+    }
+  }
+}

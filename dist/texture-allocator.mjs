@@ -4406,11 +4406,11 @@ var _VideoResource = class extends BaseImageResource {
   }
   _isSourcePlaying() {
     const source = this.source;
-    return source.currentTime > 0 && source.paused === false && source.ended === false && source.readyState > 2;
+    return !source.paused && !source.ended && this._isSourceReady();
   }
   _isSourceReady() {
     const source = this.source;
-    return source.readyState === 3 || source.readyState === 4;
+    return source.readyState > 2;
   }
   _onPlayStart() {
     if (!this.valid) {
@@ -6232,10 +6232,6 @@ var FramebufferSystem = class {
   resizeFramebuffer(framebuffer) {
     const { gl } = this;
     const fbo = framebuffer.glFramebuffers[this.CONTEXT_UID];
-    if (fbo.msaaBuffer) {
-      gl.bindRenderbuffer(gl.RENDERBUFFER, fbo.msaaBuffer);
-      gl.renderbufferStorageMultisample(gl.RENDERBUFFER, fbo.multisample, gl.RGBA8, framebuffer.width, framebuffer.height);
-    }
     if (fbo.stencil) {
       gl.bindRenderbuffer(gl.RENDERBUFFER, fbo.stencil);
       if (fbo.msaaBuffer) {
@@ -6253,6 +6249,10 @@ var FramebufferSystem = class {
       const texture = colorTextures[i];
       const parentTexture = texture.parentTextureArray || texture;
       this.renderer.texture.bind(parentTexture, 0);
+      if (i === 0 && fbo.msaaBuffer) {
+        gl.bindRenderbuffer(gl.RENDERBUFFER, fbo.msaaBuffer);
+        gl.renderbufferStorageMultisample(gl.RENDERBUFFER, fbo.multisample, parentTexture._glTextures[this.CONTEXT_UID].internalFormat, framebuffer.width, framebuffer.height);
+      }
     }
     if (framebuffer.depthTexture && this.writeDepthTexture) {
       this.renderer.texture.bind(framebuffer.depthTexture, 0);
@@ -6268,9 +6268,6 @@ var FramebufferSystem = class {
     }
     if (fbo.multisample > 1 && this.canMultisampleFramebuffer(framebuffer)) {
       fbo.msaaBuffer = fbo.msaaBuffer || gl.createRenderbuffer();
-      gl.bindRenderbuffer(gl.RENDERBUFFER, fbo.msaaBuffer);
-      gl.renderbufferStorageMultisample(gl.RENDERBUFFER, fbo.multisample, gl.RGBA8, framebuffer.width, framebuffer.height);
-      gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.RENDERBUFFER, fbo.msaaBuffer);
     } else if (fbo.msaaBuffer) {
       gl.deleteRenderbuffer(fbo.msaaBuffer);
       fbo.msaaBuffer = null;
@@ -6285,10 +6282,13 @@ var FramebufferSystem = class {
       const parentTexture = texture.parentTextureArray || texture;
       this.renderer.texture.bind(parentTexture, 0);
       if (i === 0 && fbo.msaaBuffer) {
-        continue;
+        gl.bindRenderbuffer(gl.RENDERBUFFER, fbo.msaaBuffer);
+        gl.renderbufferStorageMultisample(gl.RENDERBUFFER, fbo.multisample, parentTexture._glTextures[this.CONTEXT_UID].internalFormat, framebuffer.width, framebuffer.height);
+        gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.RENDERBUFFER, fbo.msaaBuffer);
+      } else {
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0 + i, texture.target, parentTexture._glTextures[this.CONTEXT_UID].texture, mipLevel);
+        activeTextures.push(gl.COLOR_ATTACHMENT0 + i);
       }
-      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0 + i, texture.target, parentTexture._glTextures[this.CONTEXT_UID].texture, mipLevel);
-      activeTextures.push(gl.COLOR_ATTACHMENT0 + i);
     }
     if (activeTextures.length > 1) {
       gl.drawBuffers(activeTextures);
@@ -7477,6 +7477,7 @@ var Shader = class {
     } else {
       this.uniformGroup = new UniformGroup({});
     }
+    this.disposeRunner = new Runner("disposeShader");
   }
   checkUniformExists(name, group) {
     if (group.uniforms[name]) {
@@ -7494,6 +7495,8 @@ var Shader = class {
   }
   destroy() {
     this.uniformGroup = null;
+    this.disposeRunner.emit(this);
+    this.disposeRunner.destroy();
   }
   get uniforms() {
     return this.uniformGroup.uniforms;
@@ -8554,6 +8557,7 @@ var ShaderSystem = class {
     this.reset();
   }
   bind(shader, dontSync) {
+    shader.disposeRunner.add(this);
     shader.uniforms.globals = this.renderer.globalUniforms;
     const program = shader.program;
     const glProgram = program.glPrograms[this.renderer.CONTEXT_UID] || this.generateProgram(shader);
@@ -8649,6 +8653,11 @@ var ShaderSystem = class {
   reset() {
     this.program = null;
     this.shader = null;
+  }
+  disposeShader(shader) {
+    if (this.shader === shader) {
+      this.shader = null;
+    }
   }
   destroy() {
     this.renderer = null;
@@ -9471,7 +9480,7 @@ var StartupSystem = class {
     const renderer = this.renderer;
     renderer.emitWithCustomOptions(renderer.runners.init, options);
     if (options.hello) {
-      console.log(`PixiJS ${"7.0.0-beta.3"} - ${renderer.rendererLogId} - https://pixijs.com`);
+      console.log(`PixiJS ${"7.0.0-beta.4"} - ${renderer.rendererLogId} - https://pixijs.com`);
     }
     renderer.resize(this.renderer.screen.width, this.renderer.screen.height);
   }
@@ -10932,57 +10941,57 @@ export {
  * Copyright 2019-2020, Shukant Pal <shukantpal@outlook.com>, All Rights Reserved
  */
 /*!
- * @pixi/constants - v7.0.0-beta.3
- * Compiled Thu, 13 Oct 2022 15:35:43 UTC
+ * @pixi/constants - v7.0.0-beta.4
+ * Compiled Thu, 20 Oct 2022 19:45:44 UTC
  *
  * @pixi/constants is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
  */
 /*!
- * @pixi/core - v7.0.0-beta.3
- * Compiled Thu, 13 Oct 2022 15:35:43 UTC
+ * @pixi/core - v7.0.0-beta.4
+ * Compiled Thu, 20 Oct 2022 19:45:44 UTC
  *
  * @pixi/core is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
  */
 /*!
- * @pixi/extensions - v7.0.0-beta.3
- * Compiled Thu, 13 Oct 2022 15:35:43 UTC
+ * @pixi/extensions - v7.0.0-beta.4
+ * Compiled Thu, 20 Oct 2022 19:45:44 UTC
  *
  * @pixi/extensions is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
  */
 /*!
- * @pixi/math - v7.0.0-beta.3
- * Compiled Thu, 13 Oct 2022 15:35:43 UTC
+ * @pixi/math - v7.0.0-beta.4
+ * Compiled Thu, 20 Oct 2022 19:45:44 UTC
  *
  * @pixi/math is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
  */
 /*!
- * @pixi/runner - v7.0.0-beta.3
- * Compiled Thu, 13 Oct 2022 15:35:43 UTC
+ * @pixi/runner - v7.0.0-beta.4
+ * Compiled Thu, 20 Oct 2022 19:45:44 UTC
  *
  * @pixi/runner is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
  */
 /*!
- * @pixi/settings - v7.0.0-beta.3
- * Compiled Thu, 13 Oct 2022 15:35:43 UTC
+ * @pixi/settings - v7.0.0-beta.4
+ * Compiled Thu, 20 Oct 2022 19:45:44 UTC
  *
  * @pixi/settings is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
  */
 /*!
- * @pixi/ticker - v7.0.0-beta.3
- * Compiled Thu, 13 Oct 2022 15:35:43 UTC
+ * @pixi/ticker - v7.0.0-beta.4
+ * Compiled Thu, 20 Oct 2022 19:45:44 UTC
  *
  * @pixi/ticker is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
  */
 /*!
- * @pixi/utils - v7.0.0-beta.3
- * Compiled Thu, 13 Oct 2022 15:35:43 UTC
+ * @pixi/utils - v7.0.0-beta.4
+ * Compiled Thu, 20 Oct 2022 19:45:44 UTC
  *
  * @pixi/utils is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
