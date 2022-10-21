@@ -1,0 +1,194 @@
+{
+  "inputs": {
+    "node_modules/@pixi/constants/dist/esm/constants.mjs": {
+      "bytes": 10264,
+      "imports": []
+    },
+    "node_modules/@pixi/settings/dist/esm/settings.mjs": {
+      "bytes": 6872,
+      "imports": [
+        {
+          "path": "node_modules/@pixi/constants/dist/esm/constants.mjs",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "node_modules/@pixi/extensions/dist/esm/extensions.mjs": {
+      "bytes": 3206,
+      "imports": []
+    },
+    "node_modules/@pixi/math/dist/esm/math.mjs": {
+      "bytes": 22406,
+      "imports": []
+    },
+    "node_modules/@pixi/runner/dist/esm/runner.mjs": {
+      "bytes": 1723,
+      "imports": []
+    },
+    "node_modules/@pixi/ticker/dist/esm/ticker.mjs": {
+      "bytes": 7920,
+      "imports": [
+        {
+          "path": "node_modules/@pixi/settings/dist/esm/settings.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/extensions/dist/esm/extensions.mjs",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "node_modules/eventemitter3/index.js": {
+      "bytes": 9141,
+      "imports": []
+    },
+    "node_modules/earcut/src/earcut.js": {
+      "bytes": 20816,
+      "imports": []
+    },
+    "node_modules/@pixi/utils/dist/esm/utils.mjs": {
+      "bytes": 30470,
+      "imports": [
+        {
+          "path": "node_modules/@pixi/settings/dist/esm/settings.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/settings/dist/esm/settings.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/eventemitter3/index.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/earcut/src/earcut.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/constants/dist/esm/constants.mjs",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "node_modules/@pixi/core/dist/esm/core.mjs": {
+      "bytes": 228528,
+      "imports": [
+        {
+          "path": "node_modules/@pixi/settings/dist/esm/settings.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/settings/dist/esm/settings.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/constants/dist/esm/constants.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/constants/dist/esm/constants.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/extensions/dist/esm/extensions.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/extensions/dist/esm/extensions.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/math/dist/esm/math.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/math/dist/esm/math.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/runner/dist/esm/runner.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/runner/dist/esm/runner.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/ticker/dist/esm/ticker.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/ticker/dist/esm/ticker.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/utils/dist/esm/utils.mjs",
+          "kind": "import-statement"
+        },
+        {
+          "path": "node_modules/@pixi/utils/dist/esm/utils.mjs",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "src/index.ts": {
+      "bytes": 11770,
+      "imports": [
+        {
+          "path": "node_modules/@pixi/core/dist/esm/core.mjs",
+          "kind": "import-statement"
+        }
+      ]
+    }
+  },
+  "outputs": {
+    "dist/pixi-dashed-line.cjs.map": {
+      "imports": [],
+      "exports": [],
+      "inputs": {},
+      "bytes": 974729
+    },
+    "dist/pixi-dashed-line.cjs": {
+      "imports": [],
+      "exports": [],
+      "entryPoint": "src/index.ts",
+      "inputs": {
+        "node_modules/eventemitter3/index.js": {
+          "bytesInOutput": 6378
+        },
+        "node_modules/earcut/src/earcut.js": {
+          "bytesInOutput": 16185
+        },
+        "src/index.ts": {
+          "bytesInOutput": 9081
+        },
+        "node_modules/@pixi/constants/dist/esm/constants.mjs": {
+          "bytesInOutput": 9140
+        },
+        "node_modules/@pixi/settings/dist/esm/settings.mjs": {
+          "bytesInOutput": 5755
+        },
+        "node_modules/@pixi/core/dist/esm/core.mjs": {
+          "bytesInOutput": 224620
+        },
+        "node_modules/@pixi/extensions/dist/esm/extensions.mjs": {
+          "bytesInOutput": 2932
+        },
+        "node_modules/@pixi/math/dist/esm/math.mjs": {
+          "bytesInOutput": 17846
+        },
+        "node_modules/@pixi/runner/dist/esm/runner.mjs": {
+          "bytesInOutput": 1488
+        },
+        "node_modules/@pixi/ticker/dist/esm/ticker.mjs": {
+          "bytesInOutput": 7568
+        },
+        "node_modules/@pixi/utils/dist/esm/utils.mjs": {
+          "bytesInOutput": 11897
+        }
+      },
+      "bytes": 316917
+    }
+  }
+}

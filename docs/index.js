@@ -13580,7 +13580,7 @@
   var _loop_1 = function(name) {
     Object.defineProperty(resources, name, {
       get: function() {
-        deprecation("6.0.0", "PIXI.systems." + name + " has moved to PIXI." + name);
+        deprecation("6.0.0", "systems." + name + " has moved to PIXI." + name);
         return _resources[name];
       }
     });
@@ -13593,7 +13593,7 @@
   var _loop_2 = function(name) {
     Object.defineProperty(systems, name, {
       get: function() {
-        deprecation("6.0.0", "PIXI.resources." + name + " has moved to PIXI." + name);
+        deprecation("6.0.0", "resources." + name + " has moved to PIXI." + name);
         return _systems[name];
       }
     });
@@ -28039,7 +28039,7 @@ object-assign
  *
  * pixi-viewport is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
- * 
+ *
  * Copyright 2019-2020, David Figatner, All Rights Reserved
  */
 /*!
