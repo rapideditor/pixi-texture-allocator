@@ -1,6 +1,6 @@
 {
   "name": "texture-allocator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Ben Clark <bennyc@gmail.com",
   "description": "Pixi.js texture allocator",
   "repository": "github:Bonkles/texture-allocator",
