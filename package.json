@@ -1,6 +1,6 @@
 {
   "name": "texture-allocator",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Ben Clark <bennyc@gmail.com",
   "description": "Pixi.js texture allocator",
   "repository": "github:Bonkles/texture-allocator",
@@ -25,9 +25,9 @@
   },
   "dependencies": {
     "@pixi-essentials/area-allocator": "~1.0.3",
-    "@pixi/constants": "^7.0.0-beta.4",
-    "@pixi/core": "^7.0.0-beta.4",
-    "@pixi/math": "^7.0.0-beta.4"
+    "@pixi/constants": "^7.0.0",
+    "@pixi/core": "^7.0.0",
+    "@pixi/math": "^7.0.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.0",
