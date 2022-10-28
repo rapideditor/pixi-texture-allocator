@@ -42,7 +42,7 @@
     "typescript": "^4.3.5"
   },
   "scripts": {
-    "all": "run-s clean build pretty test",
+    "all": "run-s clean build pretty",
     "clean": "shx rm -rf dist",
     "build": "run-s build:**",
     "build:browser": "esbuild ./src/index.ts --platform=browser --format=iife --global-name=textureAllocator --bundle --sourcemap --outfile=./dist/texture-allocator.iife.js --metafile=./dist/esbuild-iife.json",

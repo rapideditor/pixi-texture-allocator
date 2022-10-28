@@ -133,7 +133,7 @@
       ]
     },
     "src/AtlasResource.ts": {
-      "bytes": 3889,
+      "bytes": 3372,
       "imports": [
         {
           "path": "node_modules/@pixi/constants/dist/esm/constants.mjs",
@@ -159,7 +159,7 @@
       ]
     },
     "src/TextureAllocator.ts": {
-      "bytes": 7039,
+      "bytes": 6394,
       "imports": [
         {
           "path": "node_modules/@pixi/core/dist/esm/core.mjs",
@@ -176,7 +176,7 @@
       ]
     },
     "src/AtlasAllocator.ts": {
-      "bytes": 3399,
+      "bytes": 3068,
       "imports": [
         {
           "path": "src/AtlasResource.ts",
@@ -197,7 +197,7 @@
       ]
     },
     "src/CanvasTextureAllocator.ts": {
-      "bytes": 951,
+      "bytes": 877,
       "imports": [
         {
           "path": "node_modules/@pixi-essentials/area-allocator/lib/area-allocator.js",
@@ -214,7 +214,7 @@
       ]
     },
     "src/RenderTextureAllocator.ts": {
-      "bytes": 1255,
+      "bytes": 1167,
       "imports": [
         {
           "path": "node_modules/@pixi/core/dist/esm/core.mjs",
@@ -231,11 +231,11 @@
       ]
     },
     "src/TextureSlab.ts": {
-      "bytes": 1000,
+      "bytes": 953,
       "imports": []
     },
     "src/index.ts": {
-      "bytes": 217,
+      "bytes": 218,
       "imports": [
         {
           "path": "src/AtlasAllocator.ts",
@@ -269,7 +269,7 @@
       "imports": [],
       "exports": [],
       "inputs": {},
-      "bytes": 1059336
+      "bytes": 1057673
     },
     "dist/texture-allocator.cjs": {
       "imports": [],
