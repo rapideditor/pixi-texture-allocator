@@ -1,5 +1,12 @@
 # pixi-dashed-line
 
+>
+> 👋
+> This is just a copy of the awesome pixi-dashed-line repo that can be found at https://github.com/davidfig/pixi-dashed-line
+> You probably want that instead.
+> We are keeping this copy pinned to the latest version of PixiJS, to avoid issues with bundling multiple versions of PixiJS.
+>
+
 A pixi.js implementation to support dashed lines in Graphics.
 
 * Two implementations of a dashed line for pixi.js: lineTo/moveTo w/gaps (preferred), and texture-based (using a dashed-line texture when drawing the line)
