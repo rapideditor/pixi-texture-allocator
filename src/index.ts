@@ -1,4 +1,4 @@
-import {  Matrix, Point, SCALE_MODES, Texture} from '@pixi/core';
+import { Matrix, Point, SCALE_MODES, Texture } from '@pixi/core';
 import { Graphics, LINE_CAP, LINE_JOIN } from '@pixi/graphics';
 
 /** Define the dash: [dash length, gap size, dash size, gap size, ...] */
