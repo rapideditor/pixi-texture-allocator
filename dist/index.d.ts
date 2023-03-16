@@ -1,7 +1,7 @@
 import { Matrix, Point, Texture } from '@pixi/core';
 import { Graphics, LINE_CAP, LINE_JOIN } from '@pixi/graphics';
 /** Define the dash: [dash length, gap size, dash size, gap size, ...] */
-export declare type Dashes = number[];
+export type Dashes = number[];
 export interface DashLineOptions {
     dash?: Dashes;
     width?: number;
