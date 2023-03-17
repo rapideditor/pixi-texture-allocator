@@ -1,6 +1,6 @@
 {
   "name": "@rapideditor/pixi-dashed-line",
-  "version": "7.2.0",
+  "version": "7.2.1",
   "author": "Ben Clark <bennyc@gmail.com",
   "description": "Pixi.js dashed lines",
   "repository": "github:rapideditor/pixi-dashed-line",
@@ -22,11 +22,11 @@
     "require": "./dist/pixi-dashed-line.cjs"
   },
   "dependencies": {
-    "@pixi/core": "7.2.0",
-    "@pixi/graphics": "7.2.0"
+    "@pixi/core": "7.2.1",
+    "@pixi/graphics": "7.2.1"
   },
   "devDependencies": {
-    "esbuild": "^0.17.11",
+    "esbuild": "^0.17.12",
     "npm-run-all": "^4.1.5",
     "shx": "^0.3.4",
     "typescript": "^4.9.5"
@@ -38,7 +38,7 @@
     "build:browser": "esbuild ./src/index.ts --platform=browser --format=iife --global-name=PixiDashLine --bundle --sourcemap --outfile=./dist/pixi-dashed-line.iife.js",
     "build:cjs": "esbuild ./src/index.ts --platform=node --format=cjs --sourcemap  --outfile=./dist/pixi-dashed-line.cjs",
     "build:mjs": "esbuild ./src/index.ts --platform=neutral --format=esm --main-fields=module,main --sourcemap --outfile=./dist/pixi-dashed-line.mjs",
-    "build:types": "tsc"
+    "build:types": "tsc --declaration --out dist/index.js"
   },
   "publishConfig": {
     "access": "public"

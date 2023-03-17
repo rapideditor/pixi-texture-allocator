@@ -693,9 +693,9 @@ var PixiDashLine = (() => {
     }
   });
 
-  // node_modules/url/node_modules/punycode/punycode.js
+  // node_modules/punycode/punycode.js
   var require_punycode = __commonJS({
-    "node_modules/url/node_modules/punycode/punycode.js"(exports, module) {
+    "node_modules/punycode/punycode.js"(exports, module) {
       (function(root) {
         var freeExports = typeof exports == "object" && exports && !exports.nodeType && exports;
         var freeModule = typeof module == "object" && module && !module.nodeType && module;
@@ -8853,7 +8853,7 @@ ${this.fragmentSrc}`;
       const { renderer } = this;
       renderer.runners.init.emit(renderer.options);
       if (options.hello) {
-        console.log(`PixiJS ${"7.2.0"} - ${renderer.rendererLogId} - https://pixijs.com`);
+        console.log(`PixiJS ${"7.2.1"} - ${renderer.rendererLogId} - https://pixijs.com`);
       }
       renderer.resize(renderer.screen.width, renderer.screen.height);
     }
