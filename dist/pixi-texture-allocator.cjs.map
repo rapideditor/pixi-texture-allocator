@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/index.ts"],
+  "sourcesContent": ["export * from './Area';\nexport * from './AreaAllocator';\nexport * from './AtlasAllocator';\nexport * from './AtlasResource';\nexport * from './CanvasTextureAllocator';\nexport * from './GuilloteneAllocator';\nexport * from './RenderTextureAllocator';\nexport * from './TextureAllocator';\nexport * from './TextureSlab';"],
+  "mappings": ";;;;;;;;;;;;;;;AAAA;AAAA;AAAA,wBAAc,mBAAd;AACA,wBAAc,4BADd;AAEA,wBAAc,6BAFd;AAGA,wBAAc,4BAHd;AAIA,wBAAc,qCAJd;AAKA,wBAAc,kCALd;AAMA,wBAAc,qCANd;AAOA,wBAAc,+BAPd;AAQA,wBAAc,0BARd;",
+  "names": []
+}

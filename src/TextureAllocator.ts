@@ -1,5 +1,5 @@
 import { BaseTexture, Texture } from '@pixi/core';
-import { GuilloteneAllocator } from '@pixi-essentials/area-allocator';
+import { GuilloteneAllocator } from './GuilloteneAllocator';
 import { Rectangle } from '@pixi/math';
 
 import type { TextureSlab } from './TextureSlab';
@@ -9,7 +9,7 @@ const tempRect = new Rectangle();
 /**
  * The texture allocator dynamically manages space on base-texture slabs. It can be used to generate
  * atlases on demand, which improve batching efficiency.
- * 
+ *
  * @public
  */
 export class TextureAllocator<T extends Texture = Texture>
@@ -50,12 +50,12 @@ export class TextureAllocator<T extends Texture = Texture>
     }
 
     /**
-     * Allocates a texture from this allocator. 
-     * 
+     * Allocates a texture from this allocator.
+     *
      * If its existing slab pool has enough space, the texture is issued from one. Otherwise,
      * a new slab is created and the texture is issued from it. However, if the requested
      * dimensions are larger than slabs themselves, then `null` is always returned.
-     * 
+     *
      * To upload a texture source, you will have to create an atlas-managing {@link Resource}
      * yourself on the base-texture. The {@link AtlasAllocator} does this for you, while the
      * {@link CanvasTextureAllocator} can be used to draw on a canvas-based atlas.
@@ -68,7 +68,7 @@ export class TextureAllocator<T extends Texture = Texture>
     allocate(width: number, height: number, padding = this.calculatePadding(width, height)): T
     {
         // Cannot allocate a texture larger than a texture-slab.
-        if (width + 2 * padding > this.slabWidth || 
+        if (width + 2 * padding > this.slabWidth ||
                 height + 2 * padding > this.slabHeight)
         {
             return null;
@@ -102,7 +102,7 @@ export class TextureAllocator<T extends Texture = Texture>
      * Frees the texture and reclaims its space. It is assumed you will not use it again, and have
      * destroyed any resource uploading its data.
      *
-     * @param texture 
+     * @param texture
      * @throws When the texture was not located in this allocator.
      */
     free(texture: T): void
@@ -112,7 +112,7 @@ export class TextureAllocator<T extends Texture = Texture>
 
         if (!slab)
         {
-            throw new Error("The texture cannot be freed because " + 
+            throw new Error("The texture cannot be freed because " +
                 "its base-texture is not pooled by this allocator. " +
                 "This is either a bug in TextureAllocator or you tried to free a " +
                 "texture that was never allocated by one.");

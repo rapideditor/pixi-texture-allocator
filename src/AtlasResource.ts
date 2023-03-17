@@ -6,14 +6,14 @@ import type { Texture } from '@pixi/core';
 
 /**
  * Types of image sources supported by {@link AtlasResource}.
- * 
+ *
  * @public
  */
 export type AtlasResourceSource =  HTMLImageElement | HTMLCanvasElement | ImageBitmap | ImageData | ArrayBufferView;
 
 /**
  * An item that is uploaded to the atlas texture.
- * 
+ *
  * @public
  */
 export type AtlasResourceItem =
@@ -46,7 +46,7 @@ export type AtlasResourceItem =
 
 /**
  * An {@code AtlasResource} is used by {@link AtlasAllocator} to manage texture sources
- * 
+ *
  * @public
  */
 export class AtlasResource extends Resource
@@ -59,8 +59,8 @@ export class AtlasResource extends Resource
     /**
      * Creates an atlas resource.
      *
-     * @param width 
-     * @param height 
+     * @param width
+     * @param height
      */
     constructor(width: number, height: number)
     {
@@ -72,9 +72,9 @@ export class AtlasResource extends Resource
     /**
      * Uploads the atlas.
      *
-     * @param renderer 
-     * @param baseTexture 
-     * @param glTexture 
+     * @param renderer
+     * @param baseTexture
+     * @param glTexture
      */
     upload(renderer: Renderer, baseTexture: BaseTexture, glTexture: GLTexture): boolean
     {
@@ -92,8 +92,8 @@ export class AtlasResource extends Resource
             glTexture.height = height;
 
             gl.texImage2D(
-                baseTexture.target, 
-                0, 
+                baseTexture.target,
+                0,
                 baseTexture.format,
                 width,
                 height,
@@ -131,7 +131,7 @@ export class AtlasResource extends Resource
      * @param item - The item to upload.
      */
     protected uploadItem(
-        renderer: Renderer, 
+        renderer: Renderer,
         target: number,
         format: number,
         type: number,

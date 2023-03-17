@@ -1,12 +1,13 @@
-import { GuilloteneAllocator } from '@pixi-essentials/area-allocator';
 import { BaseTexture } from '@pixi/core';
+
+import { GuilloteneAllocator } from './GuilloteneAllocator';
 import { TextureAllocator } from './TextureAllocator';
 import { TextureSlab } from './TextureSlab';
 
 /**
  * This allocator issues texture backed by a canvas. You can draw on to that canvas to soruce
  * each texture.
- * 
+ *
  * @public
  */
 export class CanvasTextureAllocator extends TextureAllocator

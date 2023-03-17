@@ -1,6 +1,6 @@
 import { AtlasResource } from './AtlasResource';
 import { BaseTexture, Texture } from '@pixi/core';
-import { GuilloteneAllocator } from '@pixi-essentials/area-allocator';
+import { GuilloteneAllocator } from './GuilloteneAllocator';
 import { TextureAllocator } from './TextureAllocator';
 import { TextureSlab } from './TextureSlab';
 
@@ -9,7 +9,7 @@ import type { AtlasResourceSource } from './AtlasResource';
 /**
  * This texture allocator auto-manages the base-texture with an {@link AtlasResource}. You can also
  * pass a texture source to `allocate`, mimicing {@link Texture.from} functionality.
- * 
+ *
  * @public
  */
 export class AtlasAllocator extends TextureAllocator
@@ -34,10 +34,10 @@ export class AtlasAllocator extends TextureAllocator
      * Allocates a texture backed by the given atlas source, with the given padding.
      *
      * @override
-     * @param width 
-     * @param height 
-     * @param padding 
-     * @param source 
+     * @param width
+     * @param height
+     * @param padding
+     * @param source
      */
     allocate(width: number, height: number, padding?: number, source?: AtlasResourceSource): Texture;
 
@@ -45,8 +45,8 @@ export class AtlasAllocator extends TextureAllocator
      * Allocates a texture backed by the given source, with default padding.
      *
      * @param width
-     * @param height 
-     * @param source 
+     * @param height
+     * @param source
      */
     allocate(width: number, height: number, source?: AtlasResourceSource): Texture;
 

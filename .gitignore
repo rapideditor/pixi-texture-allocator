@@ -1,5 +1,4 @@
-node_modules
-.parcel-cache
-pixijs
 .DS_Store
-.vscode/
+.vscode
+node_modules/
+npm-debug.log

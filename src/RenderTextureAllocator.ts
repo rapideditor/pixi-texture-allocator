@@ -1,5 +1,5 @@
 import { BaseRenderTexture, RenderTexture } from '@pixi/core';
-import { GuilloteneAllocator } from '@pixi-essentials/area-allocator';
+import { GuilloteneAllocator } from './GuilloteneAllocator';
 import { TextureAllocator } from './TextureAllocator';
 
 import type { BaseTexture } from '@pixi/core';
@@ -8,7 +8,7 @@ import type { TextureSlab } from './TextureSlab';
 
 /**
  * This allocator issues render-textures, and is otherwise just like {@link TextureAllocator}.
- * 
+ *
  * @public
  */
 export class RenderTextureAllocator extends TextureAllocator<RenderTexture>
@@ -31,8 +31,8 @@ export class RenderTextureAllocator extends TextureAllocator<RenderTexture>
     /**
      * Creates a render-texture from the given base render-texture.
      *
-     * @param baseTexture 
-     * @param frame 
+     * @param baseTexture
+     * @param frame
      */
     protected createTexture(baseTexture: BaseTexture, frame: Rectangle): RenderTexture
     {

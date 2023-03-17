@@ -1,17 +1,13 @@
 {
-  "name": "texture-allocator",
-  "version": "1.0.1",
+  "name": "@rapideditor/pixi-texture-allocator",
+  "version": "7.2.0",
   "author": "Ben Clark <bennyc@gmail.com",
   "description": "Pixi.js texture allocator",
-  "repository": "github:Bonkles/texture-allocator",
+  "repository": "github:rapideditor/texture-allocator",
   "license": "MIT",
-  "main": "dist/texture-allocator.cjs",
-  "module": "dist/texture-allocator.mjs",
-  "bundle": "dist/texture-allocator.js",
-  "types": "./index.d.ts",
   "keywords": [
-    "texture-allocator",
     "pixijs",
+    "texture-allocator",
     "texture-pool",
     "memory"
   ],
@@ -19,81 +15,36 @@
     "dist"
   ],
   "type": "module",
+  "main": "./dist/pixi-texture-allocator.cjs",
+  "module": "./dist/pixi-texture-allocator.mjs",
+  "bundle": "./dist/pixi-texture-allocator.iife.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    "import": "./dist/texture-allocator.mjs",
-    "require": "./dist/texture-allocator.cjs"
+    "import": "./dist/pixi-texture-allocator.mjs",
+    "require": "./dist/pixi-texture-allocator.cjs"
   },
   "dependencies": {
-    "@pixi-essentials/area-allocator": "~1.0.3",
-    "@pixi/constants": "^7.0.0-beta.4",
-    "@pixi/core": "^7.0.0-beta.4",
-    "@pixi/math": "^7.0.0-beta.4"
+    "@pixi/constants": "7.2.0",
+    "@pixi/core": "7.2.0",
+    "@pixi/math": "7.2.0"
   },
   "devDependencies": {
-    "@types/jest": "^27.0.0",
-    "esbuild": "^0.14.1",
-    "esbuild-jest": "~0.5.0",
-    "esbuild-visualizer": "^0.3.1",
-    "jest": "^27.0.6",
-    "jest-extended": "^1.0.0",
+    "esbuild": "^0.17.11",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.3.1",
-    "shx": "^0.3.3",
-    "typescript": "^4.3.5"
+    "shx": "^0.3.4",
+    "typescript": "^4.9.5"
   },
   "scripts": {
-    "all": "run-s clean build pretty test",
+    "all": "run-s clean build",
     "clean": "shx rm -rf dist",
     "build": "run-s build:**",
-    "build:browser": "esbuild ./src/index.ts --platform=browser --format=iife --global-name=textureAllocator --bundle --sourcemap --outfile=./dist/texture-allocator.iife.js --metafile=./dist/esbuild-iife.json",
-    "build:cjs": "esbuild ./src/index.ts --platform=node --format=cjs --bundle --sourcemap  --outfile=./dist/texture-allocator.cjs --metafile=./dist/esbuild-cjs.json",
-    "build:mjs": "esbuild ./src/index.ts --platform=neutral --format=esm --bundle --main-fields=module,main --sourcemap --outfile=./dist/texture-allocator.mjs --metafile=./dist/esbuild-esm.json",
-    "build:stats": "esbuild-visualizer --metadata dist/esbuild-esm.json --exclude *.png --filename docs/esm-statistics.html",
-    "build:types": "tsc",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --colors",
-    "pretty": "prettier --write \"./{src,tests}/*.{ts,js}\""
+    "build:browser": "esbuild ./src/index.ts --platform=browser --format=iife --global-name=PixiTextureAllocator --bundle --sourcemap --outfile=./dist/pixi-texture-allocator.iife.js",
+    "build:cjs": "esbuild ./src/index.ts --platform=node --format=cjs --sourcemap  --outfile=./dist/pixi-texture-allocator.cjs",
+    "build:mjs": "esbuild ./src/index.ts --platform=neutral --format=esm --main-fields=module,main --sourcemap --outfile=./dist/pixi-texture-allocator.mjs",
+    "build:types": "tsc --declaration --out dist/index.js"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "jest": {
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "**/src/*.(ts|js)"
-    ],
-    "coverageDirectory": "<rootDir>/.coverage",
-    "coverageProvider": "v8",
-    "extensionsToTreatAsEsm": [
-      ".ts"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "js",
-      "json"
-    ],
-    "setupFilesAfterEnv": [
-      "jest-extended"
-    ],
-    "testEnvironment": "node",
-    "testMatch": [
-      "**/tests/*.spec.(ts|js)"
-    ],
-    "transform": {
-      "^.+\\.ts$": [
-        "esbuild-jest",
-        {
-          "format": "esm",
-          "sourcemap": "true"
-        }
-      ]
-    },
-    "verbose": true
-  },
-  "prettier": {
-    "arrowParens": "always",
-    "printWidth": 100,
-    "singleQuote": true,
-    "trailingComma": "none"
   },
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
