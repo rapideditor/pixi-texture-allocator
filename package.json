@@ -15,45 +15,34 @@
   "type": "module",
   "main": "./dist/pixi-dashed-line.cjs",
   "module": "./dist/pixi-dashed-line.mjs",
-  "bundle": "./dist/pixi-dashed-line.js",
+  "bundle": "./dist/pixi-dashed-line.iife.js",
   "types": "./dist/index.d.ts",
   "exports": {
     "import": "./dist/pixi-dashed-line.mjs",
     "require": "./dist/pixi-dashed-line.cjs"
   },
   "dependencies": {
-    "@pixi/core": "^7.2.0",
-    "@pixi/display": "^7.2.0",
-    "@pixi/graphics": "^7.2.0"
+    "@pixi/core": "7.2.0",
+    "@pixi/graphics": "7.2.0"
   },
   "devDependencies": {
     "esbuild": "^0.17.11",
-    "esbuild-jest": "~0.5.0",
-    "esbuild-visualizer": "^0.4.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.4",
     "shx": "^0.3.4",
     "typescript": "^4.9.5"
   },
   "scripts": {
-    "all": "run-s clean build build:stats",
+    "all": "run-s clean build",
     "clean": "shx rm -rf dist",
     "build": "run-s build:**",
-    "build:browser": "esbuild ./src/index.ts --platform=browser --format=iife --global-name=PixiDashedLine --bundle --sourcemap --outfile=./dist/pixi-dashed-line.iife.js",
-    "build:cjs": "esbuild ./src/index.ts --platform=node --format=cjs --bundle --sourcemap  --outfile=./dist/pixi-dashed-line.cjs",
-    "build:mjs": "esbuild ./src/index.ts --platform=neutral --format=esm --bundle --main-fields=module,main --sourcemap --outfile=./dist/pixi-dashed-line.mjs --metafile=./dist/esbuild-esm.json",
-    "build:stats": "esbuild-visualizer --metadata dist/esbuild-esm.json --filename docs/statistics.html",
-    "build:types": "tsc",
-    "pretty": "prettier --write \"./{src,tests}/*.{ts,js}\""
+    "build:browser": "esbuild ./src/index.ts --platform=browser --format=iife --global-name=PixiDashLine --bundle --sourcemap --outfile=./dist/pixi-dashed-line.iife.js",
+    "build:cjs": "esbuild ./src/index.ts --platform=node --format=cjs --sourcemap  --outfile=./dist/pixi-dashed-line.cjs",
+    "build:mjs": "esbuild ./src/index.ts --platform=neutral --format=esm --main-fields=module,main --sourcemap --outfile=./dist/pixi-dashed-line.mjs",
+    "build:types": "tsc"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "prettier": {
-    "arrowParens": "always",
-    "printWidth": 100,
-    "singleQuote": true,
-    "trailingComma": "none"
   },
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
