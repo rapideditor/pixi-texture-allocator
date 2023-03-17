@@ -3,7 +3,7 @@
   "version": "7.2.1",
   "author": "Ben Clark <bennyc@gmail.com",
   "description": "Pixi.js texture allocator",
-  "repository": "github:rapideditor/texture-allocator",
+  "repository": "github:rapideditor/pixi-texture-allocator",
   "license": "MIT",
   "keywords": [
     "pixijs",
