@@ -8896,7 +8896,7 @@ ${this.fragmentSrc}`;
       const { renderer } = this;
       renderer.runners.init.emit(renderer.options);
       if (options.hello) {
-        console.log(`PixiJS ${"7.2.0"} - ${renderer.rendererLogId} - https://pixijs.com`);
+        console.log(`PixiJS ${"7.2.1"} - ${renderer.rendererLogId} - https://pixijs.com`);
       }
       renderer.resize(renderer.screen.width, renderer.screen.height);
     }
