@@ -2,22 +2,24 @@
   "include": ["src/*"],
   "exclude": ["node_modules", "dist"],
   "compilerOptions": {
-    "forceConsistentCasingInFileNames": true,
-    "module": "ES2020",
     "declaration": true,
+    "declarationMap": true,
     "emitDeclarationOnly": true,
-    "outDir": "dist",
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "listEmittedFiles": true,
+    "module": "ES2020",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
+    "outDir": "dist",
+    "outFile": "dist/index.js",
     "resolveJsonModule": true,
+    "strict": true,
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
     "strictNullChecks": false,
-    "target": "ES6",
-    "strict":true,
-  },
-  "module": "commonjs"
+    "target": "ES2020"
+  }
 }

@@ -488,3 +488,4 @@ declare module "index" {
     export * from "TextureAllocator";
     export * from "TextureSlab";
 }
+//# sourceMappingURL=index.d.ts.map

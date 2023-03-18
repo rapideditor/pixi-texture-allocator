@@ -4,22 +4,8 @@ var PixiTextureAllocator = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;
-  var __getOwnPropSymbols = Object.getOwnPropertySymbols;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __propIsEnum = Object.prototype.propertyIsEnumerable;
-  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-  var __spreadValues = (a2, b2) => {
-    for (var prop in b2 ||= {})
-      if (__hasOwnProp.call(b2, prop))
-        __defNormalProp(a2, prop, b2[prop]);
-    if (__getOwnPropSymbols)
-      for (var prop of __getOwnPropSymbols(b2)) {
-        if (__propIsEnum.call(b2, prop))
-          __defNormalProp(a2, prop, b2[prop]);
-      }
-    return a2;
-  };
   var __commonJS = (cb, mod) => function __require() {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
@@ -11532,7 +11518,7 @@ ${this.fragmentSrc}`;
     }
     printState(area) {
       if (!this.hasChildren(area)) {
-        console.log(__spreadValues({}, this.getFrame(area)), area[2]);
+        console.log({ ...this.getFrame(area) }, area[2]);
       } else {
         this.getChildren(area).forEach((n2) => this.printState(n2));
       }
