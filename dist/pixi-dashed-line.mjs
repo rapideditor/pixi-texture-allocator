@@ -1,21 +1,6 @@
-var __defProp = Object.defineProperty;
-var __getOwnPropSymbols = Object.getOwnPropertySymbols;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __propIsEnum = Object.prototype.propertyIsEnumerable;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __spreadValues = (a, b) => {
-  for (var prop in b ||= {})
-    if (__hasOwnProp.call(b, prop))
-      __defNormalProp(a, prop, b[prop]);
-  if (__getOwnPropSymbols)
-    for (var prop of __getOwnPropSymbols(b)) {
-      if (__propIsEnum.call(b, prop))
-        __defNormalProp(a, prop, b[prop]);
-    }
-  return a;
-};
+// src/index.ts
 import { Matrix, Point, SCALE_MODES, Texture } from "@pixi/core";
-const dashLineOptionsDefault = {
+var dashLineOptionsDefault = {
   dash: [10, 5],
   width: 1,
   color: 16777215,
@@ -24,7 +9,7 @@ const dashLineOptionsDefault = {
   useTexture: false,
   alignment: 0.5
 };
-const _DashLine = class {
+var _DashLine = class {
   /**
    * Create a DashLine
    * @param graphics
@@ -44,7 +29,7 @@ const _DashLine = class {
     /** desired scale of line */
     this.scale = 1;
     this.graphics = graphics;
-    options = __spreadValues(__spreadValues({}, dashLineOptionsDefault), options);
+    options = { ...dashLineOptionsDefault, ...options };
     this.dash = options.dash;
     this.dashSize = this.dash.reduce((a, b) => a + b);
     this.useTexture = options.useTexture;
@@ -319,7 +304,7 @@ const _DashLine = class {
     return texture;
   }
 };
-let DashLine = _DashLine;
+var DashLine = _DashLine;
 // cache of Textures for dashed lines
 DashLine.dashTextureCache = {};
 export {

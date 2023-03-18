@@ -58,3 +58,4 @@ declare module "index" {
         private static getTexture;
     }
 }
+//# sourceMappingURL=index.d.ts.map
