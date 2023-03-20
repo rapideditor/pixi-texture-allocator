@@ -9,5 +9,6 @@
 - [ ] git add . && git commit -m 'vA.B.C'
 - [ ] git tag vA.B.C
 - [ ] git push origin main vA.B.C
-- [ ] Go to GitHub and convert the tag to a release
+- [ ] Go to https://github.com/rapideditor/pixi-texture-allocator/tags
+- [ ] Convert the tag to a release
 - [ ] npm publish
