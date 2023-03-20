@@ -1,6 +1,6 @@
 {
   "name": "@rapideditor/pixi-dashed-line",
-  "version": "7.2.1",
+  "version": "7.1.0",
   "author": "Ben Clark <bennyc@gmail.com",
   "description": "Pixi.js dashed lines",
   "repository": "github:rapideditor/pixi-dashed-line",
@@ -23,8 +23,9 @@
     "require": "./dist/pixi-dashed-line.cjs"
   },
   "dependencies": {
-    "@pixi/core": "7.2.1",
-    "@pixi/graphics": "7.2.1"
+    "@pixi/core": "7.1.0",
+    "@pixi/display": "7.1.0",
+    "@pixi/graphics": "7.1.0"
   },
   "devDependencies": {
     "esbuild": "^0.17.12",
