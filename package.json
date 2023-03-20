@@ -1,6 +1,6 @@
 {
   "name": "@rapideditor/pixi-texture-allocator",
-  "version": "7.2.2-pre.0",
+  "version": "7.1.0",
   "author": "Ben Clark <bennyc@gmail.com",
   "description": "Pixi.js texture allocator",
   "repository": "github:rapideditor/pixi-texture-allocator",
@@ -25,9 +25,9 @@
     "require": "./dist/pixi-texture-allocator.cjs"
   },
   "dependencies": {
-    "@pixi/constants": "7.2.1",
-    "@pixi/core": "7.2.1",
-    "@pixi/math": "7.2.1"
+    "@pixi/constants": "7.1.0",
+    "@pixi/core": "7.1.0",
+    "@pixi/math": "7.1.0"
   },
   "devDependencies": {
     "esbuild": "^0.17.12",
