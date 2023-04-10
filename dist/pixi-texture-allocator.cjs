@@ -134,8 +134,26 @@ var AtlasResource = class extends import_core.Resource {
       return;
     }
     const gl = renderer.gl;
-    const source = item.source;
+    const isWebGL2 = gl instanceof WebGL2RenderingContext;
     const frame = item.frame;
+    let source = item.source;
+    if (!isWebGL2) {
+      if (source instanceof ImageData) {
+        source = source.data;
+      } else if (source instanceof HTMLCanvasElement) {
+        const ctx = source.getContext("2d");
+        const [w, h] = [source.width, source.height];
+        source = ctx.getImageData(0, 0, w, h).data;
+      } else if (source instanceof HTMLImageElement) {
+        const [w, h] = [source.naturalWidth, source.naturalHeight];
+        const canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(source, 0, 0);
+        source = ctx.getImageData(0, 0, w, h).data;
+      }
+    }
     gl.texSubImage2D(
       target,
       0,

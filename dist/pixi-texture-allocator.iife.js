@@ -91,8 +91,8 @@ var PixiTextureAllocator = (() => {
           return [];
         if (handlers.fn)
           return [handlers.fn];
-        for (var i = 0, l = handlers.length, ee = new Array(l); i < l; i++) {
-          ee[i] = handlers[i].fn;
+        for (var i2 = 0, l2 = handlers.length, ee = new Array(l2); i2 < l2; i2++) {
+          ee[i2] = handlers[i2].fn;
         }
         return ee;
       };
@@ -108,7 +108,7 @@ var PixiTextureAllocator = (() => {
         var evt = prefix ? prefix + event : event;
         if (!this._events[evt])
           return false;
-        var listeners = this._events[evt], len = arguments.length, args, i;
+        var listeners = this._events[evt], len = arguments.length, args, i2;
         if (listeners.fn) {
           if (listeners.once)
             this.removeListener(event, listeners.fn, void 0, true);
@@ -126,34 +126,34 @@ var PixiTextureAllocator = (() => {
             case 6:
               return listeners.fn.call(listeners.context, a1, a2, a3, a4, a5), true;
           }
-          for (i = 1, args = new Array(len - 1); i < len; i++) {
-            args[i - 1] = arguments[i];
+          for (i2 = 1, args = new Array(len - 1); i2 < len; i2++) {
+            args[i2 - 1] = arguments[i2];
           }
           listeners.fn.apply(listeners.context, args);
         } else {
-          var length = listeners.length, j;
-          for (i = 0; i < length; i++) {
-            if (listeners[i].once)
-              this.removeListener(event, listeners[i].fn, void 0, true);
+          var length = listeners.length, j2;
+          for (i2 = 0; i2 < length; i2++) {
+            if (listeners[i2].once)
+              this.removeListener(event, listeners[i2].fn, void 0, true);
             switch (len) {
               case 1:
-                listeners[i].fn.call(listeners[i].context);
+                listeners[i2].fn.call(listeners[i2].context);
                 break;
               case 2:
-                listeners[i].fn.call(listeners[i].context, a1);
+                listeners[i2].fn.call(listeners[i2].context, a1);
                 break;
               case 3:
-                listeners[i].fn.call(listeners[i].context, a1, a2);
+                listeners[i2].fn.call(listeners[i2].context, a1, a2);
                 break;
               case 4:
-                listeners[i].fn.call(listeners[i].context, a1, a2, a3);
+                listeners[i2].fn.call(listeners[i2].context, a1, a2, a3);
                 break;
               default:
                 if (!args)
-                  for (j = 1, args = new Array(len - 1); j < len; j++) {
-                    args[j - 1] = arguments[j];
+                  for (j2 = 1, args = new Array(len - 1); j2 < len; j2++) {
+                    args[j2 - 1] = arguments[j2];
                   }
-                listeners[i].fn.apply(listeners[i].context, args);
+                listeners[i2].fn.apply(listeners[i2].context, args);
             }
           }
         }
@@ -179,9 +179,9 @@ var PixiTextureAllocator = (() => {
             clearEvent(this, evt);
           }
         } else {
-          for (var i = 0, events = [], length = listeners.length; i < length; i++) {
-            if (listeners[i].fn !== fn || once && !listeners[i].once || context2 && listeners[i].context !== context2) {
-              events.push(listeners[i]);
+          for (var i2 = 0, events = [], length = listeners.length; i2 < length; i2++) {
+            if (listeners[i2].fn !== fn || once && !listeners[i2].once || context2 && listeners[i2].context !== context2) {
+              events.push(listeners[i2]);
             }
           }
           if (events.length)
@@ -224,23 +224,23 @@ var PixiTextureAllocator = (() => {
         var hasHoles = holeIndices && holeIndices.length, outerLen = hasHoles ? holeIndices[0] * dim : data.length, outerNode = linkedList(data, 0, outerLen, dim, true), triangles = [];
         if (!outerNode || outerNode.next === outerNode.prev)
           return triangles;
-        var minX, minY, maxX, maxY, x, y, invSize;
+        var minX, minY, maxX, maxY, x2, y2, invSize;
         if (hasHoles)
           outerNode = eliminateHoles(data, holeIndices, outerNode, dim);
         if (data.length > 80 * dim) {
           minX = maxX = data[0];
           minY = maxY = data[1];
-          for (var i = dim; i < outerLen; i += dim) {
-            x = data[i];
-            y = data[i + 1];
-            if (x < minX)
-              minX = x;
-            if (y < minY)
-              minY = y;
-            if (x > maxX)
-              maxX = x;
-            if (y > maxY)
-              maxY = y;
+          for (var i2 = dim; i2 < outerLen; i2 += dim) {
+            x2 = data[i2];
+            y2 = data[i2 + 1];
+            if (x2 < minX)
+              minX = x2;
+            if (y2 < minY)
+              minY = y2;
+            if (x2 > maxX)
+              maxX = x2;
+            if (y2 > maxY)
+              maxY = y2;
           }
           invSize = Math.max(maxX - minX, maxY - minY);
           invSize = invSize !== 0 ? 32767 / invSize : 0;
@@ -249,13 +249,13 @@ var PixiTextureAllocator = (() => {
         return triangles;
       }
       function linkedList(data, start, end, dim, clockwise) {
-        var i, last;
+        var i2, last;
         if (clockwise === signedArea(data, start, end, dim) > 0) {
-          for (i = start; i < end; i += dim)
-            last = insertNode(i, data[i], data[i + 1], last);
+          for (i2 = start; i2 < end; i2 += dim)
+            last = insertNode(i2, data[i2], data[i2 + 1], last);
         } else {
-          for (i = end - dim; i >= start; i -= dim)
-            last = insertNode(i, data[i], data[i + 1], last);
+          for (i2 = end - dim; i2 >= start; i2 -= dim)
+            last = insertNode(i2, data[i2], data[i2 + 1], last);
         }
         if (last && equals(last, last.next)) {
           removeNode(last);
@@ -268,19 +268,19 @@ var PixiTextureAllocator = (() => {
           return start;
         if (!end)
           end = start;
-        var p = start, again;
+        var p2 = start, again;
         do {
           again = false;
-          if (!p.steiner && (equals(p, p.next) || area(p.prev, p, p.next) === 0)) {
-            removeNode(p);
-            p = end = p.prev;
-            if (p === p.next)
+          if (!p2.steiner && (equals(p2, p2.next) || area(p2.prev, p2, p2.next) === 0)) {
+            removeNode(p2);
+            p2 = end = p2.prev;
+            if (p2 === p2.next)
               break;
             again = true;
           } else {
-            p = p.next;
+            p2 = p2.next;
           }
-        } while (again || p !== end);
+        } while (again || p2 !== end);
         return end;
       }
       function earcutLinked(ear, triangles, dim, minX, minY, invSize, pass) {
@@ -316,99 +316,99 @@ var PixiTextureAllocator = (() => {
         }
       }
       function isEar(ear) {
-        var a = ear.prev, b = ear, c = ear.next;
-        if (area(a, b, c) >= 0)
+        var a2 = ear.prev, b2 = ear, c2 = ear.next;
+        if (area(a2, b2, c2) >= 0)
           return false;
-        var ax = a.x, bx = b.x, cx = c.x, ay = a.y, by = b.y, cy = c.y;
+        var ax = a2.x, bx = b2.x, cx = c2.x, ay = a2.y, by = b2.y, cy = c2.y;
         var x0 = ax < bx ? ax < cx ? ax : cx : bx < cx ? bx : cx, y0 = ay < by ? ay < cy ? ay : cy : by < cy ? by : cy, x1 = ax > bx ? ax > cx ? ax : cx : bx > cx ? bx : cx, y1 = ay > by ? ay > cy ? ay : cy : by > cy ? by : cy;
-        var p = c.next;
-        while (p !== a) {
-          if (p.x >= x0 && p.x <= x1 && p.y >= y0 && p.y <= y1 && pointInTriangle(ax, ay, bx, by, cx, cy, p.x, p.y) && area(p.prev, p, p.next) >= 0)
+        var p2 = c2.next;
+        while (p2 !== a2) {
+          if (p2.x >= x0 && p2.x <= x1 && p2.y >= y0 && p2.y <= y1 && pointInTriangle(ax, ay, bx, by, cx, cy, p2.x, p2.y) && area(p2.prev, p2, p2.next) >= 0)
             return false;
-          p = p.next;
+          p2 = p2.next;
         }
         return true;
       }
       function isEarHashed(ear, minX, minY, invSize) {
-        var a = ear.prev, b = ear, c = ear.next;
-        if (area(a, b, c) >= 0)
+        var a2 = ear.prev, b2 = ear, c2 = ear.next;
+        if (area(a2, b2, c2) >= 0)
           return false;
-        var ax = a.x, bx = b.x, cx = c.x, ay = a.y, by = b.y, cy = c.y;
+        var ax = a2.x, bx = b2.x, cx = c2.x, ay = a2.y, by = b2.y, cy = c2.y;
         var x0 = ax < bx ? ax < cx ? ax : cx : bx < cx ? bx : cx, y0 = ay < by ? ay < cy ? ay : cy : by < cy ? by : cy, x1 = ax > bx ? ax > cx ? ax : cx : bx > cx ? bx : cx, y1 = ay > by ? ay > cy ? ay : cy : by > cy ? by : cy;
         var minZ = zOrder(x0, y0, minX, minY, invSize), maxZ = zOrder(x1, y1, minX, minY, invSize);
-        var p = ear.prevZ, n = ear.nextZ;
-        while (p && p.z >= minZ && n && n.z <= maxZ) {
-          if (p.x >= x0 && p.x <= x1 && p.y >= y0 && p.y <= y1 && p !== a && p !== c && pointInTriangle(ax, ay, bx, by, cx, cy, p.x, p.y) && area(p.prev, p, p.next) >= 0)
+        var p2 = ear.prevZ, n2 = ear.nextZ;
+        while (p2 && p2.z >= minZ && n2 && n2.z <= maxZ) {
+          if (p2.x >= x0 && p2.x <= x1 && p2.y >= y0 && p2.y <= y1 && p2 !== a2 && p2 !== c2 && pointInTriangle(ax, ay, bx, by, cx, cy, p2.x, p2.y) && area(p2.prev, p2, p2.next) >= 0)
             return false;
-          p = p.prevZ;
-          if (n.x >= x0 && n.x <= x1 && n.y >= y0 && n.y <= y1 && n !== a && n !== c && pointInTriangle(ax, ay, bx, by, cx, cy, n.x, n.y) && area(n.prev, n, n.next) >= 0)
+          p2 = p2.prevZ;
+          if (n2.x >= x0 && n2.x <= x1 && n2.y >= y0 && n2.y <= y1 && n2 !== a2 && n2 !== c2 && pointInTriangle(ax, ay, bx, by, cx, cy, n2.x, n2.y) && area(n2.prev, n2, n2.next) >= 0)
             return false;
-          n = n.nextZ;
+          n2 = n2.nextZ;
         }
-        while (p && p.z >= minZ) {
-          if (p.x >= x0 && p.x <= x1 && p.y >= y0 && p.y <= y1 && p !== a && p !== c && pointInTriangle(ax, ay, bx, by, cx, cy, p.x, p.y) && area(p.prev, p, p.next) >= 0)
+        while (p2 && p2.z >= minZ) {
+          if (p2.x >= x0 && p2.x <= x1 && p2.y >= y0 && p2.y <= y1 && p2 !== a2 && p2 !== c2 && pointInTriangle(ax, ay, bx, by, cx, cy, p2.x, p2.y) && area(p2.prev, p2, p2.next) >= 0)
             return false;
-          p = p.prevZ;
+          p2 = p2.prevZ;
         }
-        while (n && n.z <= maxZ) {
-          if (n.x >= x0 && n.x <= x1 && n.y >= y0 && n.y <= y1 && n !== a && n !== c && pointInTriangle(ax, ay, bx, by, cx, cy, n.x, n.y) && area(n.prev, n, n.next) >= 0)
+        while (n2 && n2.z <= maxZ) {
+          if (n2.x >= x0 && n2.x <= x1 && n2.y >= y0 && n2.y <= y1 && n2 !== a2 && n2 !== c2 && pointInTriangle(ax, ay, bx, by, cx, cy, n2.x, n2.y) && area(n2.prev, n2, n2.next) >= 0)
             return false;
-          n = n.nextZ;
+          n2 = n2.nextZ;
         }
         return true;
       }
       function cureLocalIntersections(start, triangles, dim) {
-        var p = start;
+        var p2 = start;
         do {
-          var a = p.prev, b = p.next.next;
-          if (!equals(a, b) && intersects(a, p, p.next, b) && locallyInside(a, b) && locallyInside(b, a)) {
-            triangles.push(a.i / dim | 0);
-            triangles.push(p.i / dim | 0);
-            triangles.push(b.i / dim | 0);
-            removeNode(p);
-            removeNode(p.next);
-            p = start = b;
+          var a2 = p2.prev, b2 = p2.next.next;
+          if (!equals(a2, b2) && intersects(a2, p2, p2.next, b2) && locallyInside(a2, b2) && locallyInside(b2, a2)) {
+            triangles.push(a2.i / dim | 0);
+            triangles.push(p2.i / dim | 0);
+            triangles.push(b2.i / dim | 0);
+            removeNode(p2);
+            removeNode(p2.next);
+            p2 = start = b2;
           }
-          p = p.next;
-        } while (p !== start);
-        return filterPoints(p);
+          p2 = p2.next;
+        } while (p2 !== start);
+        return filterPoints(p2);
       }
       function splitEarcut(start, triangles, dim, minX, minY, invSize) {
-        var a = start;
+        var a2 = start;
         do {
-          var b = a.next.next;
-          while (b !== a.prev) {
-            if (a.i !== b.i && isValidDiagonal(a, b)) {
-              var c = splitPolygon(a, b);
-              a = filterPoints(a, a.next);
-              c = filterPoints(c, c.next);
-              earcutLinked(a, triangles, dim, minX, minY, invSize, 0);
-              earcutLinked(c, triangles, dim, minX, minY, invSize, 0);
+          var b2 = a2.next.next;
+          while (b2 !== a2.prev) {
+            if (a2.i !== b2.i && isValidDiagonal(a2, b2)) {
+              var c2 = splitPolygon(a2, b2);
+              a2 = filterPoints(a2, a2.next);
+              c2 = filterPoints(c2, c2.next);
+              earcutLinked(a2, triangles, dim, minX, minY, invSize, 0);
+              earcutLinked(c2, triangles, dim, minX, minY, invSize, 0);
               return;
             }
-            b = b.next;
+            b2 = b2.next;
           }
-          a = a.next;
-        } while (a !== start);
+          a2 = a2.next;
+        } while (a2 !== start);
       }
       function eliminateHoles(data, holeIndices, outerNode, dim) {
-        var queue = [], i, len, start, end, list;
-        for (i = 0, len = holeIndices.length; i < len; i++) {
-          start = holeIndices[i] * dim;
-          end = i < len - 1 ? holeIndices[i + 1] * dim : data.length;
+        var queue = [], i2, len, start, end, list;
+        for (i2 = 0, len = holeIndices.length; i2 < len; i2++) {
+          start = holeIndices[i2] * dim;
+          end = i2 < len - 1 ? holeIndices[i2 + 1] * dim : data.length;
           list = linkedList(data, start, end, dim, false);
           if (list === list.next)
             list.steiner = true;
           queue.push(getLeftmost(list));
         }
         queue.sort(compareX);
-        for (i = 0; i < queue.length; i++) {
-          outerNode = eliminateHole(queue[i], outerNode);
+        for (i2 = 0; i2 < queue.length; i2++) {
+          outerNode = eliminateHole(queue[i2], outerNode);
         }
         return outerNode;
       }
-      function compareX(a, b) {
-        return a.x - b.x;
+      function compareX(a2, b2) {
+        return a2.x - b2.x;
       }
       function eliminateHole(hole, outerNode) {
         var bridge = findHoleBridge(hole, outerNode);
@@ -420,63 +420,63 @@ var PixiTextureAllocator = (() => {
         return filterPoints(bridge, bridge.next);
       }
       function findHoleBridge(hole, outerNode) {
-        var p = outerNode, hx = hole.x, hy = hole.y, qx = -Infinity, m;
+        var p2 = outerNode, hx = hole.x, hy = hole.y, qx = -Infinity, m2;
         do {
-          if (hy <= p.y && hy >= p.next.y && p.next.y !== p.y) {
-            var x = p.x + (hy - p.y) * (p.next.x - p.x) / (p.next.y - p.y);
-            if (x <= hx && x > qx) {
-              qx = x;
-              m = p.x < p.next.x ? p : p.next;
-              if (x === hx)
-                return m;
+          if (hy <= p2.y && hy >= p2.next.y && p2.next.y !== p2.y) {
+            var x2 = p2.x + (hy - p2.y) * (p2.next.x - p2.x) / (p2.next.y - p2.y);
+            if (x2 <= hx && x2 > qx) {
+              qx = x2;
+              m2 = p2.x < p2.next.x ? p2 : p2.next;
+              if (x2 === hx)
+                return m2;
             }
           }
-          p = p.next;
-        } while (p !== outerNode);
-        if (!m)
+          p2 = p2.next;
+        } while (p2 !== outerNode);
+        if (!m2)
           return null;
-        var stop = m, mx = m.x, my = m.y, tanMin = Infinity, tan2;
-        p = m;
+        var stop = m2, mx = m2.x, my = m2.y, tanMin = Infinity, tan;
+        p2 = m2;
         do {
-          if (hx >= p.x && p.x >= mx && hx !== p.x && pointInTriangle(hy < my ? hx : qx, hy, mx, my, hy < my ? qx : hx, hy, p.x, p.y)) {
-            tan2 = Math.abs(hy - p.y) / (hx - p.x);
-            if (locallyInside(p, hole) && (tan2 < tanMin || tan2 === tanMin && (p.x > m.x || p.x === m.x && sectorContainsSector(m, p)))) {
-              m = p;
-              tanMin = tan2;
+          if (hx >= p2.x && p2.x >= mx && hx !== p2.x && pointInTriangle(hy < my ? hx : qx, hy, mx, my, hy < my ? qx : hx, hy, p2.x, p2.y)) {
+            tan = Math.abs(hy - p2.y) / (hx - p2.x);
+            if (locallyInside(p2, hole) && (tan < tanMin || tan === tanMin && (p2.x > m2.x || p2.x === m2.x && sectorContainsSector(m2, p2)))) {
+              m2 = p2;
+              tanMin = tan;
             }
           }
-          p = p.next;
-        } while (p !== stop);
-        return m;
+          p2 = p2.next;
+        } while (p2 !== stop);
+        return m2;
       }
-      function sectorContainsSector(m, p) {
-        return area(m.prev, m, p.prev) < 0 && area(p.next, m, m.next) < 0;
+      function sectorContainsSector(m2, p2) {
+        return area(m2.prev, m2, p2.prev) < 0 && area(p2.next, m2, m2.next) < 0;
       }
       function indexCurve(start, minX, minY, invSize) {
-        var p = start;
+        var p2 = start;
         do {
-          if (p.z === 0)
-            p.z = zOrder(p.x, p.y, minX, minY, invSize);
-          p.prevZ = p.prev;
-          p.nextZ = p.next;
-          p = p.next;
-        } while (p !== start);
-        p.prevZ.nextZ = null;
-        p.prevZ = null;
-        sortLinked(p);
+          if (p2.z === 0)
+            p2.z = zOrder(p2.x, p2.y, minX, minY, invSize);
+          p2.prevZ = p2.prev;
+          p2.nextZ = p2.next;
+          p2 = p2.next;
+        } while (p2 !== start);
+        p2.prevZ.nextZ = null;
+        p2.prevZ = null;
+        sortLinked(p2);
       }
       function sortLinked(list) {
-        var i, p, q, e, tail, numMerges, pSize, qSize, inSize = 1;
+        var i2, p2, q, e2, tail, numMerges, pSize, qSize, inSize = 1;
         do {
-          p = list;
+          p2 = list;
           list = null;
           tail = null;
           numMerges = 0;
-          while (p) {
+          while (p2) {
             numMerges++;
-            q = p;
+            q = p2;
             pSize = 0;
-            for (i = 0; i < inSize; i++) {
+            for (i2 = 0; i2 < inSize; i2++) {
               pSize++;
               q = q.nextZ;
               if (!q)
@@ -484,62 +484,62 @@ var PixiTextureAllocator = (() => {
             }
             qSize = inSize;
             while (pSize > 0 || qSize > 0 && q) {
-              if (pSize !== 0 && (qSize === 0 || !q || p.z <= q.z)) {
-                e = p;
-                p = p.nextZ;
+              if (pSize !== 0 && (qSize === 0 || !q || p2.z <= q.z)) {
+                e2 = p2;
+                p2 = p2.nextZ;
                 pSize--;
               } else {
-                e = q;
+                e2 = q;
                 q = q.nextZ;
                 qSize--;
               }
               if (tail)
-                tail.nextZ = e;
+                tail.nextZ = e2;
               else
-                list = e;
-              e.prevZ = tail;
-              tail = e;
+                list = e2;
+              e2.prevZ = tail;
+              tail = e2;
             }
-            p = q;
+            p2 = q;
           }
           tail.nextZ = null;
           inSize *= 2;
         } while (numMerges > 1);
         return list;
       }
-      function zOrder(x, y, minX, minY, invSize) {
-        x = (x - minX) * invSize | 0;
-        y = (y - minY) * invSize | 0;
-        x = (x | x << 8) & 16711935;
-        x = (x | x << 4) & 252645135;
-        x = (x | x << 2) & 858993459;
-        x = (x | x << 1) & 1431655765;
-        y = (y | y << 8) & 16711935;
-        y = (y | y << 4) & 252645135;
-        y = (y | y << 2) & 858993459;
-        y = (y | y << 1) & 1431655765;
-        return x | y << 1;
+      function zOrder(x2, y2, minX, minY, invSize) {
+        x2 = (x2 - minX) * invSize | 0;
+        y2 = (y2 - minY) * invSize | 0;
+        x2 = (x2 | x2 << 8) & 16711935;
+        x2 = (x2 | x2 << 4) & 252645135;
+        x2 = (x2 | x2 << 2) & 858993459;
+        x2 = (x2 | x2 << 1) & 1431655765;
+        y2 = (y2 | y2 << 8) & 16711935;
+        y2 = (y2 | y2 << 4) & 252645135;
+        y2 = (y2 | y2 << 2) & 858993459;
+        y2 = (y2 | y2 << 1) & 1431655765;
+        return x2 | y2 << 1;
       }
       function getLeftmost(start) {
-        var p = start, leftmost = start;
+        var p2 = start, leftmost = start;
         do {
-          if (p.x < leftmost.x || p.x === leftmost.x && p.y < leftmost.y)
-            leftmost = p;
-          p = p.next;
-        } while (p !== start);
+          if (p2.x < leftmost.x || p2.x === leftmost.x && p2.y < leftmost.y)
+            leftmost = p2;
+          p2 = p2.next;
+        } while (p2 !== start);
         return leftmost;
       }
       function pointInTriangle(ax, ay, bx, by, cx, cy, px, py) {
         return (cx - px) * (ay - py) >= (ax - px) * (cy - py) && (ax - px) * (by - py) >= (bx - px) * (ay - py) && (bx - px) * (cy - py) >= (cx - px) * (by - py);
       }
-      function isValidDiagonal(a, b) {
-        return a.next.i !== b.i && a.prev.i !== b.i && !intersectsPolygon(a, b) && // dones't intersect other edges
-        (locallyInside(a, b) && locallyInside(b, a) && middleInside(a, b) && // locally visible
-        (area(a.prev, a, b.prev) || area(a, b.prev, b)) || // does not create opposite-facing sectors
-        equals(a, b) && area(a.prev, a, a.next) > 0 && area(b.prev, b, b.next) > 0);
+      function isValidDiagonal(a2, b2) {
+        return a2.next.i !== b2.i && a2.prev.i !== b2.i && !intersectsPolygon(a2, b2) && // dones't intersect other edges
+        (locallyInside(a2, b2) && locallyInside(b2, a2) && middleInside(a2, b2) && // locally visible
+        (area(a2.prev, a2, b2.prev) || area(a2, b2.prev, b2)) || // does not create opposite-facing sectors
+        equals(a2, b2) && area(a2.prev, a2, a2.next) > 0 && area(b2.prev, b2, b2.next) > 0);
       }
-      function area(p, q, r) {
-        return (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
+      function area(p2, q, r2) {
+        return (q.y - p2.y) * (r2.x - q.x) - (q.x - p2.x) * (r2.y - q.y);
       }
       function equals(p1, p2) {
         return p1.x === p2.x && p1.y === p2.y;
@@ -561,70 +561,70 @@ var PixiTextureAllocator = (() => {
           return true;
         return false;
       }
-      function onSegment(p, q, r) {
-        return q.x <= Math.max(p.x, r.x) && q.x >= Math.min(p.x, r.x) && q.y <= Math.max(p.y, r.y) && q.y >= Math.min(p.y, r.y);
+      function onSegment(p2, q, r2) {
+        return q.x <= Math.max(p2.x, r2.x) && q.x >= Math.min(p2.x, r2.x) && q.y <= Math.max(p2.y, r2.y) && q.y >= Math.min(p2.y, r2.y);
       }
       function sign2(num) {
         return num > 0 ? 1 : num < 0 ? -1 : 0;
       }
-      function intersectsPolygon(a, b) {
-        var p = a;
+      function intersectsPolygon(a2, b2) {
+        var p2 = a2;
         do {
-          if (p.i !== a.i && p.next.i !== a.i && p.i !== b.i && p.next.i !== b.i && intersects(p, p.next, a, b))
+          if (p2.i !== a2.i && p2.next.i !== a2.i && p2.i !== b2.i && p2.next.i !== b2.i && intersects(p2, p2.next, a2, b2))
             return true;
-          p = p.next;
-        } while (p !== a);
+          p2 = p2.next;
+        } while (p2 !== a2);
         return false;
       }
-      function locallyInside(a, b) {
-        return area(a.prev, a, a.next) < 0 ? area(a, b, a.next) >= 0 && area(a, a.prev, b) >= 0 : area(a, b, a.prev) < 0 || area(a, a.next, b) < 0;
+      function locallyInside(a2, b2) {
+        return area(a2.prev, a2, a2.next) < 0 ? area(a2, b2, a2.next) >= 0 && area(a2, a2.prev, b2) >= 0 : area(a2, b2, a2.prev) < 0 || area(a2, a2.next, b2) < 0;
       }
-      function middleInside(a, b) {
-        var p = a, inside = false, px = (a.x + b.x) / 2, py = (a.y + b.y) / 2;
+      function middleInside(a2, b2) {
+        var p2 = a2, inside = false, px = (a2.x + b2.x) / 2, py = (a2.y + b2.y) / 2;
         do {
-          if (p.y > py !== p.next.y > py && p.next.y !== p.y && px < (p.next.x - p.x) * (py - p.y) / (p.next.y - p.y) + p.x)
+          if (p2.y > py !== p2.next.y > py && p2.next.y !== p2.y && px < (p2.next.x - p2.x) * (py - p2.y) / (p2.next.y - p2.y) + p2.x)
             inside = !inside;
-          p = p.next;
-        } while (p !== a);
+          p2 = p2.next;
+        } while (p2 !== a2);
         return inside;
       }
-      function splitPolygon(a, b) {
-        var a2 = new Node(a.i, a.x, a.y), b2 = new Node(b.i, b.x, b.y), an = a.next, bp = b.prev;
-        a.next = b;
-        b.prev = a;
-        a2.next = an;
-        an.prev = a2;
-        b2.next = a2;
-        a2.prev = b2;
-        bp.next = b2;
-        b2.prev = bp;
-        return b2;
+      function splitPolygon(a2, b2) {
+        var a22 = new Node(a2.i, a2.x, a2.y), b22 = new Node(b2.i, b2.x, b2.y), an = a2.next, bp = b2.prev;
+        a2.next = b2;
+        b2.prev = a2;
+        a22.next = an;
+        an.prev = a22;
+        b22.next = a22;
+        a22.prev = b22;
+        bp.next = b22;
+        b22.prev = bp;
+        return b22;
       }
-      function insertNode(i, x, y, last) {
-        var p = new Node(i, x, y);
+      function insertNode(i2, x2, y2, last) {
+        var p2 = new Node(i2, x2, y2);
         if (!last) {
-          p.prev = p;
-          p.next = p;
+          p2.prev = p2;
+          p2.next = p2;
         } else {
-          p.next = last.next;
-          p.prev = last;
-          last.next.prev = p;
-          last.next = p;
+          p2.next = last.next;
+          p2.prev = last;
+          last.next.prev = p2;
+          last.next = p2;
         }
-        return p;
+        return p2;
       }
-      function removeNode(p) {
-        p.next.prev = p.prev;
-        p.prev.next = p.next;
-        if (p.prevZ)
-          p.prevZ.nextZ = p.nextZ;
-        if (p.nextZ)
-          p.nextZ.prevZ = p.prevZ;
+      function removeNode(p2) {
+        p2.next.prev = p2.prev;
+        p2.prev.next = p2.next;
+        if (p2.prevZ)
+          p2.prevZ.nextZ = p2.nextZ;
+        if (p2.nextZ)
+          p2.nextZ.prevZ = p2.prevZ;
       }
-      function Node(i, x, y) {
-        this.i = i;
-        this.x = x;
-        this.y = y;
+      function Node(i2, x2, y2) {
+        this.i = i2;
+        this.x = x2;
+        this.y = y2;
         this.prev = null;
         this.next = null;
         this.z = 0;
@@ -637,40 +637,40 @@ var PixiTextureAllocator = (() => {
         var outerLen = hasHoles ? holeIndices[0] * dim : data.length;
         var polygonArea = Math.abs(signedArea(data, 0, outerLen, dim));
         if (hasHoles) {
-          for (var i = 0, len = holeIndices.length; i < len; i++) {
-            var start = holeIndices[i] * dim;
-            var end = i < len - 1 ? holeIndices[i + 1] * dim : data.length;
+          for (var i2 = 0, len = holeIndices.length; i2 < len; i2++) {
+            var start = holeIndices[i2] * dim;
+            var end = i2 < len - 1 ? holeIndices[i2 + 1] * dim : data.length;
             polygonArea -= Math.abs(signedArea(data, start, end, dim));
           }
         }
         var trianglesArea = 0;
-        for (i = 0; i < triangles.length; i += 3) {
-          var a = triangles[i] * dim;
-          var b = triangles[i + 1] * dim;
-          var c = triangles[i + 2] * dim;
+        for (i2 = 0; i2 < triangles.length; i2 += 3) {
+          var a2 = triangles[i2] * dim;
+          var b2 = triangles[i2 + 1] * dim;
+          var c2 = triangles[i2 + 2] * dim;
           trianglesArea += Math.abs(
-            (data[a] - data[c]) * (data[b + 1] - data[a + 1]) - (data[a] - data[b]) * (data[c + 1] - data[a + 1])
+            (data[a2] - data[c2]) * (data[b2 + 1] - data[a2 + 1]) - (data[a2] - data[b2]) * (data[c2 + 1] - data[a2 + 1])
           );
         }
         return polygonArea === 0 && trianglesArea === 0 ? 0 : Math.abs((trianglesArea - polygonArea) / polygonArea);
       };
       function signedArea(data, start, end, dim) {
         var sum = 0;
-        for (var i = start, j = end - dim; i < end; i += dim) {
-          sum += (data[j] - data[i]) * (data[i + 1] + data[j + 1]);
-          j = i;
+        for (var i2 = start, j2 = end - dim; i2 < end; i2 += dim) {
+          sum += (data[j2] - data[i2]) * (data[i2 + 1] + data[j2 + 1]);
+          j2 = i2;
         }
         return sum;
       }
       earcut.flatten = function(data) {
         var dim = data[0][0].length, result = { vertices: [], holes: [], dimensions: dim }, holeIndex = 0;
-        for (var i = 0; i < data.length; i++) {
-          for (var j = 0; j < data[i].length; j++) {
-            for (var d = 0; d < dim; d++)
-              result.vertices.push(data[i][j][d]);
+        for (var i2 = 0; i2 < data.length; i2++) {
+          for (var j2 = 0; j2 < data[i2].length; j2++) {
+            for (var d2 = 0; d2 < dim; d2++)
+              result.vertices.push(data[i2][j2][d2]);
           }
-          if (i > 0) {
-            holeIndex += data[i - 1].length;
+          if (i2 > 0) {
+            holeIndex += data[i2 - 1].length;
             result.holes.push(holeIndex);
           }
         }
@@ -763,66 +763,66 @@ var PixiTextureAllocator = (() => {
           return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
         }
         function adapt(delta, numPoints, firstTime) {
-          var k = 0;
+          var k2 = 0;
           delta = firstTime ? floor(delta / damp) : delta >> 1;
           delta += floor(delta / numPoints);
-          for (; delta > baseMinusTMin * tMax >> 1; k += base) {
+          for (; delta > baseMinusTMin * tMax >> 1; k2 += base) {
             delta = floor(delta / baseMinusTMin);
           }
-          return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
+          return floor(k2 + (baseMinusTMin + 1) * delta / (delta + skew));
         }
         function decode(input) {
-          var output = [], inputLength = input.length, out, i = 0, n = initialN, bias = initialBias, basic, j, index, oldi, w, k, digit, t, baseMinusT;
+          var output = [], inputLength = input.length, out, i2 = 0, n2 = initialN, bias = initialBias, basic, j2, index, oldi, w2, k2, digit, t2, baseMinusT;
           basic = input.lastIndexOf(delimiter);
           if (basic < 0) {
             basic = 0;
           }
-          for (j = 0; j < basic; ++j) {
-            if (input.charCodeAt(j) >= 128) {
+          for (j2 = 0; j2 < basic; ++j2) {
+            if (input.charCodeAt(j2) >= 128) {
               error("not-basic");
             }
-            output.push(input.charCodeAt(j));
+            output.push(input.charCodeAt(j2));
           }
           for (index = basic > 0 ? basic + 1 : 0; index < inputLength; ) {
-            for (oldi = i, w = 1, k = base; ; k += base) {
+            for (oldi = i2, w2 = 1, k2 = base; ; k2 += base) {
               if (index >= inputLength) {
                 error("invalid-input");
               }
               digit = basicToDigit(input.charCodeAt(index++));
-              if (digit >= base || digit > floor((maxInt - i) / w)) {
+              if (digit >= base || digit > floor((maxInt - i2) / w2)) {
                 error("overflow");
               }
-              i += digit * w;
-              t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
-              if (digit < t) {
+              i2 += digit * w2;
+              t2 = k2 <= bias ? tMin : k2 >= bias + tMax ? tMax : k2 - bias;
+              if (digit < t2) {
                 break;
               }
-              baseMinusT = base - t;
-              if (w > floor(maxInt / baseMinusT)) {
+              baseMinusT = base - t2;
+              if (w2 > floor(maxInt / baseMinusT)) {
                 error("overflow");
               }
-              w *= baseMinusT;
+              w2 *= baseMinusT;
             }
             out = output.length + 1;
-            bias = adapt(i - oldi, out, oldi == 0);
-            if (floor(i / out) > maxInt - n) {
+            bias = adapt(i2 - oldi, out, oldi == 0);
+            if (floor(i2 / out) > maxInt - n2) {
               error("overflow");
             }
-            n += floor(i / out);
-            i %= out;
-            output.splice(i++, 0, n);
+            n2 += floor(i2 / out);
+            i2 %= out;
+            output.splice(i2++, 0, n2);
           }
           return ucs2encode(output);
         }
         function encode(input) {
-          var n, delta, handledCPCount, basicLength, bias, j, m, q, k, t, currentValue, output = [], inputLength, handledCPCountPlusOne, baseMinusT, qMinusT;
+          var n2, delta, handledCPCount, basicLength, bias, j2, m2, q, k2, t2, currentValue, output = [], inputLength, handledCPCountPlusOne, baseMinusT, qMinusT;
           input = ucs2decode(input);
           inputLength = input.length;
-          n = initialN;
+          n2 = initialN;
           delta = 0;
           bias = initialBias;
-          for (j = 0; j < inputLength; ++j) {
-            currentValue = input[j];
+          for (j2 = 0; j2 < inputLength; ++j2) {
+            currentValue = input[j2];
             if (currentValue < 128) {
               output.push(stringFromCharCode(currentValue));
             }
@@ -832,33 +832,33 @@ var PixiTextureAllocator = (() => {
             output.push(delimiter);
           }
           while (handledCPCount < inputLength) {
-            for (m = maxInt, j = 0; j < inputLength; ++j) {
-              currentValue = input[j];
-              if (currentValue >= n && currentValue < m) {
-                m = currentValue;
+            for (m2 = maxInt, j2 = 0; j2 < inputLength; ++j2) {
+              currentValue = input[j2];
+              if (currentValue >= n2 && currentValue < m2) {
+                m2 = currentValue;
               }
             }
             handledCPCountPlusOne = handledCPCount + 1;
-            if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) {
+            if (m2 - n2 > floor((maxInt - delta) / handledCPCountPlusOne)) {
               error("overflow");
             }
-            delta += (m - n) * handledCPCountPlusOne;
-            n = m;
-            for (j = 0; j < inputLength; ++j) {
-              currentValue = input[j];
-              if (currentValue < n && ++delta > maxInt) {
+            delta += (m2 - n2) * handledCPCountPlusOne;
+            n2 = m2;
+            for (j2 = 0; j2 < inputLength; ++j2) {
+              currentValue = input[j2];
+              if (currentValue < n2 && ++delta > maxInt) {
                 error("overflow");
               }
-              if (currentValue == n) {
-                for (q = delta, k = base; ; k += base) {
-                  t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
-                  if (q < t) {
+              if (currentValue == n2) {
+                for (q = delta, k2 = base; ; k2 += base) {
+                  t2 = k2 <= bias ? tMin : k2 >= bias + tMax ? tMax : k2 - bias;
+                  if (q < t2) {
                     break;
                   }
-                  qMinusT = q - t;
-                  baseMinusT = base - t;
+                  qMinusT = q - t2;
+                  baseMinusT = base - t2;
                   output.push(
-                    stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0))
+                    stringFromCharCode(digitToBasic(t2 + qMinusT % baseMinusT, 0))
                   );
                   q = floor(qMinusT / baseMinusT);
                 }
@@ -869,7 +869,7 @@ var PixiTextureAllocator = (() => {
               }
             }
             ++delta;
-            ++n;
+            ++n2;
           }
           return output.join("");
         }
@@ -970,23 +970,23 @@ var PixiTextureAllocator = (() => {
         if (maxKeys > 0 && len > maxKeys) {
           len = maxKeys;
         }
-        for (var i = 0; i < len; ++i) {
-          var x = qs[i].replace(regexp, "%20"), idx = x.indexOf(eq), kstr, vstr, k, v;
+        for (var i2 = 0; i2 < len; ++i2) {
+          var x2 = qs[i2].replace(regexp, "%20"), idx = x2.indexOf(eq), kstr, vstr, k2, v2;
           if (idx >= 0) {
-            kstr = x.substr(0, idx);
-            vstr = x.substr(idx + 1);
+            kstr = x2.substr(0, idx);
+            vstr = x2.substr(idx + 1);
           } else {
-            kstr = x;
+            kstr = x2;
             vstr = "";
           }
-          k = decodeURIComponent(kstr);
-          v = decodeURIComponent(vstr);
-          if (!hasOwnProperty(obj, k)) {
-            obj[k] = v;
-          } else if (Array.isArray(obj[k])) {
-            obj[k].push(v);
+          k2 = decodeURIComponent(kstr);
+          v2 = decodeURIComponent(vstr);
+          if (!hasOwnProperty(obj, k2)) {
+            obj[k2] = v2;
+          } else if (Array.isArray(obj[k2])) {
+            obj[k2].push(v2);
           } else {
-            obj[k] = [obj[k], v];
+            obj[k2] = [obj[k2], v2];
           }
         }
         return obj;
@@ -998,14 +998,14 @@ var PixiTextureAllocator = (() => {
   var require_encode = __commonJS({
     "node_modules/querystring/encode.js"(exports, module) {
       "use strict";
-      var stringifyPrimitive = function(v) {
-        switch (typeof v) {
+      var stringifyPrimitive = function(v2) {
+        switch (typeof v2) {
           case "string":
-            return v;
+            return v2;
           case "boolean":
-            return v ? "true" : "false";
+            return v2 ? "true" : "false";
           case "number":
-            return isFinite(v) ? v : "";
+            return isFinite(v2) ? v2 : "";
           default:
             return "";
         }
@@ -1017,14 +1017,14 @@ var PixiTextureAllocator = (() => {
           obj = void 0;
         }
         if (typeof obj === "object") {
-          return Object.keys(obj).map(function(k) {
-            var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
-            if (Array.isArray(obj[k])) {
-              return obj[k].map(function(v) {
-                return ks + encodeURIComponent(stringifyPrimitive(v));
+          return Object.keys(obj).map(function(k2) {
+            var ks = encodeURIComponent(stringifyPrimitive(k2)) + eq;
+            if (Array.isArray(obj[k2])) {
+              return obj[k2].map(function(v2) {
+                return ks + encodeURIComponent(stringifyPrimitive(v2));
               }).join(sep);
             } else {
-              return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+              return ks + encodeURIComponent(stringifyPrimitive(obj[k2]));
             }
           }).join(sep);
         }
@@ -1104,9 +1104,9 @@ var PixiTextureAllocator = (() => {
       function urlParse(url2, parseQueryString, slashesDenoteHost) {
         if (url2 && util.isObject(url2) && url2 instanceof Url)
           return url2;
-        var u = new Url();
-        u.parse(url2, parseQueryString, slashesDenoteHost);
-        return u;
+        var u2 = new Url();
+        u2.parse(url2, parseQueryString, slashesDenoteHost);
+        return u2;
       }
       Url.prototype.parse = function(url2, parseQueryString, slashesDenoteHost) {
         if (!util.isString(url2)) {
@@ -1153,8 +1153,8 @@ var PixiTextureAllocator = (() => {
         }
         if (!hostlessProtocol[proto] && (slashes || proto && !slashedProtocol[proto])) {
           var hostEnd = -1;
-          for (var i = 0; i < hostEndingChars.length; i++) {
-            var hec = rest.indexOf(hostEndingChars[i]);
+          for (var i2 = 0; i2 < hostEndingChars.length; i2++) {
+            var hec = rest.indexOf(hostEndingChars[i2]);
             if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
               hostEnd = hec;
           }
@@ -1170,8 +1170,8 @@ var PixiTextureAllocator = (() => {
             this.auth = decodeURIComponent(auth);
           }
           hostEnd = -1;
-          for (var i = 0; i < nonHostChars.length; i++) {
-            var hec = rest.indexOf(nonHostChars[i]);
+          for (var i2 = 0; i2 < nonHostChars.length; i2++) {
+            var hec = rest.indexOf(nonHostChars[i2]);
             if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
               hostEnd = hec;
           }
@@ -1184,22 +1184,22 @@ var PixiTextureAllocator = (() => {
           var ipv6Hostname = this.hostname[0] === "[" && this.hostname[this.hostname.length - 1] === "]";
           if (!ipv6Hostname) {
             var hostparts = this.hostname.split(/\./);
-            for (var i = 0, l = hostparts.length; i < l; i++) {
-              var part = hostparts[i];
+            for (var i2 = 0, l2 = hostparts.length; i2 < l2; i2++) {
+              var part = hostparts[i2];
               if (!part)
                 continue;
               if (!part.match(hostnamePartPattern)) {
                 var newpart = "";
-                for (var j = 0, k = part.length; j < k; j++) {
-                  if (part.charCodeAt(j) > 127) {
+                for (var j2 = 0, k2 = part.length; j2 < k2; j2++) {
+                  if (part.charCodeAt(j2) > 127) {
                     newpart += "x";
                   } else {
-                    newpart += part[j];
+                    newpart += part[j2];
                   }
                 }
                 if (!newpart.match(hostnamePartPattern)) {
-                  var validParts = hostparts.slice(0, i);
-                  var notHost = hostparts.slice(i + 1);
+                  var validParts = hostparts.slice(0, i2);
+                  var notHost = hostparts.slice(i2 + 1);
                   var bit = part.match(hostnamePartStart);
                   if (bit) {
                     validParts.push(bit[1]);
@@ -1222,9 +1222,9 @@ var PixiTextureAllocator = (() => {
           if (!ipv6Hostname) {
             this.hostname = punycode.toASCII(this.hostname);
           }
-          var p = this.port ? ":" + this.port : "";
-          var h = this.hostname || "";
-          this.host = h + p;
+          var p2 = this.port ? ":" + this.port : "";
+          var h2 = this.hostname || "";
+          this.host = h2 + p2;
           this.href += this.host;
           if (ipv6Hostname) {
             this.hostname = this.hostname.substr(1, this.hostname.length - 2);
@@ -1234,8 +1234,8 @@ var PixiTextureAllocator = (() => {
           }
         }
         if (!unsafeProtocol[lowerProto]) {
-          for (var i = 0, l = autoEscape.length; i < l; i++) {
-            var ae = autoEscape[i];
+          for (var i2 = 0, l2 = autoEscape.length; i2 < l2; i2++) {
+            var ae = autoEscape[i2];
             if (rest.indexOf(ae) === -1)
               continue;
             var esc = encodeURIComponent(ae);
@@ -1268,9 +1268,9 @@ var PixiTextureAllocator = (() => {
           this.pathname = "/";
         }
         if (this.pathname || this.search) {
-          var p = this.pathname || "";
-          var s = this.search || "";
-          this.path = p + s;
+          var p2 = this.pathname || "";
+          var s2 = this.search || "";
+          this.path = p2 + s2;
         }
         this.href = this.format();
         return this;
@@ -1365,9 +1365,9 @@ var PixiTextureAllocator = (() => {
         if (relative.protocol && relative.protocol !== result.protocol) {
           if (!slashedProtocol[relative.protocol]) {
             var keys = Object.keys(relative);
-            for (var v = 0; v < keys.length; v++) {
-              var k = keys[v];
-              result[k] = relative[k];
+            for (var v2 = 0; v2 < keys.length; v2++) {
+              var k2 = keys[v2];
+              result[k2] = relative[k2];
             }
             result.href = result.format();
             return result;
@@ -1396,9 +1396,9 @@ var PixiTextureAllocator = (() => {
           result.hostname = relative.hostname || relative.host;
           result.port = relative.port;
           if (result.pathname || result.search) {
-            var p = result.pathname || "";
-            var s = result.search || "";
-            result.path = p + s;
+            var p2 = result.pathname || "";
+            var s2 = result.search || "";
+            result.path = p2 + s2;
           }
           result.slashes = result.slashes || relative.slashes;
           result.href = result.format();
@@ -1471,15 +1471,15 @@ var PixiTextureAllocator = (() => {
         var last = srcPath.slice(-1)[0];
         var hasTrailingSlash = (result.host || relative.host || srcPath.length > 1) && (last === "." || last === "..") || last === "";
         var up = 0;
-        for (var i = srcPath.length; i >= 0; i--) {
-          last = srcPath[i];
+        for (var i2 = srcPath.length; i2 >= 0; i2--) {
+          last = srcPath[i2];
           if (last === ".") {
-            srcPath.splice(i, 1);
+            srcPath.splice(i2, 1);
           } else if (last === "..") {
-            srcPath.splice(i, 1);
+            srcPath.splice(i2, 1);
             up++;
           } else if (up) {
-            srcPath.splice(i, 1);
+            srcPath.splice(i2, 1);
             up--;
           }
         }
@@ -1593,6 +1593,12 @@ var PixiTextureAllocator = (() => {
     ENV2[ENV2["WEBGL2"] = 2] = "WEBGL2";
     return ENV2;
   })(ENV || {});
+  var RENDERER_TYPE = /* @__PURE__ */ ((RENDERER_TYPE2) => {
+    RENDERER_TYPE2[RENDERER_TYPE2["UNKNOWN"] = 0] = "UNKNOWN";
+    RENDERER_TYPE2[RENDERER_TYPE2["WEBGL"] = 1] = "WEBGL";
+    RENDERER_TYPE2[RENDERER_TYPE2["CANVAS"] = 2] = "CANVAS";
+    return RENDERER_TYPE2;
+  })(RENDERER_TYPE || {});
   var BUFFER_BITS = /* @__PURE__ */ ((BUFFER_BITS2) => {
     BUFFER_BITS2[BUFFER_BITS2["COLOR"] = 16384] = "COLOR";
     BUFFER_BITS2[BUFFER_BITS2["DEPTH"] = 256] = "DEPTH";
@@ -1790,25 +1796,11 @@ var PixiTextureAllocator = (() => {
   var settings = {
     ADAPTER: BrowserAdapter,
     RESOLUTION: 1,
-    RENDER_OPTIONS: {
-      view: null,
-      antialias: false,
-      autoDensity: false,
-      backgroundColor: 0,
-      backgroundAlpha: 1,
-      premultipliedAlpha: true,
-      clearBeforeRender: true,
-      preserveDrawingBuffer: false,
-      width: 800,
-      height: 600,
-      legacy: false,
-      hello: false
-    },
     CREATE_IMAGE_BITMAP: false,
     ROUND_PIXELS: false
   };
 
-  // node_modules/@pixi/settings/lib/external/ismobilejs/esm/isMobile.mjs
+  // node_modules/ismobilejs/esm/isMobile.js
   var appleIphone = /iPhone/i;
   var appleIpod = /iPod/i;
   var appleTablet = /iPad/i;
@@ -1905,7 +1897,8 @@ var PixiTextureAllocator = (() => {
   }
 
   // node_modules/@pixi/settings/lib/utils/isMobile.mjs
-  var isMobile2 = isMobile(globalThis.navigator);
+  var isMobileCall = isMobile.default ?? isMobile;
+  var isMobile2 = isMobileCall(globalThis.navigator);
 
   // node_modules/@pixi/utils/lib/settings.mjs
   settings.RETINA_PREFIX = /@([0-9\.]+)x/;
@@ -1973,7 +1966,7 @@ Deprecated since v${version}`);
           }
           gl = null;
           return success;
-        } catch (e) {
+        } catch (e2) {
           return false;
         }
       }();
@@ -1981,339 +1974,454 @@ Deprecated since v${version}`);
     return supported;
   }
 
-  // node_modules/@pixi/utils/lib/external/css-color-names/css-color-names.mjs
-  var aliceblue = "#f0f8ff";
-  var antiquewhite = "#faebd7";
-  var aqua = "#00ffff";
-  var aquamarine = "#7fffd4";
-  var azure = "#f0ffff";
-  var beige = "#f5f5dc";
-  var bisque = "#ffe4c4";
-  var black = "#000000";
-  var blanchedalmond = "#ffebcd";
-  var blue = "#0000ff";
-  var blueviolet = "#8a2be2";
-  var brown = "#a52a2a";
-  var burlywood = "#deb887";
-  var cadetblue = "#5f9ea0";
-  var chartreuse = "#7fff00";
-  var chocolate = "#d2691e";
-  var coral = "#ff7f50";
-  var cornflowerblue = "#6495ed";
-  var cornsilk = "#fff8dc";
-  var crimson = "#dc143c";
-  var cyan = "#00ffff";
-  var darkblue = "#00008b";
-  var darkcyan = "#008b8b";
-  var darkgoldenrod = "#b8860b";
-  var darkgray = "#a9a9a9";
-  var darkgreen = "#006400";
-  var darkgrey = "#a9a9a9";
-  var darkkhaki = "#bdb76b";
-  var darkmagenta = "#8b008b";
-  var darkolivegreen = "#556b2f";
-  var darkorange = "#ff8c00";
-  var darkorchid = "#9932cc";
-  var darkred = "#8b0000";
-  var darksalmon = "#e9967a";
-  var darkseagreen = "#8fbc8f";
-  var darkslateblue = "#483d8b";
-  var darkslategray = "#2f4f4f";
-  var darkslategrey = "#2f4f4f";
-  var darkturquoise = "#00ced1";
-  var darkviolet = "#9400d3";
-  var deeppink = "#ff1493";
-  var deepskyblue = "#00bfff";
-  var dimgray = "#696969";
-  var dimgrey = "#696969";
-  var dodgerblue = "#1e90ff";
-  var firebrick = "#b22222";
-  var floralwhite = "#fffaf0";
-  var forestgreen = "#228b22";
-  var fuchsia = "#ff00ff";
-  var gainsboro = "#dcdcdc";
-  var ghostwhite = "#f8f8ff";
-  var goldenrod = "#daa520";
-  var gold = "#ffd700";
-  var gray = "#808080";
-  var green = "#008000";
-  var greenyellow = "#adff2f";
-  var grey = "#808080";
-  var honeydew = "#f0fff0";
-  var hotpink = "#ff69b4";
-  var indianred = "#cd5c5c";
-  var indigo = "#4b0082";
-  var ivory = "#fffff0";
-  var khaki = "#f0e68c";
-  var lavenderblush = "#fff0f5";
-  var lavender = "#e6e6fa";
-  var lawngreen = "#7cfc00";
-  var lemonchiffon = "#fffacd";
-  var lightblue = "#add8e6";
-  var lightcoral = "#f08080";
-  var lightcyan = "#e0ffff";
-  var lightgoldenrodyellow = "#fafad2";
-  var lightgray = "#d3d3d3";
-  var lightgreen = "#90ee90";
-  var lightgrey = "#d3d3d3";
-  var lightpink = "#ffb6c1";
-  var lightsalmon = "#ffa07a";
-  var lightseagreen = "#20b2aa";
-  var lightskyblue = "#87cefa";
-  var lightslategray = "#778899";
-  var lightslategrey = "#778899";
-  var lightsteelblue = "#b0c4de";
-  var lightyellow = "#ffffe0";
-  var lime = "#00ff00";
-  var limegreen = "#32cd32";
-  var linen = "#faf0e6";
-  var magenta = "#ff00ff";
-  var maroon = "#800000";
-  var mediumaquamarine = "#66cdaa";
-  var mediumblue = "#0000cd";
-  var mediumorchid = "#ba55d3";
-  var mediumpurple = "#9370db";
-  var mediumseagreen = "#3cb371";
-  var mediumslateblue = "#7b68ee";
-  var mediumspringgreen = "#00fa9a";
-  var mediumturquoise = "#48d1cc";
-  var mediumvioletred = "#c71585";
-  var midnightblue = "#191970";
-  var mintcream = "#f5fffa";
-  var mistyrose = "#ffe4e1";
-  var moccasin = "#ffe4b5";
-  var navajowhite = "#ffdead";
-  var navy = "#000080";
-  var oldlace = "#fdf5e6";
-  var olive = "#808000";
-  var olivedrab = "#6b8e23";
-  var orange = "#ffa500";
-  var orangered = "#ff4500";
-  var orchid = "#da70d6";
-  var palegoldenrod = "#eee8aa";
-  var palegreen = "#98fb98";
-  var paleturquoise = "#afeeee";
-  var palevioletred = "#db7093";
-  var papayawhip = "#ffefd5";
-  var peachpuff = "#ffdab9";
-  var peru = "#cd853f";
-  var pink = "#ffc0cb";
-  var plum = "#dda0dd";
-  var powderblue = "#b0e0e6";
-  var purple = "#800080";
-  var rebeccapurple = "#663399";
-  var red = "#ff0000";
-  var rosybrown = "#bc8f8f";
-  var royalblue = "#4169e1";
-  var saddlebrown = "#8b4513";
-  var salmon = "#fa8072";
-  var sandybrown = "#f4a460";
-  var seagreen = "#2e8b57";
-  var seashell = "#fff5ee";
-  var sienna = "#a0522d";
-  var silver = "#c0c0c0";
-  var skyblue = "#87ceeb";
-  var slateblue = "#6a5acd";
-  var slategray = "#708090";
-  var slategrey = "#708090";
-  var snow = "#fffafa";
-  var springgreen = "#00ff7f";
-  var steelblue = "#4682b4";
-  var tan = "#d2b48c";
-  var teal = "#008080";
-  var thistle = "#d8bfd8";
-  var tomato = "#ff6347";
-  var turquoise = "#40e0d0";
-  var violet = "#ee82ee";
-  var wheat = "#f5deb3";
-  var white = "#ffffff";
-  var whitesmoke = "#f5f5f5";
-  var yellow = "#ffff00";
-  var yellowgreen = "#9acd32";
-  var cssColorNames = {
-    aliceblue,
-    antiquewhite,
-    aqua,
-    aquamarine,
-    azure,
-    beige,
-    bisque,
-    black,
-    blanchedalmond,
-    blue,
-    blueviolet,
-    brown,
-    burlywood,
-    cadetblue,
-    chartreuse,
-    chocolate,
-    coral,
-    cornflowerblue,
-    cornsilk,
-    crimson,
-    cyan,
-    darkblue,
-    darkcyan,
-    darkgoldenrod,
-    darkgray,
-    darkgreen,
-    darkgrey,
-    darkkhaki,
-    darkmagenta,
-    darkolivegreen,
-    darkorange,
-    darkorchid,
-    darkred,
-    darksalmon,
-    darkseagreen,
-    darkslateblue,
-    darkslategray,
-    darkslategrey,
-    darkturquoise,
-    darkviolet,
-    deeppink,
-    deepskyblue,
-    dimgray,
-    dimgrey,
-    dodgerblue,
-    firebrick,
-    floralwhite,
-    forestgreen,
-    fuchsia,
-    gainsboro,
-    ghostwhite,
-    goldenrod,
-    gold,
-    gray,
-    green,
-    greenyellow,
-    grey,
-    honeydew,
-    hotpink,
-    indianred,
-    indigo,
-    ivory,
-    khaki,
-    lavenderblush,
-    lavender,
-    lawngreen,
-    lemonchiffon,
-    lightblue,
-    lightcoral,
-    lightcyan,
-    lightgoldenrodyellow,
-    lightgray,
-    lightgreen,
-    lightgrey,
-    lightpink,
-    lightsalmon,
-    lightseagreen,
-    lightskyblue,
-    lightslategray,
-    lightslategrey,
-    lightsteelblue,
-    lightyellow,
-    lime,
-    limegreen,
-    linen,
-    magenta,
-    maroon,
-    mediumaquamarine,
-    mediumblue,
-    mediumorchid,
-    mediumpurple,
-    mediumseagreen,
-    mediumslateblue,
-    mediumspringgreen,
-    mediumturquoise,
-    mediumvioletred,
-    midnightblue,
-    mintcream,
-    mistyrose,
-    moccasin,
-    navajowhite,
-    navy,
-    oldlace,
-    olive,
-    olivedrab,
-    orange,
-    orangered,
-    orchid,
-    palegoldenrod,
-    palegreen,
-    paleturquoise,
-    palevioletred,
-    papayawhip,
-    peachpuff,
-    peru,
-    pink,
-    plum,
-    powderblue,
-    purple,
-    rebeccapurple,
-    red,
-    rosybrown,
-    royalblue,
-    saddlebrown,
-    salmon,
-    sandybrown,
-    seagreen,
-    seashell,
-    sienna,
-    silver,
-    skyblue,
-    slateblue,
-    slategray,
-    slategrey,
-    snow,
-    springgreen,
-    steelblue,
-    tan,
-    teal,
-    thistle,
-    tomato,
-    turquoise,
-    violet,
-    wheat,
-    white,
-    whitesmoke,
-    yellow,
-    yellowgreen
+  // node_modules/colord/index.mjs
+  var r = { grad: 0.9, turn: 360, rad: 360 / (2 * Math.PI) };
+  var t = function(r2) {
+    return "string" == typeof r2 ? r2.length > 0 : "number" == typeof r2;
+  };
+  var n = function(r2, t2, n2) {
+    return void 0 === t2 && (t2 = 0), void 0 === n2 && (n2 = Math.pow(10, t2)), Math.round(n2 * r2) / n2 + 0;
+  };
+  var e = function(r2, t2, n2) {
+    return void 0 === t2 && (t2 = 0), void 0 === n2 && (n2 = 1), r2 > n2 ? n2 : r2 > t2 ? r2 : t2;
+  };
+  var u = function(r2) {
+    return (r2 = isFinite(r2) ? r2 % 360 : 0) > 0 ? r2 : r2 + 360;
+  };
+  var a = function(r2) {
+    return { r: e(r2.r, 0, 255), g: e(r2.g, 0, 255), b: e(r2.b, 0, 255), a: e(r2.a) };
+  };
+  var o = function(r2) {
+    return { r: n(r2.r), g: n(r2.g), b: n(r2.b), a: n(r2.a, 3) };
+  };
+  var i = /^#([0-9a-f]{3,8})$/i;
+  var s = function(r2) {
+    var t2 = r2.toString(16);
+    return t2.length < 2 ? "0" + t2 : t2;
+  };
+  var h = function(r2) {
+    var t2 = r2.r, n2 = r2.g, e2 = r2.b, u2 = r2.a, a2 = Math.max(t2, n2, e2), o2 = a2 - Math.min(t2, n2, e2), i2 = o2 ? a2 === t2 ? (n2 - e2) / o2 : a2 === n2 ? 2 + (e2 - t2) / o2 : 4 + (t2 - n2) / o2 : 0;
+    return { h: 60 * (i2 < 0 ? i2 + 6 : i2), s: a2 ? o2 / a2 * 100 : 0, v: a2 / 255 * 100, a: u2 };
+  };
+  var b = function(r2) {
+    var t2 = r2.h, n2 = r2.s, e2 = r2.v, u2 = r2.a;
+    t2 = t2 / 360 * 6, n2 /= 100, e2 /= 100;
+    var a2 = Math.floor(t2), o2 = e2 * (1 - n2), i2 = e2 * (1 - (t2 - a2) * n2), s2 = e2 * (1 - (1 - t2 + a2) * n2), h2 = a2 % 6;
+    return { r: 255 * [e2, i2, o2, o2, s2, e2][h2], g: 255 * [s2, e2, e2, i2, o2, o2][h2], b: 255 * [o2, o2, s2, e2, e2, i2][h2], a: u2 };
+  };
+  var g = function(r2) {
+    return { h: u(r2.h), s: e(r2.s, 0, 100), l: e(r2.l, 0, 100), a: e(r2.a) };
+  };
+  var d = function(r2) {
+    return { h: n(r2.h), s: n(r2.s), l: n(r2.l), a: n(r2.a, 3) };
+  };
+  var f = function(r2) {
+    return b((n2 = (t2 = r2).s, { h: t2.h, s: (n2 *= ((e2 = t2.l) < 50 ? e2 : 100 - e2) / 100) > 0 ? 2 * n2 / (e2 + n2) * 100 : 0, v: e2 + n2, a: t2.a }));
+    var t2, n2, e2;
+  };
+  var c = function(r2) {
+    return { h: (t2 = h(r2)).h, s: (u2 = (200 - (n2 = t2.s)) * (e2 = t2.v) / 100) > 0 && u2 < 200 ? n2 * e2 / 100 / (u2 <= 100 ? u2 : 200 - u2) * 100 : 0, l: u2 / 2, a: t2.a };
+    var t2, n2, e2, u2;
+  };
+  var l = /^hsla?\(\s*([+-]?\d*\.?\d+)(deg|rad|grad|turn)?\s*,\s*([+-]?\d*\.?\d+)%\s*,\s*([+-]?\d*\.?\d+)%\s*(?:,\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
+  var p = /^hsla?\(\s*([+-]?\d*\.?\d+)(deg|rad|grad|turn)?\s+([+-]?\d*\.?\d+)%\s+([+-]?\d*\.?\d+)%\s*(?:\/\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
+  var v = /^rgba?\(\s*([+-]?\d*\.?\d+)(%)?\s*,\s*([+-]?\d*\.?\d+)(%)?\s*,\s*([+-]?\d*\.?\d+)(%)?\s*(?:,\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
+  var m = /^rgba?\(\s*([+-]?\d*\.?\d+)(%)?\s+([+-]?\d*\.?\d+)(%)?\s+([+-]?\d*\.?\d+)(%)?\s*(?:\/\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
+  var y = { string: [[function(r2) {
+    var t2 = i.exec(r2);
+    return t2 ? (r2 = t2[1]).length <= 4 ? { r: parseInt(r2[0] + r2[0], 16), g: parseInt(r2[1] + r2[1], 16), b: parseInt(r2[2] + r2[2], 16), a: 4 === r2.length ? n(parseInt(r2[3] + r2[3], 16) / 255, 2) : 1 } : 6 === r2.length || 8 === r2.length ? { r: parseInt(r2.substr(0, 2), 16), g: parseInt(r2.substr(2, 2), 16), b: parseInt(r2.substr(4, 2), 16), a: 8 === r2.length ? n(parseInt(r2.substr(6, 2), 16) / 255, 2) : 1 } : null : null;
+  }, "hex"], [function(r2) {
+    var t2 = v.exec(r2) || m.exec(r2);
+    return t2 ? t2[2] !== t2[4] || t2[4] !== t2[6] ? null : a({ r: Number(t2[1]) / (t2[2] ? 100 / 255 : 1), g: Number(t2[3]) / (t2[4] ? 100 / 255 : 1), b: Number(t2[5]) / (t2[6] ? 100 / 255 : 1), a: void 0 === t2[7] ? 1 : Number(t2[7]) / (t2[8] ? 100 : 1) }) : null;
+  }, "rgb"], [function(t2) {
+    var n2 = l.exec(t2) || p.exec(t2);
+    if (!n2)
+      return null;
+    var e2, u2, a2 = g({ h: (e2 = n2[1], u2 = n2[2], void 0 === u2 && (u2 = "deg"), Number(e2) * (r[u2] || 1)), s: Number(n2[3]), l: Number(n2[4]), a: void 0 === n2[5] ? 1 : Number(n2[5]) / (n2[6] ? 100 : 1) });
+    return f(a2);
+  }, "hsl"]], object: [[function(r2) {
+    var n2 = r2.r, e2 = r2.g, u2 = r2.b, o2 = r2.a, i2 = void 0 === o2 ? 1 : o2;
+    return t(n2) && t(e2) && t(u2) ? a({ r: Number(n2), g: Number(e2), b: Number(u2), a: Number(i2) }) : null;
+  }, "rgb"], [function(r2) {
+    var n2 = r2.h, e2 = r2.s, u2 = r2.l, a2 = r2.a, o2 = void 0 === a2 ? 1 : a2;
+    if (!t(n2) || !t(e2) || !t(u2))
+      return null;
+    var i2 = g({ h: Number(n2), s: Number(e2), l: Number(u2), a: Number(o2) });
+    return f(i2);
+  }, "hsl"], [function(r2) {
+    var n2 = r2.h, a2 = r2.s, o2 = r2.v, i2 = r2.a, s2 = void 0 === i2 ? 1 : i2;
+    if (!t(n2) || !t(a2) || !t(o2))
+      return null;
+    var h2 = function(r3) {
+      return { h: u(r3.h), s: e(r3.s, 0, 100), v: e(r3.v, 0, 100), a: e(r3.a) };
+    }({ h: Number(n2), s: Number(a2), v: Number(o2), a: Number(s2) });
+    return b(h2);
+  }, "hsv"]] };
+  var N = function(r2, t2) {
+    for (var n2 = 0; n2 < t2.length; n2++) {
+      var e2 = t2[n2][0](r2);
+      if (e2)
+        return [e2, t2[n2][1]];
+    }
+    return [null, void 0];
+  };
+  var x = function(r2) {
+    return "string" == typeof r2 ? N(r2.trim(), y.string) : "object" == typeof r2 && null !== r2 ? N(r2, y.object) : [null, void 0];
+  };
+  var M = function(r2, t2) {
+    var n2 = c(r2);
+    return { h: n2.h, s: e(n2.s + 100 * t2, 0, 100), l: n2.l, a: n2.a };
+  };
+  var H = function(r2) {
+    return (299 * r2.r + 587 * r2.g + 114 * r2.b) / 1e3 / 255;
+  };
+  var $ = function(r2, t2) {
+    var n2 = c(r2);
+    return { h: n2.h, s: n2.s, l: e(n2.l + 100 * t2, 0, 100), a: n2.a };
+  };
+  var j = function() {
+    function r2(r3) {
+      this.parsed = x(r3)[0], this.rgba = this.parsed || { r: 0, g: 0, b: 0, a: 1 };
+    }
+    return r2.prototype.isValid = function() {
+      return null !== this.parsed;
+    }, r2.prototype.brightness = function() {
+      return n(H(this.rgba), 2);
+    }, r2.prototype.isDark = function() {
+      return H(this.rgba) < 0.5;
+    }, r2.prototype.isLight = function() {
+      return H(this.rgba) >= 0.5;
+    }, r2.prototype.toHex = function() {
+      return r3 = o(this.rgba), t2 = r3.r, e2 = r3.g, u2 = r3.b, i2 = (a2 = r3.a) < 1 ? s(n(255 * a2)) : "", "#" + s(t2) + s(e2) + s(u2) + i2;
+      var r3, t2, e2, u2, a2, i2;
+    }, r2.prototype.toRgb = function() {
+      return o(this.rgba);
+    }, r2.prototype.toRgbString = function() {
+      return r3 = o(this.rgba), t2 = r3.r, n2 = r3.g, e2 = r3.b, (u2 = r3.a) < 1 ? "rgba(" + t2 + ", " + n2 + ", " + e2 + ", " + u2 + ")" : "rgb(" + t2 + ", " + n2 + ", " + e2 + ")";
+      var r3, t2, n2, e2, u2;
+    }, r2.prototype.toHsl = function() {
+      return d(c(this.rgba));
+    }, r2.prototype.toHslString = function() {
+      return r3 = d(c(this.rgba)), t2 = r3.h, n2 = r3.s, e2 = r3.l, (u2 = r3.a) < 1 ? "hsla(" + t2 + ", " + n2 + "%, " + e2 + "%, " + u2 + ")" : "hsl(" + t2 + ", " + n2 + "%, " + e2 + "%)";
+      var r3, t2, n2, e2, u2;
+    }, r2.prototype.toHsv = function() {
+      return r3 = h(this.rgba), { h: n(r3.h), s: n(r3.s), v: n(r3.v), a: n(r3.a, 3) };
+      var r3;
+    }, r2.prototype.invert = function() {
+      return w({ r: 255 - (r3 = this.rgba).r, g: 255 - r3.g, b: 255 - r3.b, a: r3.a });
+      var r3;
+    }, r2.prototype.saturate = function(r3) {
+      return void 0 === r3 && (r3 = 0.1), w(M(this.rgba, r3));
+    }, r2.prototype.desaturate = function(r3) {
+      return void 0 === r3 && (r3 = 0.1), w(M(this.rgba, -r3));
+    }, r2.prototype.grayscale = function() {
+      return w(M(this.rgba, -1));
+    }, r2.prototype.lighten = function(r3) {
+      return void 0 === r3 && (r3 = 0.1), w($(this.rgba, r3));
+    }, r2.prototype.darken = function(r3) {
+      return void 0 === r3 && (r3 = 0.1), w($(this.rgba, -r3));
+    }, r2.prototype.rotate = function(r3) {
+      return void 0 === r3 && (r3 = 15), this.hue(this.hue() + r3);
+    }, r2.prototype.alpha = function(r3) {
+      return "number" == typeof r3 ? w({ r: (t2 = this.rgba).r, g: t2.g, b: t2.b, a: r3 }) : n(this.rgba.a, 3);
+      var t2;
+    }, r2.prototype.hue = function(r3) {
+      var t2 = c(this.rgba);
+      return "number" == typeof r3 ? w({ h: r3, s: t2.s, l: t2.l, a: t2.a }) : n(t2.h);
+    }, r2.prototype.isEqual = function(r3) {
+      return this.toHex() === w(r3).toHex();
+    }, r2;
+  }();
+  var w = function(r2) {
+    return r2 instanceof j ? r2 : new j(r2);
+  };
+  var S = [];
+  var k = function(r2) {
+    r2.forEach(function(r3) {
+      S.indexOf(r3) < 0 && (r3(j, y), S.push(r3));
+    });
   };
 
-  // node_modules/@pixi/utils/lib/color/hex.mjs
-  function hex2rgb(hex, out = []) {
-    out[0] = (hex >> 16 & 255) / 255;
-    out[1] = (hex >> 8 & 255) / 255;
-    out[2] = (hex & 255) / 255;
-    return out;
-  }
-  function hex2string(hex) {
-    let hexString = hex.toString(16);
-    hexString = "000000".substring(0, 6 - hexString.length) + hexString;
-    return `#${hexString}`;
-  }
-  function string2hex(string) {
-    if (typeof string === "string") {
-      string = cssColorNames[string.toLowerCase()] || string;
-      if (string[0] === "#") {
-        string = string.slice(1);
+  // node_modules/colord/plugins/names.mjs
+  function names_default(e2, f2) {
+    var a2 = { white: "#ffffff", bisque: "#ffe4c4", blue: "#0000ff", cadetblue: "#5f9ea0", chartreuse: "#7fff00", chocolate: "#d2691e", coral: "#ff7f50", antiquewhite: "#faebd7", aqua: "#00ffff", azure: "#f0ffff", whitesmoke: "#f5f5f5", papayawhip: "#ffefd5", plum: "#dda0dd", blanchedalmond: "#ffebcd", black: "#000000", gold: "#ffd700", goldenrod: "#daa520", gainsboro: "#dcdcdc", cornsilk: "#fff8dc", cornflowerblue: "#6495ed", burlywood: "#deb887", aquamarine: "#7fffd4", beige: "#f5f5dc", crimson: "#dc143c", cyan: "#00ffff", darkblue: "#00008b", darkcyan: "#008b8b", darkgoldenrod: "#b8860b", darkkhaki: "#bdb76b", darkgray: "#a9a9a9", darkgreen: "#006400", darkgrey: "#a9a9a9", peachpuff: "#ffdab9", darkmagenta: "#8b008b", darkred: "#8b0000", darkorchid: "#9932cc", darkorange: "#ff8c00", darkslateblue: "#483d8b", gray: "#808080", darkslategray: "#2f4f4f", darkslategrey: "#2f4f4f", deeppink: "#ff1493", deepskyblue: "#00bfff", wheat: "#f5deb3", firebrick: "#b22222", floralwhite: "#fffaf0", ghostwhite: "#f8f8ff", darkviolet: "#9400d3", magenta: "#ff00ff", green: "#008000", dodgerblue: "#1e90ff", grey: "#808080", honeydew: "#f0fff0", hotpink: "#ff69b4", blueviolet: "#8a2be2", forestgreen: "#228b22", lawngreen: "#7cfc00", indianred: "#cd5c5c", indigo: "#4b0082", fuchsia: "#ff00ff", brown: "#a52a2a", maroon: "#800000", mediumblue: "#0000cd", lightcoral: "#f08080", darkturquoise: "#00ced1", lightcyan: "#e0ffff", ivory: "#fffff0", lightyellow: "#ffffe0", lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", linen: "#faf0e6", mediumaquamarine: "#66cdaa", lemonchiffon: "#fffacd", lime: "#00ff00", khaki: "#f0e68c", mediumseagreen: "#3cb371", limegreen: "#32cd32", mediumspringgreen: "#00fa9a", lightskyblue: "#87cefa", lightblue: "#add8e6", midnightblue: "#191970", lightpink: "#ffb6c1", mistyrose: "#ffe4e1", moccasin: "#ffe4b5", mintcream: "#f5fffa", lightslategray: "#778899", lightslategrey: "#778899", navajowhite: "#ffdead", navy: "#000080", mediumvioletred: "#c71585", powderblue: "#b0e0e6", palegoldenrod: "#eee8aa", oldlace: "#fdf5e6", paleturquoise: "#afeeee", mediumturquoise: "#48d1cc", mediumorchid: "#ba55d3", rebeccapurple: "#663399", lightsteelblue: "#b0c4de", mediumslateblue: "#7b68ee", thistle: "#d8bfd8", tan: "#d2b48c", orchid: "#da70d6", mediumpurple: "#9370db", purple: "#800080", pink: "#ffc0cb", skyblue: "#87ceeb", springgreen: "#00ff7f", palegreen: "#98fb98", red: "#ff0000", yellow: "#ffff00", slateblue: "#6a5acd", lavenderblush: "#fff0f5", peru: "#cd853f", palevioletred: "#db7093", violet: "#ee82ee", teal: "#008080", slategray: "#708090", slategrey: "#708090", aliceblue: "#f0f8ff", darkseagreen: "#8fbc8f", darkolivegreen: "#556b2f", greenyellow: "#adff2f", seagreen: "#2e8b57", seashell: "#fff5ee", tomato: "#ff6347", silver: "#c0c0c0", sienna: "#a0522d", lavender: "#e6e6fa", lightgreen: "#90ee90", orange: "#ffa500", orangered: "#ff4500", steelblue: "#4682b4", royalblue: "#4169e1", turquoise: "#40e0d0", yellowgreen: "#9acd32", salmon: "#fa8072", saddlebrown: "#8b4513", sandybrown: "#f4a460", rosybrown: "#bc8f8f", darksalmon: "#e9967a", lightgoldenrodyellow: "#fafad2", snow: "#fffafa", lightgrey: "#d3d3d3", lightgray: "#d3d3d3", dimgray: "#696969", dimgrey: "#696969", olivedrab: "#6b8e23", olive: "#808000" }, r2 = {};
+    for (var d2 in a2)
+      r2[a2[d2]] = d2;
+    var l2 = {};
+    e2.prototype.toName = function(f3) {
+      if (!(this.rgba.a || this.rgba.r || this.rgba.g || this.rgba.b))
+        return "transparent";
+      var d3, i2, n2 = r2[this.toHex()];
+      if (n2)
+        return n2;
+      if (null == f3 ? void 0 : f3.closest) {
+        var o2 = this.toRgb(), t2 = 1 / 0, b2 = "black";
+        if (!l2.length)
+          for (var c2 in a2)
+            l2[c2] = new e2(a2[c2]).toRgb();
+        for (var g2 in a2) {
+          var u2 = (d3 = o2, i2 = l2[g2], Math.pow(d3.r - i2.r, 2) + Math.pow(d3.g - i2.g, 2) + Math.pow(d3.b - i2.b, 2));
+          u2 < t2 && (t2 = u2, b2 = g2);
+        }
+        return b2;
       }
-      if (string.length === 3) {
-        const [r, g, b] = string;
-        string = r + r + g + g + b + b;
+    };
+    f2.string.push([function(f3) {
+      var r3 = f3.toLowerCase(), d3 = "transparent" === r3 ? "#0000" : a2[r3];
+      return d3 ? new e2(d3).toRgb() : null;
+    }, "name"]);
+  }
+
+  // node_modules/@pixi/color/lib/Color.mjs
+  k([names_default]);
+  var _Color = class {
+    constructor(value = 16777215) {
+      this._value = null;
+      this._components = new Float32Array(4);
+      this._components.fill(1);
+      this._int = 16777215;
+      this.value = value;
+    }
+    get red() {
+      return this._components[0];
+    }
+    get green() {
+      return this._components[1];
+    }
+    get blue() {
+      return this._components[2];
+    }
+    get alpha() {
+      return this._components[3];
+    }
+    setValue(value) {
+      this.value = value;
+      return this;
+    }
+    set value(value) {
+      if (value instanceof _Color) {
+        this._value = this.cloneSource(value._value);
+        this._int = value._int;
+        this._components.set(value._components);
+      } else if (value === null) {
+        throw new Error("Cannot set PIXI.Color#value to null");
+      } else if (this._value === null || !this.isSourceEqual(this._value, value)) {
+        this.normalize(value);
+        this._value = this.cloneSource(value);
       }
     }
-    return parseInt(string, 16);
-  }
+    get value() {
+      return this._value;
+    }
+    cloneSource(value) {
+      if (typeof value === "string" || typeof value === "number" || value instanceof Number || value === null) {
+        return value;
+      } else if (Array.isArray(value) || ArrayBuffer.isView(value)) {
+        return value.slice(0);
+      } else if (typeof value === "object" && value !== null) {
+        return { ...value };
+      }
+      return value;
+    }
+    isSourceEqual(value1, value2) {
+      const type1 = typeof value1;
+      const type2 = typeof value2;
+      if (type1 !== type2) {
+        return false;
+      } else if (type1 === "number" || type1 === "string" || value1 instanceof Number) {
+        return value1 === value2;
+      } else if (Array.isArray(value1) && Array.isArray(value2) || ArrayBuffer.isView(value1) && ArrayBuffer.isView(value2)) {
+        if (value1.length !== value2.length) {
+          return false;
+        }
+        return value1.every((v2, i2) => v2 === value2[i2]);
+      } else if (value1 !== null && value2 !== null) {
+        const keys1 = Object.keys(value1);
+        const keys2 = Object.keys(value2);
+        if (keys1.length !== keys2.length) {
+          return false;
+        }
+        return keys1.every((key) => value1[key] === value2[key]);
+      }
+      return value1 === value2;
+    }
+    toRgba() {
+      const [r2, g2, b2, a2] = this._components;
+      return { r: r2, g: g2, b: b2, a: a2 };
+    }
+    toRgb() {
+      const [r2, g2, b2] = this._components;
+      return { r: r2, g: g2, b: b2 };
+    }
+    toRgbaString() {
+      const [r2, g2, b2] = this.toUint8RgbArray();
+      return `rgba(${r2},${g2},${b2},${this.alpha})`;
+    }
+    toUint8RgbArray(out) {
+      const [r2, g2, b2] = this._components;
+      out = out ?? [];
+      out[0] = Math.round(r2 * 255);
+      out[1] = Math.round(g2 * 255);
+      out[2] = Math.round(b2 * 255);
+      return out;
+    }
+    toRgbArray(out) {
+      out = out ?? [];
+      const [r2, g2, b2] = this._components;
+      out[0] = r2;
+      out[1] = g2;
+      out[2] = b2;
+      return out;
+    }
+    toNumber() {
+      return this._int;
+    }
+    toLittleEndianNumber() {
+      const value = this._int;
+      return (value >> 16) + (value & 65280) + ((value & 255) << 16);
+    }
+    multiply(value) {
+      const [r2, g2, b2, a2] = _Color.temp.setValue(value)._components;
+      this._components[0] *= r2;
+      this._components[1] *= g2;
+      this._components[2] *= b2;
+      this._components[3] *= a2;
+      this.refreshInt();
+      this._value = null;
+      return this;
+    }
+    premultiply(alpha, applyToRGB = true) {
+      if (applyToRGB) {
+        this._components[0] *= alpha;
+        this._components[1] *= alpha;
+        this._components[2] *= alpha;
+      }
+      this._components[3] = alpha;
+      this.refreshInt();
+      this._value = null;
+      return this;
+    }
+    toPremultiplied(alpha, applyToRGB = true) {
+      if (alpha === 1) {
+        return (255 << 24) + this._int;
+      }
+      if (alpha === 0) {
+        return applyToRGB ? 0 : this._int;
+      }
+      let r2 = this._int >> 16 & 255;
+      let g2 = this._int >> 8 & 255;
+      let b2 = this._int & 255;
+      if (applyToRGB) {
+        r2 = r2 * alpha + 0.5 | 0;
+        g2 = g2 * alpha + 0.5 | 0;
+        b2 = b2 * alpha + 0.5 | 0;
+      }
+      return (alpha * 255 << 24) + (r2 << 16) + (g2 << 8) + b2;
+    }
+    toHex() {
+      const hexString = this._int.toString(16);
+      return `#${"000000".substring(0, 6 - hexString.length) + hexString}`;
+    }
+    toHexa() {
+      const alphaValue = Math.round(this._components[3] * 255);
+      const alphaString = alphaValue.toString(16);
+      return this.toHex() + "00".substring(0, 2 - alphaString.length) + alphaString;
+    }
+    setAlpha(alpha) {
+      this._components[3] = this._clamp(alpha);
+      return this;
+    }
+    round(steps) {
+      const [r2, g2, b2] = this._components;
+      this._components[0] = Math.round(r2 * steps) / steps;
+      this._components[1] = Math.round(g2 * steps) / steps;
+      this._components[2] = Math.round(b2 * steps) / steps;
+      this.refreshInt();
+      this._value = null;
+      return this;
+    }
+    toArray(out) {
+      out = out ?? [];
+      const [r2, g2, b2, a2] = this._components;
+      out[0] = r2;
+      out[1] = g2;
+      out[2] = b2;
+      out[3] = a2;
+      return out;
+    }
+    normalize(value) {
+      let r2;
+      let g2;
+      let b2;
+      let a2;
+      if ((typeof value === "number" || value instanceof Number) && value >= 0 && value <= 16777215) {
+        const int = value;
+        r2 = (int >> 16 & 255) / 255;
+        g2 = (int >> 8 & 255) / 255;
+        b2 = (int & 255) / 255;
+        a2 = 1;
+      } else if ((Array.isArray(value) || value instanceof Float32Array) && value.length >= 3 && value.length <= 4) {
+        value = this._clamp(value);
+        [r2, g2, b2, a2 = 1] = value;
+      } else if ((value instanceof Uint8Array || value instanceof Uint8ClampedArray) && value.length >= 3 && value.length <= 4) {
+        value = this._clamp(value, 0, 255);
+        [r2, g2, b2, a2 = 255] = value;
+        r2 /= 255;
+        g2 /= 255;
+        b2 /= 255;
+        a2 /= 255;
+      } else if (typeof value === "string" || typeof value === "object") {
+        if (typeof value === "string") {
+          const match = _Color.HEX_PATTERN.exec(value);
+          if (match) {
+            value = `#${match[2]}`;
+          }
+        }
+        const color = w(value);
+        if (color.isValid()) {
+          ({ r: r2, g: g2, b: b2, a: a2 } = color.rgba);
+          r2 /= 255;
+          g2 /= 255;
+          b2 /= 255;
+        }
+      }
+      if (r2 !== void 0) {
+        this._components[0] = r2;
+        this._components[1] = g2;
+        this._components[2] = b2;
+        this._components[3] = a2;
+        this.refreshInt();
+      } else {
+        throw new Error(`Unable to convert color ${value}`);
+      }
+    }
+    refreshInt() {
+      this._clamp(this._components);
+      const [r2, g2, b2] = this._components;
+      this._int = (r2 * 255 << 16) + (g2 * 255 << 8) + (b2 * 255 | 0);
+    }
+    _clamp(value, min = 0, max = 1) {
+      if (typeof value === "number") {
+        return Math.min(Math.max(value, min), max);
+      }
+      value.forEach((v2, i2) => {
+        value[i2] = Math.min(Math.max(v2, min), max);
+      });
+      return value;
+    }
+  };
+  var Color = _Color;
+  Color.shared = new _Color();
+  Color.temp = new _Color();
+  Color.HEX_PATTERN = /^(#|0x)?(([a-f0-9]{3}){1,2}([a-f0-9]{2})?)$/i;
 
   // node_modules/@pixi/utils/lib/color/premultiply.mjs
   function mapPremultipliedBlendModes() {
     const pm = [];
     const npm = [];
-    for (let i = 0; i < 32; i++) {
-      pm[i] = i;
-      npm[i] = i;
+    for (let i2 = 0; i2 < 32; i2++) {
+      pm[i2] = i2;
+      npm[i2] = i2;
     }
     pm[BLEND_MODES.NORMAL_NPM] = BLEND_MODES.NORMAL;
     pm[BLEND_MODES.ADD_NPM] = BLEND_MODES.ADD;
@@ -2327,21 +2435,6 @@ Deprecated since v${version}`);
     return array;
   }
   var premultiplyBlendMode = mapPremultipliedBlendModes();
-  function premultiplyTint(tint, alpha) {
-    if (alpha === 1) {
-      return (alpha * 255 << 24) + tint;
-    }
-    if (alpha === 0) {
-      return 0;
-    }
-    let R = tint >> 16 & 255;
-    let G = tint >> 8 & 255;
-    let B = tint & 255;
-    R = R * alpha + 0.5 | 0;
-    G = G * alpha + 0.5 | 0;
-    B = B * alpha + 0.5 | 0;
-    return (alpha * 255 << 24) + (R << 16) + (G << 8) + B;
-  }
 
   // node_modules/@pixi/utils/lib/data/getBufferType.mjs
   function getBufferType(array) {
@@ -2365,45 +2458,45 @@ Deprecated since v${version}`);
   }
 
   // node_modules/@pixi/utils/lib/data/pow2.mjs
-  function nextPow2(v) {
-    v += v === 0 ? 1 : 0;
-    --v;
-    v |= v >>> 1;
-    v |= v >>> 2;
-    v |= v >>> 4;
-    v |= v >>> 8;
-    v |= v >>> 16;
-    return v + 1;
+  function nextPow2(v2) {
+    v2 += v2 === 0 ? 1 : 0;
+    --v2;
+    v2 |= v2 >>> 1;
+    v2 |= v2 >>> 2;
+    v2 |= v2 >>> 4;
+    v2 |= v2 >>> 8;
+    v2 |= v2 >>> 16;
+    return v2 + 1;
   }
-  function isPow2(v) {
-    return !(v & v - 1) && !!v;
+  function isPow2(v2) {
+    return !(v2 & v2 - 1) && !!v2;
   }
-  function log2(v) {
-    let r = (v > 65535 ? 1 : 0) << 4;
-    v >>>= r;
-    let shift = (v > 255 ? 1 : 0) << 3;
-    v >>>= shift;
-    r |= shift;
-    shift = (v > 15 ? 1 : 0) << 2;
-    v >>>= shift;
-    r |= shift;
-    shift = (v > 3 ? 1 : 0) << 1;
-    v >>>= shift;
-    r |= shift;
-    return r | v >> 1;
+  function log2(v2) {
+    let r2 = (v2 > 65535 ? 1 : 0) << 4;
+    v2 >>>= r2;
+    let shift = (v2 > 255 ? 1 : 0) << 3;
+    v2 >>>= shift;
+    r2 |= shift;
+    shift = (v2 > 15 ? 1 : 0) << 2;
+    v2 >>>= shift;
+    r2 |= shift;
+    shift = (v2 > 3 ? 1 : 0) << 1;
+    v2 >>>= shift;
+    r2 |= shift;
+    return r2 | v2 >> 1;
   }
 
   // node_modules/@pixi/utils/lib/data/removeItems.mjs
   function removeItems(arr, startIdx, removeCount) {
     const length = arr.length;
-    let i;
+    let i2;
     if (startIdx >= length || removeCount === 0) {
       return;
     }
     removeCount = startIdx + removeCount > length ? length - startIdx : removeCount;
     const len = length - removeCount;
-    for (i = startIdx; i < len; ++i) {
-      arr[i] = arr[i + removeCount];
+    for (i2 = startIdx; i2 < len; ++i2) {
+      arr[i2] = arr[i2 + removeCount];
     }
     arr.length = len;
   }
@@ -2555,7 +2648,7 @@ Deprecated since v${version}`);
           return;
         }
         list.push(extension.ref);
-        list.sort((a, b) => normalizePriority(b, defaultPriority) - normalizePriority(a, defaultPriority));
+        list.sort((a2, b2) => normalizePriority(b2, defaultPriority) - normalizePriority(a2, defaultPriority));
       }, (extension) => {
         const index = list.indexOf(extension.ref);
         if (index !== -1) {
@@ -2650,12 +2743,12 @@ Deprecated since v${version}`);
   ].join("\n");
   function generateIfTestSrc(maxIfs) {
     let src = "";
-    for (let i = 0; i < maxIfs; ++i) {
-      if (i > 0) {
+    for (let i2 = 0; i2 < maxIfs; ++i2) {
+      if (i2 > 0) {
         src += "\nelse ";
       }
-      if (i < maxIfs - 1) {
-        src += `if(test == ${i}.0){}`;
+      if (i2 < maxIfs - 1) {
+        src += `if(test == ${i2}.0){}`;
       }
     }
     return src;
@@ -2779,8 +2872,8 @@ Deprecated since v${version}`);
         extension = result[1].toLowerCase();
       }
     }
-    for (let i = INSTALLED.length - 1; i >= 0; --i) {
-      const ResourcePlugin = INSTALLED[i];
+    for (let i2 = INSTALLED.length - 1; i2 >= 0; --i2) {
+      const ResourcePlugin = INSTALLED[i2];
       if (ResourcePlugin.test && ResourcePlugin.test(source, extension)) {
         return new ResourcePlugin(source, options);
       }
@@ -2801,8 +2894,8 @@ Deprecated since v${version}`);
       }
       const { name, items } = this;
       this._aliasCount++;
-      for (let i = 0, len = items.length; i < len; i++) {
-        items[i][name](a0, a1, a2, a3, a4, a5, a6, a7);
+      for (let i2 = 0, len = items.length; i2 < len; i2++) {
+        items[i2][name](a0, a1, a2, a3, a4, a5, a6, a7);
       }
       if (items === this.items) {
         this._aliasCount--;
@@ -3169,7 +3262,7 @@ Deprecated since v${version}`);
       buffer = buffer || new Float32Array(width * height * 4);
       const resource = new BufferResource(buffer, { width, height });
       const type = buffer instanceof Float32Array ? TYPES.FLOAT : TYPES.UNSIGNED_BYTE;
-      return new _BaseTexture(resource, Object.assign({}, defaultBufferOptions, options || { width, height, type }));
+      return new _BaseTexture(resource, Object.assign({}, defaultBufferOptions, { type }, options));
     }
     static addToCache(baseTexture, id) {
       if (id) {
@@ -3194,8 +3287,8 @@ Deprecated since v${version}`);
           return baseTextureFromCache;
         }
       } else if (baseTexture?.textureCacheIds) {
-        for (let i = 0; i < baseTexture.textureCacheIds.length; ++i) {
-          delete BaseTextureCache[baseTexture.textureCacheIds[i]];
+        for (let i2 = 0; i2 < baseTexture.textureCacheIds.length; ++i2) {
+          delete BaseTextureCache[baseTexture.textureCacheIds[i2]];
         }
         baseTexture.textureCacheIds.length = 0;
         return baseTexture;
@@ -3299,25 +3392,25 @@ Deprecated since v${version}`);
     let outSize = 0;
     let stride = 0;
     const views = {};
-    for (let i = 0; i < arrays.length; i++) {
-      stride += sizes[i];
-      outSize += arrays[i].length;
+    for (let i2 = 0; i2 < arrays.length; i2++) {
+      stride += sizes[i2];
+      outSize += arrays[i2].length;
     }
     const buffer = new ArrayBuffer(outSize * 4);
     let out = null;
     let littleOffset = 0;
-    for (let i = 0; i < arrays.length; i++) {
-      const size = sizes[i];
-      const array = arrays[i];
+    for (let i2 = 0; i2 < arrays.length; i2++) {
+      const size = sizes[i2];
+      const array = arrays[i2];
       const type = getBufferType(array);
       if (!views[type]) {
         views[type] = new map[type](buffer);
       }
       out = views[type];
-      for (let j = 0; j < array.length; j++) {
-        const indexStart = (j / size | 0) * stride + littleOffset;
-        const index = j % size;
-        out[indexStart + index] = array[j];
+      for (let j2 = 0; j2 < array.length; j2++) {
+        const indexStart = (j2 / size | 0) * stride + littleOffset;
+        const index = j2 % size;
+        out[indexStart + index] = array[j2];
       }
       littleOffset += size;
     }
@@ -3358,8 +3451,8 @@ Deprecated since v${version}`);
       }
       const ids = id.split("|");
       if (ids.length > 1) {
-        for (let i = 0; i < ids.length; i++) {
-          this.addAttribute(ids[i], buffer, size, normalized, type);
+        for (let i2 = 0; i2 < ids.length; i2++) {
+          this.addAttribute(ids[i2], buffer, size, normalized, type);
         }
         return this;
       }
@@ -3401,18 +3494,18 @@ Deprecated since v${version}`);
       const arrays = [];
       const sizes = [];
       const interleavedBuffer = new Buffer2();
-      let i;
-      for (i in this.attributes) {
-        const attribute = this.attributes[i];
+      let i2;
+      for (i2 in this.attributes) {
+        const attribute = this.attributes[i2];
         const buffer = this.buffers[attribute.buffer];
         arrays.push(buffer.data);
         sizes.push(attribute.size * byteSizeMap[attribute.type] / 4);
         attribute.buffer = 0;
       }
       interleavedBuffer.data = interleaveTypedArrays2(arrays, sizes);
-      for (i = 0; i < this.buffers.length; i++) {
-        if (this.buffers[i] !== this.indexBuffer) {
-          this.buffers[i].destroy();
+      for (i2 = 0; i2 < this.buffers.length; i2++) {
+        if (this.buffers[i2] !== this.indexBuffer) {
+          this.buffers[i2].destroy();
         }
       }
       this.buffers = [interleavedBuffer];
@@ -3422,8 +3515,8 @@ Deprecated since v${version}`);
       return this;
     }
     getSize() {
-      for (const i in this.attributes) {
-        const attribute = this.attributes[i];
+      for (const i2 in this.attributes) {
+        const attribute = this.attributes[i2];
         const buffer = this.buffers[attribute.buffer];
         return buffer.data.length / (attribute.stride / 4 || attribute.size);
       }
@@ -3440,12 +3533,12 @@ Deprecated since v${version}`);
     }
     clone() {
       const geometry = new Geometry();
-      for (let i = 0; i < this.buffers.length; i++) {
-        geometry.buffers[i] = new Buffer2(this.buffers[i].data.slice(0));
+      for (let i2 = 0; i2 < this.buffers.length; i2++) {
+        geometry.buffers[i2] = new Buffer2(this.buffers[i2].data.slice(0));
       }
-      for (const i in this.attributes) {
-        const attrib = this.attributes[i];
-        geometry.attributes[i] = new Attribute(attrib.buffer, attrib.size, attrib.normalized, attrib.type, attrib.stride, attrib.start, attrib.instance);
+      for (const i2 in this.attributes) {
+        const attrib = this.attributes[i2];
+        geometry.attributes[i2] = new Attribute(attrib.buffer, attrib.size, attrib.normalized, attrib.type, attrib.stride, attrib.start, attrib.instance);
       }
       if (this.indexBuffer) {
         geometry.indexBuffer = geometry.buffers[this.buffers.indexOf(this.indexBuffer)];
@@ -3459,23 +3552,23 @@ Deprecated since v${version}`);
       const sizes = [];
       const offsets = [];
       let geometry;
-      for (let i = 0; i < geometries.length; i++) {
-        geometry = geometries[i];
-        for (let j = 0; j < geometry.buffers.length; j++) {
-          sizes[j] = sizes[j] || 0;
-          sizes[j] += geometry.buffers[j].data.length;
-          offsets[j] = 0;
+      for (let i2 = 0; i2 < geometries.length; i2++) {
+        geometry = geometries[i2];
+        for (let j2 = 0; j2 < geometry.buffers.length; j2++) {
+          sizes[j2] = sizes[j2] || 0;
+          sizes[j2] += geometry.buffers[j2].data.length;
+          offsets[j2] = 0;
         }
       }
-      for (let i = 0; i < geometry.buffers.length; i++) {
-        arrays[i] = new map2[getBufferType(geometry.buffers[i].data)](sizes[i]);
-        geometryOut.buffers[i] = new Buffer2(arrays[i]);
+      for (let i2 = 0; i2 < geometry.buffers.length; i2++) {
+        arrays[i2] = new map2[getBufferType(geometry.buffers[i2].data)](sizes[i2]);
+        geometryOut.buffers[i2] = new Buffer2(arrays[i2]);
       }
-      for (let i = 0; i < geometries.length; i++) {
-        geometry = geometries[i];
-        for (let j = 0; j < geometry.buffers.length; j++) {
-          arrays[j].set(geometry.buffers[j].data, offsets[j]);
-          offsets[j] += geometry.buffers[j].data.length;
+      for (let i2 = 0; i2 < geometries.length; i2++) {
+        geometry = geometries[i2];
+        for (let j2 = 0; j2 < geometry.buffers.length; j2++) {
+          arrays[j2].set(geometry.buffers[j2].data, offsets[j2]);
+          offsets[j2] += geometry.buffers[j2].data.length;
         }
       }
       geometryOut.attributes = geometry.attributes;
@@ -3486,24 +3579,24 @@ Deprecated since v${version}`);
         let stride = 0;
         let offset2 = 0;
         let bufferIndexToCount = 0;
-        for (let i = 0; i < geometry.buffers.length; i++) {
-          if (geometry.buffers[i] !== geometry.indexBuffer) {
-            bufferIndexToCount = i;
+        for (let i2 = 0; i2 < geometry.buffers.length; i2++) {
+          if (geometry.buffers[i2] !== geometry.indexBuffer) {
+            bufferIndexToCount = i2;
             break;
           }
         }
-        for (const i in geometry.attributes) {
-          const attribute = geometry.attributes[i];
+        for (const i2 in geometry.attributes) {
+          const attribute = geometry.attributes[i2];
           if ((attribute.buffer | 0) === bufferIndexToCount) {
             stride += attribute.size * byteSizeMap[attribute.type] / 4;
           }
         }
-        for (let i = 0; i < geometries.length; i++) {
-          const indexBufferData = geometries[i].indexBuffer.data;
-          for (let j = 0; j < indexBufferData.length; j++) {
-            geometryOut.indexBuffer.data[j + offset2] += offset;
+        for (let i2 = 0; i2 < geometries.length; i2++) {
+          const indexBufferData = geometries[i2].indexBuffer.data;
+          for (let j2 = 0; j2 < indexBufferData.length; j2++) {
+            geometryOut.indexBuffer.data[j2 + offset2] += offset;
           }
-          offset += geometries[i].buffers[bufferIndexToCount].data.length / stride;
+          offset += geometries[i2].buffers[bufferIndexToCount].data.length / stride;
           offset2 += indexBufferData.length;
         }
       }
@@ -3536,29 +3629,29 @@ Deprecated since v${version}`);
 
   // node_modules/@pixi/math/lib/Point.mjs
   var Point = class {
-    constructor(x = 0, y = 0) {
+    constructor(x2 = 0, y2 = 0) {
       this.x = 0;
       this.y = 0;
-      this.x = x;
-      this.y = y;
+      this.x = x2;
+      this.y = y2;
     }
     clone() {
       return new Point(this.x, this.y);
     }
-    copyFrom(p) {
-      this.set(p.x, p.y);
+    copyFrom(p2) {
+      this.set(p2.x, p2.y);
       return this;
     }
-    copyTo(p) {
-      p.set(this.x, this.y);
-      return p;
+    copyTo(p2) {
+      p2.set(this.x, this.y);
+      return p2;
     }
-    equals(p) {
-      return p.x === this.x && p.y === this.y;
+    equals(p2) {
+      return p2.x === this.x && p2.y === this.y;
     }
-    set(x = 0, y = x) {
-      this.x = x;
-      this.y = y;
+    set(x2 = 0, y2 = x2) {
+      this.x = x2;
+      this.y = y2;
       return this;
     }
     toString() {
@@ -3569,9 +3662,9 @@ Deprecated since v${version}`);
   // node_modules/@pixi/math/lib/shapes/Rectangle.mjs
   var tempPoints = [new Point(), new Point(), new Point(), new Point()];
   var Rectangle = class {
-    constructor(x = 0, y = 0, width = 0, height = 0) {
-      this.x = Number(x);
-      this.y = Number(y);
+    constructor(x2 = 0, y2 = 0, width = 0, height = 0) {
+      this.x = Number(x2);
+      this.y = Number(y2);
       this.width = Number(width);
       this.height = Number(height);
       this.type = SHAPES.RECT;
@@ -3608,12 +3701,12 @@ Deprecated since v${version}`);
       rectangle.height = this.height;
       return rectangle;
     }
-    contains(x, y) {
+    contains(x2, y2) {
       if (this.width <= 0 || this.height <= 0) {
         return false;
       }
-      if (x >= this.x && x < this.x + this.width) {
-        if (y >= this.y && y < this.y + this.height) {
+      if (x2 >= this.x && x2 < this.x + this.width) {
+        if (y2 >= this.y && y2 < this.y + this.height) {
           return true;
         }
       }
@@ -3644,8 +3737,8 @@ Deprecated since v${version}`);
       if (rt.x <= lt.x || lb.y <= lt.y) {
         return false;
       }
-      const s = Math.sign(transform.a * transform.d - transform.b * transform.c);
-      if (s === 0) {
+      const s2 = Math.sign(transform.a * transform.d - transform.b * transform.c);
+      if (s2 === 0) {
         return false;
       }
       transform.apply(lt, lt);
@@ -3655,8 +3748,8 @@ Deprecated since v${version}`);
       if (Math.max(lt.x, lb.x, rt.x, rb.x) <= x0 || Math.min(lt.x, lb.x, rt.x, rb.x) >= x1 || Math.max(lt.y, lb.y, rt.y, rb.y) <= y0 || Math.min(lt.y, lb.y, rt.y, rb.y) >= y1) {
         return false;
       }
-      const nx = s * (lb.y - lt.y);
-      const ny = s * (lt.x - lb.x);
+      const nx = s2 * (lb.y - lt.y);
+      const ny = s2 * (lt.x - lb.x);
       const n00 = nx * x0 + ny * y0;
       const n10 = nx * x1 + ny * y0;
       const n01 = nx * x0 + ny * y1;
@@ -3664,8 +3757,8 @@ Deprecated since v${version}`);
       if (Math.max(n00, n10, n01, n11) <= nx * lt.x + ny * lt.y || Math.min(n00, n10, n01, n11) >= nx * rb.x + ny * rb.y) {
         return false;
       }
-      const mx = s * (lt.y - rt.y);
-      const my = s * (rt.x - lt.x);
+      const mx = s2 * (lt.y - rt.y);
+      const my = s2 * (rt.x - lt.x);
       const m00 = mx * x0 + my * y0;
       const m10 = mx * x1 + my * y0;
       const m01 = mx * x0 + my * y1;
@@ -3720,12 +3813,12 @@ Deprecated since v${version}`);
 
   // node_modules/@pixi/math/lib/Matrix.mjs
   var Matrix = class {
-    constructor(a = 1, b = 0, c = 0, d = 1, tx = 0, ty = 0) {
+    constructor(a2 = 1, b2 = 0, c2 = 0, d2 = 1, tx = 0, ty = 0) {
       this.array = null;
-      this.a = a;
-      this.b = b;
-      this.c = c;
-      this.d = d;
+      this.a = a2;
+      this.b = b2;
+      this.c = c2;
+      this.d = d2;
       this.tx = tx;
       this.ty = ty;
     }
@@ -3737,11 +3830,11 @@ Deprecated since v${version}`);
       this.tx = array[2];
       this.ty = array[5];
     }
-    set(a, b, c, d, tx, ty) {
-      this.a = a;
-      this.b = b;
-      this.c = c;
-      this.d = d;
+    set(a2, b2, c2, d2, tx, ty) {
+      this.a = a2;
+      this.b = b2;
+      this.c = c2;
+      this.d = d2;
       this.tx = tx;
       this.ty = ty;
       return this;
@@ -3776,33 +3869,33 @@ Deprecated since v${version}`);
     }
     apply(pos, newPos) {
       newPos = newPos || new Point();
-      const x = pos.x;
-      const y = pos.y;
-      newPos.x = this.a * x + this.c * y + this.tx;
-      newPos.y = this.b * x + this.d * y + this.ty;
+      const x2 = pos.x;
+      const y2 = pos.y;
+      newPos.x = this.a * x2 + this.c * y2 + this.tx;
+      newPos.y = this.b * x2 + this.d * y2 + this.ty;
       return newPos;
     }
     applyInverse(pos, newPos) {
       newPos = newPos || new Point();
       const id = 1 / (this.a * this.d + this.c * -this.b);
-      const x = pos.x;
-      const y = pos.y;
-      newPos.x = this.d * id * x + -this.c * id * y + (this.ty * this.c - this.tx * this.d) * id;
-      newPos.y = this.a * id * y + -this.b * id * x + (-this.ty * this.a + this.tx * this.b) * id;
+      const x2 = pos.x;
+      const y2 = pos.y;
+      newPos.x = this.d * id * x2 + -this.c * id * y2 + (this.ty * this.c - this.tx * this.d) * id;
+      newPos.y = this.a * id * y2 + -this.b * id * x2 + (-this.ty * this.a + this.tx * this.b) * id;
       return newPos;
     }
-    translate(x, y) {
-      this.tx += x;
-      this.ty += y;
+    translate(x2, y2) {
+      this.tx += x2;
+      this.ty += y2;
       return this;
     }
-    scale(x, y) {
-      this.a *= x;
-      this.d *= y;
-      this.c *= x;
-      this.b *= y;
-      this.tx *= x;
-      this.ty *= y;
+    scale(x2, y2) {
+      this.a *= x2;
+      this.d *= y2;
+      this.c *= x2;
+      this.b *= y2;
+      this.tx *= x2;
+      this.ty *= y2;
       return this;
     }
     rotate(angle) {
@@ -3832,13 +3925,13 @@ Deprecated since v${version}`);
       this.ty = matrix.tx * b1 + matrix.ty * d1 + this.ty;
       return this;
     }
-    setTransform(x, y, pivotX, pivotY, scaleX, scaleY, rotation, skewX, skewY) {
+    setTransform(x2, y2, pivotX, pivotY, scaleX, scaleY, rotation, skewX, skewY) {
       this.a = Math.cos(rotation + skewY) * scaleX;
       this.b = Math.sin(rotation + skewY) * scaleX;
       this.c = -Math.sin(rotation - skewX) * scaleY;
       this.d = Math.cos(rotation - skewX) * scaleY;
-      this.tx = x - (pivotX * this.a + pivotY * this.c);
-      this.ty = y - (pivotX * this.b + pivotY * this.d);
+      this.tx = x2 - (pivotX * this.a + pivotY * this.c);
+      this.ty = y2 - (pivotX * this.b + pivotY * this.d);
       return this;
     }
     prepend(matrix) {
@@ -3856,13 +3949,13 @@ Deprecated since v${version}`);
       return this;
     }
     decompose(transform) {
-      const a = this.a;
-      const b = this.b;
-      const c = this.c;
-      const d = this.d;
+      const a2 = this.a;
+      const b2 = this.b;
+      const c2 = this.c;
+      const d2 = this.d;
       const pivot = transform.pivot;
-      const skewX = -Math.atan2(-c, d);
-      const skewY = Math.atan2(b, a);
+      const skewX = -Math.atan2(-c2, d2);
+      const skewY = Math.atan2(b2, a2);
       const delta = Math.abs(skewX + skewY);
       if (delta < 1e-5 || Math.abs(PI_2 - delta) < 1e-5) {
         transform.rotation = skewY;
@@ -3872,10 +3965,10 @@ Deprecated since v${version}`);
         transform.skew.x = skewX;
         transform.skew.y = skewY;
       }
-      transform.scale.x = Math.sqrt(a * a + b * b);
-      transform.scale.y = Math.sqrt(c * c + d * d);
-      transform.position.x = this.tx + (pivot.x * a + pivot.y * c);
-      transform.position.y = this.ty + (pivot.x * b + pivot.y * d);
+      transform.scale.x = Math.sqrt(a2 * a2 + b2 * b2);
+      transform.scale.y = Math.sqrt(c2 * c2 + d2 * d2);
+      transform.position.x = this.tx + (pivot.x * a2 + pivot.y * c2);
+      transform.position.y = this.ty + (pivot.x * b2 + pivot.y * d2);
       return transform;
     }
     invert() {
@@ -3884,13 +3977,13 @@ Deprecated since v${version}`);
       const c1 = this.c;
       const d1 = this.d;
       const tx1 = this.tx;
-      const n = a1 * d1 - b1 * c1;
-      this.a = d1 / n;
-      this.b = -b1 / n;
-      this.c = -c1 / n;
-      this.d = a1 / n;
-      this.tx = (c1 * this.ty - d1 * tx1) / n;
-      this.ty = -(a1 * this.ty - b1 * tx1) / n;
+      const n2 = a1 * d1 - b1 * c1;
+      this.a = d1 / n2;
+      this.b = -b1 / n2;
+      this.c = -c1 / n2;
+      this.d = a1 / n2;
+      this.tx = (c1 * this.ty - d1 * tx1) / n2;
+      this.ty = -(a1 * this.ty - b1 * tx1) / n2;
       return this;
     }
     identity() {
@@ -3950,25 +4043,25 @@ Deprecated since v${version}`);
   var rotationMatrices = [];
   var signum = Math.sign;
   function init() {
-    for (let i = 0; i < 16; i++) {
+    for (let i2 = 0; i2 < 16; i2++) {
       const row = [];
       rotationCayley.push(row);
-      for (let j = 0; j < 16; j++) {
-        const _ux = signum(ux[i] * ux[j] + vx[i] * uy[j]);
-        const _uy = signum(uy[i] * ux[j] + vy[i] * uy[j]);
-        const _vx = signum(ux[i] * vx[j] + vx[i] * vy[j]);
-        const _vy = signum(uy[i] * vx[j] + vy[i] * vy[j]);
-        for (let k = 0; k < 16; k++) {
-          if (ux[k] === _ux && uy[k] === _uy && vx[k] === _vx && vy[k] === _vy) {
-            row.push(k);
+      for (let j2 = 0; j2 < 16; j2++) {
+        const _ux = signum(ux[i2] * ux[j2] + vx[i2] * uy[j2]);
+        const _uy = signum(uy[i2] * ux[j2] + vy[i2] * uy[j2]);
+        const _vx = signum(ux[i2] * vx[j2] + vx[i2] * vy[j2]);
+        const _vy = signum(uy[i2] * vx[j2] + vy[i2] * vy[j2]);
+        for (let k2 = 0; k2 < 16; k2++) {
+          if (ux[k2] === _ux && uy[k2] === _uy && vx[k2] === _vx && vy[k2] === _vy) {
+            row.push(k2);
             break;
           }
         }
       }
     }
-    for (let i = 0; i < 16; i++) {
+    for (let i2 = 0; i2 < 16; i2++) {
       const mat = new Matrix();
-      mat.set(ux[i], uy[i], vx[i], vy[i], 0, 0);
+      mat.set(ux[i2], uy[i2], vx[i2], vy[i2], 0, 0);
       rotationMatrices.push(mat);
     }
   }
@@ -4031,37 +4124,37 @@ Deprecated since v${version}`);
 
   // node_modules/@pixi/math/lib/ObservablePoint.mjs
   var ObservablePoint = class {
-    constructor(cb, scope, x = 0, y = 0) {
-      this._x = x;
-      this._y = y;
+    constructor(cb, scope, x2 = 0, y2 = 0) {
+      this._x = x2;
+      this._y = y2;
       this.cb = cb;
       this.scope = scope;
     }
     clone(cb = this.cb, scope = this.scope) {
       return new ObservablePoint(cb, scope, this._x, this._y);
     }
-    set(x = 0, y = x) {
-      if (this._x !== x || this._y !== y) {
-        this._x = x;
-        this._y = y;
+    set(x2 = 0, y2 = x2) {
+      if (this._x !== x2 || this._y !== y2) {
+        this._x = x2;
+        this._y = y2;
         this.cb.call(this.scope);
       }
       return this;
     }
-    copyFrom(p) {
-      if (this._x !== p.x || this._y !== p.y) {
-        this._x = p.x;
-        this._y = p.y;
+    copyFrom(p2) {
+      if (this._x !== p2.x || this._y !== p2.y) {
+        this._x = p2.x;
+        this._y = p2.y;
         this.cb.call(this.scope);
       }
       return this;
     }
-    copyTo(p) {
-      p.set(this._x, this._y);
-      return p;
+    copyTo(p2) {
+      p2.set(this._x, this._y);
+      return p2;
     }
-    equals(p) {
-      return p.x === this._x && p.y === this._y;
+    equals(p2) {
+      return p2.x === this._x && p2.y === this._y;
     }
     toString() {
       return `[@pixi/math:ObservablePoint x=${0} y=${0} scope=${this.scope}]`;
@@ -4190,8 +4283,8 @@ Deprecated since v${version}`);
   // node_modules/@pixi/core/lib/shader/utils/defaultValue.mjs
   function booleanArray(size) {
     const array = new Array(size);
-    for (let i = 0; i < array.length; i++) {
-      array[i] = false;
+    for (let i2 = 0; i2 < array.length; i2++) {
+      array[i2] = false;
     }
     return array;
   }
@@ -4372,6 +4465,51 @@ Deprecated since v${version}`);
                     data[offset+1] = v.y;
                     data[offset+2] = v.width;
                     data[offset+3] = v.height;
+                `
+    },
+    {
+      test: (data, uniform) => data.type === "vec4" && data.size === 1 && !data.isArray && uniform.red !== void 0,
+      code: (name) => `
+                cv = ud["${name}"].value;
+                v = uv["${name}"];
+
+                if(cv[0] !== v.red || cv[1] !== v.green || cv[2] !== v.blue || cv[3] !== v.alpha)
+                {
+                    cv[0] = v.red;
+                    cv[1] = v.green;
+                    cv[2] = v.blue;
+                    cv[3] = v.alpha;
+                    gl.uniform4f(ud["${name}"].location, v.red, v.green, v.blue, v.alpha)
+                }`,
+      codeUbo: (name) => `
+                    v = uv.${name};
+
+                    data[offset] = v.red;
+                    data[offset+1] = v.green;
+                    data[offset+2] = v.blue;
+                    data[offset+3] = v.alpha;
+                `
+    },
+    {
+      test: (data, uniform) => data.type === "vec3" && data.size === 1 && !data.isArray && uniform.red !== void 0,
+      code: (name) => `
+                cv = ud["${name}"].value;
+                v = uv["${name}"];
+
+                if(cv[0] !== v.red || cv[1] !== v.green || cv[2] !== v.blue || cv[3] !== v.a)
+                {
+                    cv[0] = v.red;
+                    cv[1] = v.green;
+                    cv[2] = v.blue;
+    
+                    gl.uniform3f(ud["${name}"].location, v.red, v.green, v.blue)
+                }`,
+      codeUbo: (name) => `
+                    v = uv.${name};
+
+                    data[offset] = v.red;
+                    data[offset+1] = v.green;
+                    data[offset+2] = v.blue;
                 `
     },
     {
@@ -4585,38 +4723,38 @@ Deprecated since v${version}`);
         var t = 0;
         var gl = renderer.gl;
     `];
-    for (const i in group.uniforms) {
-      const data = uniformData[i];
+    for (const i2 in group.uniforms) {
+      const data = uniformData[i2];
       if (!data) {
-        if (group.uniforms[i]?.group) {
-          if (group.uniforms[i].ubo) {
+        if (group.uniforms[i2]?.group) {
+          if (group.uniforms[i2].ubo) {
             funcFragments.push(`
-                        renderer.shader.syncUniformBufferGroup(uv.${i}, '${i}');
+                        renderer.shader.syncUniformBufferGroup(uv.${i2}, '${i2}');
                     `);
           } else {
             funcFragments.push(`
-                        renderer.shader.syncUniformGroup(uv.${i}, syncData);
+                        renderer.shader.syncUniformGroup(uv.${i2}, syncData);
                     `);
           }
         }
         continue;
       }
-      const uniform = group.uniforms[i];
+      const uniform = group.uniforms[i2];
       let parsed = false;
-      for (let j = 0; j < uniformParsers.length; j++) {
-        if (uniformParsers[j].test(data, uniform)) {
-          funcFragments.push(uniformParsers[j].code(i, uniform));
+      for (let j2 = 0; j2 < uniformParsers.length; j2++) {
+        if (uniformParsers[j2].test(data, uniform)) {
+          funcFragments.push(uniformParsers[j2].code(i2, uniform));
           parsed = true;
           break;
         }
       }
       if (!parsed) {
         const templateType = data.size === 1 && !data.isArray ? GLSL_TO_SINGLE_SETTERS_CACHED : GLSL_TO_ARRAY_SETTERS;
-        const template = templateType[data.type].replace("location", `ud["${i}"].location`);
+        const template = templateType[data.type].replace("location", `ud["${i2}"].location`);
         funcFragments.push(`
-            cu = ud["${i}"];
+            cu = ud["${i2}"];
             cv = cu.value;
-            v = uv["${i}"];
+            v = uv["${i2}"];
             ${template};`);
       }
     }
@@ -4668,9 +4806,9 @@ Deprecated since v${version}`);
     const shaderLog = gl.getShaderInfoLog(shader);
     const splitShader = shaderLog.split("\n");
     const dedupe = {};
-    const lineNumbers = splitShader.map((line) => parseFloat(line.replace(/^ERROR\: 0\:([\d]+)\:.*$/, "$1"))).filter((n) => {
-      if (n && !dedupe[n]) {
-        dedupe[n] = true;
+    const lineNumbers = splitShader.map((line) => parseFloat(line.replace(/^ERROR\: 0\:([\d]+)\:.*$/, "$1"))).filter((n2) => {
+      if (n2 && !dedupe[n2]) {
+        dedupe[n2] = true;
         return true;
       }
       return false;
@@ -4765,8 +4903,8 @@ Deprecated since v${version}`);
     if (!GL_TABLE) {
       const typeNames = Object.keys(GL_TO_GLSL_TYPES);
       GL_TABLE = {};
-      for (let i = 0; i < typeNames.length; ++i) {
-        const tn = typeNames[i];
+      for (let i2 = 0; i2 < typeNames.length; ++i2) {
+        const tn = typeNames[i2];
         GL_TABLE[gl[tn]] = GL_TO_GLSL_TYPES[tn];
       }
     }
@@ -4797,7 +4935,7 @@ ${src}`;
     try {
       const func = new Function("param1", "param2", "param3", "return param1[param2] === param3;");
       unsafeEval = func({ a: "b" }, "a", "b") === true;
-    } catch (e) {
+    } catch (e2) {
       unsafeEval = false;
     }
     return unsafeEval;
@@ -4917,8 +5055,8 @@ ${this.fragmentSrc}`;
       if (group.uniforms[name]) {
         return true;
       }
-      for (const i in group.uniforms) {
-        const uniform = group.uniforms[i];
+      for (const i2 in group.uniforms) {
+        const uniform = group.uniforms[i2];
         if (uniform.group) {
           if (this.checkUniformExists(name, uniform)) {
             return true;
@@ -4958,8 +5096,8 @@ ${this.fragmentSrc}`;
     generateShader(maxTextures) {
       if (!this.programCache[maxTextures]) {
         const sampleValues = new Int32Array(maxTextures);
-        for (let i = 0; i < maxTextures; i++) {
-          sampleValues[i] = i;
+        for (let i2 = 0; i2 < maxTextures; i2++) {
+          sampleValues[i2] = i2;
         }
         this.defaultGroupCache[maxTextures] = UniformGroup.from({ uSamplers: sampleValues }, true);
         let fragmentSrc = this.fragTemplate;
@@ -4978,16 +5116,16 @@ ${this.fragmentSrc}`;
       let src = "";
       src += "\n";
       src += "\n";
-      for (let i = 0; i < maxTextures; i++) {
-        if (i > 0) {
+      for (let i2 = 0; i2 < maxTextures; i2++) {
+        if (i2 > 0) {
           src += "\nelse ";
         }
-        if (i < maxTextures - 1) {
-          src += `if(vTextureId < ${i}.5)`;
+        if (i2 < maxTextures - 1) {
+          src += `if(vTextureId < ${i2}.5)`;
         }
         src += "\n{";
         src += `
-	color = texture2D(uSamplers[${i}], vTextureCoord);`;
+	color = texture2D(uSamplers[${i2}], vTextureCoord);`;
         src += "\n}";
       }
       src += "\n";
@@ -5004,8 +5142,8 @@ ${this.fragmentSrc}`;
       this.count = 0;
     }
     clear() {
-      for (let i = 0; i < this.count; i++) {
-        this.elements[i] = null;
+      for (let i2 = 0; i2 < this.count; i2++) {
+        this.elements[i2] = null;
       }
       this.count = 0;
     }
@@ -5137,8 +5275,8 @@ ${this.fragmentSrc}`;
         this.maxTextures = checkMaxIfStatementsInShader(this.maxTextures, gl);
       }
       this._shader = this.shaderGenerator.generateShader(this.maxTextures);
-      for (let i = 0; i < this._packedGeometryPoolSize; i++) {
-        this._packedGeometries[i] = new this.geometryClass();
+      for (let i2 = 0; i2 < this._packedGeometryPoolSize; i2++) {
+        this._packedGeometries[i2] = new this.geometryClass();
       }
       this.initFlushBuffers();
     }
@@ -5155,8 +5293,8 @@ ${this.fragmentSrc}`;
       while (_textureArrayPool.length < MAX_TA) {
         _textureArrayPool.push(new BatchTextureArray());
       }
-      for (let i = 0; i < this.maxTextures; i++) {
-        this._tempBoundTextures[i] = null;
+      for (let i2 = 0; i2 < this.maxTextures; i2++) {
+        this._tempBoundTextures[i2] = null;
       }
     }
     onPrerender() {
@@ -5188,16 +5326,16 @@ ${this.fragmentSrc}`;
       let texArray = textureArrays[0];
       let start = 0;
       batch.copyBoundTextures(boundTextures, maxTextures);
-      for (let i = 0; i < this._bufferSize; ++i) {
-        const tex = textures[i];
-        textures[i] = null;
+      for (let i2 = 0; i2 < this._bufferSize; ++i2) {
+        const tex = textures[i2];
+        textures[i2] = null;
         if (tex._batchEnabled === TICK) {
           continue;
         }
         if (texArray.count >= maxTextures) {
           batch.boundArray(texArray, boundTextures, TICK, maxTextures);
-          this.buildDrawCalls(texArray, start, i);
-          start = i;
+          this.buildDrawCalls(texArray, start, i2);
+          start = i2;
           texArray = textureArrays[++countTexArrays];
           ++TICK;
         }
@@ -5211,8 +5349,8 @@ ${this.fragmentSrc}`;
         ++countTexArrays;
         ++TICK;
       }
-      for (let i = 0; i < boundTextures.length; i++) {
-        boundTextures[i] = null;
+      for (let i2 = 0; i2 < boundTextures.length; i2++) {
+        boundTextures[i2] = null;
       }
       BaseTexture._globalBatch = TICK;
     }
@@ -5230,14 +5368,14 @@ ${this.fragmentSrc}`;
       let drawCall = drawCalls[dcIndex];
       drawCall.start = this._iIndex;
       drawCall.texArray = texArray;
-      for (let i = start; i < finish; ++i) {
-        const sprite = elements[i];
+      for (let i2 = start; i2 < finish; ++i2) {
+        const sprite = elements[i2];
         const tex = sprite._texture.baseTexture;
         const spriteBlendMode = premultiplyBlendMode[tex.alphaMode ? 1 : 0][sprite.blendMode];
-        elements[i] = null;
-        if (start < i && drawCall.blend !== spriteBlendMode) {
+        elements[i2] = null;
+        if (start < i2 && drawCall.blend !== spriteBlendMode) {
           drawCall.size = iIndex - drawCall.start;
-          start = i;
+          start = i2;
           drawCall = drawCalls[++dcIndex];
           drawCall.texArray = texArray;
           drawCall.start = iIndex;
@@ -5257,9 +5395,9 @@ ${this.fragmentSrc}`;
     }
     bindAndClearTexArray(texArray) {
       const textureSystem = this.renderer.texture;
-      for (let j = 0; j < texArray.count; j++) {
-        textureSystem.bind(texArray.elements[j], texArray.ids[j]);
-        texArray.elements[j] = null;
+      for (let j2 = 0; j2 < texArray.count; j2++) {
+        textureSystem.bind(texArray.elements[j2], texArray.ids[j2]);
+        texArray.elements[j2] = null;
       }
       texArray.count = 0;
     }
@@ -5290,8 +5428,8 @@ ${this.fragmentSrc}`;
       const { gl, state: stateSystem } = this.renderer;
       const drawCalls = _BatchRenderer._drawCallPool;
       let curTexArray = null;
-      for (let i = 0; i < dcCount; i++) {
-        const { texArray, type, size, start, blend } = drawCalls[i];
+      for (let i2 = 0; i2 < dcCount; i2++) {
+        const { texArray, type, size, start, blend } = drawCalls[i2];
         if (curTexArray !== texArray) {
           curTexArray = texArray;
           this.bindAndClearTexArray(texArray);
@@ -5329,9 +5467,9 @@ ${this.fragmentSrc}`;
       this.flush();
     }
     destroy() {
-      for (let i = 0; i < this._packedGeometryPoolSize; i++) {
-        if (this._packedGeometries[i]) {
-          this._packedGeometries[i].destroy();
+      for (let i2 = 0; i2 < this._packedGeometryPoolSize; i2++) {
+        if (this._packedGeometries[i2]) {
+          this._packedGeometries[i2].destroy();
         }
       }
       this.renderer.off("prerender", this.onPrerender, this);
@@ -5383,17 +5521,17 @@ ${this.fragmentSrc}`;
       const vertexData = element.vertexData;
       const textureId = element._texture.baseTexture._batchLocation;
       const alpha = Math.min(element.worldAlpha, 1);
-      const argb = alpha < 1 && element._texture.baseTexture.alphaMode ? premultiplyTint(element._tintRGB, alpha) : element._tintRGB + (alpha * 255 << 24);
-      for (let i = 0; i < vertexData.length; i += 2) {
-        float32View[aIndex++] = vertexData[i];
-        float32View[aIndex++] = vertexData[i + 1];
-        float32View[aIndex++] = uvs[i];
-        float32View[aIndex++] = uvs[i + 1];
+      const argb = Color.shared.setValue(element._tintRGB).toPremultiplied(alpha, element._texture.baseTexture.alphaMode > 0);
+      for (let i2 = 0; i2 < vertexData.length; i2 += 2) {
+        float32View[aIndex++] = vertexData[i2];
+        float32View[aIndex++] = vertexData[i2 + 1];
+        float32View[aIndex++] = uvs[i2];
+        float32View[aIndex++] = uvs[i2 + 1];
         uint32View[aIndex++] = argb;
         float32View[aIndex++] = textureId;
       }
-      for (let i = 0; i < indicies.length; i++) {
-        indexBuffer[iIndex++] = packedVertices + indicies[i];
+      for (let i2 = 0; i2 < indicies.length; i2++) {
+        indexBuffer[iIndex++] = packedVertices + indicies[i2];
       }
     }
   };
@@ -5455,41 +5593,40 @@ ${this.fragmentSrc}`;
   var BackgroundSystem = class {
     constructor() {
       this.clearBeforeRender = true;
-      this._backgroundColor = 0;
-      this._backgroundColorRgba = [0, 0, 0, 1];
-      this._backgroundColorString = "#000000";
-      this.color = this._backgroundColor;
+      this._backgroundColor = new Color(0);
       this.alpha = 1;
     }
     init(options) {
       this.clearBeforeRender = options.clearBeforeRender;
-      if (options.color) {
-        this.color = typeof options.color === "string" ? string2hex(options.color) : options.color;
+      const { backgroundColor, background, backgroundAlpha } = options;
+      const color = background ?? backgroundColor;
+      if (color !== void 0) {
+        this.color = color;
       }
-      this.alpha = options.alpha;
+      this.alpha = backgroundAlpha;
     }
     get color() {
-      return this._backgroundColor;
+      return this._backgroundColor.value;
     }
     set color(value) {
-      this._backgroundColor = value;
-      this._backgroundColorString = hex2string(value);
-      hex2rgb(value, this._backgroundColorRgba);
+      this._backgroundColor.setValue(value);
     }
     get alpha() {
-      return this._backgroundColorRgba[3];
+      return this._backgroundColor.alpha;
     }
     set alpha(value) {
-      this._backgroundColorRgba[3] = value;
+      this._backgroundColor.setAlpha(value);
     }
-    get colorRgba() {
-      return this._backgroundColorRgba;
-    }
-    get colorString() {
-      return this._backgroundColorString;
+    get backgroundColor() {
+      return this._backgroundColor;
     }
     destroy() {
     }
+  };
+  BackgroundSystem.defaultOptions = {
+    backgroundAlpha: 1,
+    backgroundColor: 0,
+    clearBeforeRender: true
   };
   BackgroundSystem.extension = {
     type: [
@@ -5523,32 +5660,32 @@ ${this.fragmentSrc}`;
     }
     copyBoundTextures(arr, maxTextures) {
       const { boundTextures } = this.renderer.texture;
-      for (let i = maxTextures - 1; i >= 0; --i) {
-        arr[i] = boundTextures[i] || null;
-        if (arr[i]) {
-          arr[i]._batchLocation = i;
+      for (let i2 = maxTextures - 1; i2 >= 0; --i2) {
+        arr[i2] = boundTextures[i2] || null;
+        if (arr[i2]) {
+          arr[i2]._batchLocation = i2;
         }
       }
     }
     boundArray(texArray, boundTextures, batchId, maxTextures) {
       const { elements, ids, count } = texArray;
-      let j = 0;
-      for (let i = 0; i < count; i++) {
-        const tex = elements[i];
+      let j2 = 0;
+      for (let i2 = 0; i2 < count; i2++) {
+        const tex = elements[i2];
         const loc = tex._batchLocation;
         if (loc >= 0 && loc < maxTextures && boundTextures[loc] === tex) {
-          ids[i] = loc;
+          ids[i2] = loc;
           continue;
         }
-        while (j < maxTextures) {
-          const bound = boundTextures[j];
-          if (bound && bound._batchEnabled === batchId && bound._batchLocation === j) {
-            j++;
+        while (j2 < maxTextures) {
+          const bound = boundTextures[j2];
+          if (bound && bound._batchEnabled === batchId && bound._batchLocation === j2) {
+            j2++;
             continue;
           }
-          ids[i] = j;
-          tex._batchLocation = j;
-          boundTextures[j] = tex;
+          ids[i2] = j2;
+          tex._batchLocation = j2;
+          boundTextures[j2] = tex;
           break;
         }
       }
@@ -5712,6 +5849,13 @@ ${this.fragmentSrc}`;
       }
     }
   };
+  ContextSystem.defaultOptions = {
+    context: null,
+    antialias: false,
+    premultipliedAlpha: true,
+    preserveDrawingBuffer: false,
+    powerPreference: "default"
+  };
   ContextSystem.extension = {
     type: ExtensionType.RendererSystem,
     name: "context"
@@ -5802,8 +5946,8 @@ ${this.fragmentSrc}`;
       this.height = height;
       this.dirtyId++;
       this.dirtySize++;
-      for (let i = 0; i < this.colorTextures.length; i++) {
-        const texture = this.colorTextures[i];
+      for (let i2 = 0; i2 < this.colorTextures.length; i2++) {
+        const texture = this.colorTextures[i2];
         const resolution = texture.resolution;
         texture.setSize(width / resolution, height / resolution);
       }
@@ -5841,11 +5985,20 @@ ${this.fragmentSrc}`;
       super(null, options);
       this.mipmap = MIPMAP_MODES.OFF;
       this.valid = true;
-      this.clearColor = [0, 0, 0, 0];
+      this._clear = new Color([0, 0, 0, 0]);
       this.framebuffer = new Framebuffer(this.realWidth, this.realHeight).addColorTexture(0, this);
       this.framebuffer.multisample = options.multisample;
       this.maskStack = [];
       this.filterStack = [{}];
+    }
+    set clearColor(value) {
+      this._clear.setValue(value);
+    }
+    get clearColor() {
+      return this._clear.value;
+    }
+    get clear() {
+      return this._clear;
     }
     resize(desiredWidth, desiredHeight) {
       this.framebuffer.resize(desiredWidth * this.resolution, desiredHeight * this.resolution);
@@ -5992,7 +6145,7 @@ ${this.fragmentSrc}`;
       const cors = !source.crossOrigin || source.crossOrigin === "anonymous";
       this._process = fetch(source.src, {
         mode: cors ? "cors" : "no-cors"
-      }).then((r) => r.blob()).then((blob) => createImageBitmap2(blob, 0, 0, source.width, source.height, {
+      }).then((r2) => r2.blob()).then((blob) => createImageBitmap2(blob, 0, 0, source.width, source.height, {
         premultiplyAlpha: this.alphaMode === null || this.alphaMode === ALPHA_MODES.UNPACK ? "premultiply" : "none"
       })).then((bitmap) => {
         if (this.destroyed) {
@@ -6124,7 +6277,7 @@ ${this.fragmentSrc}`;
     };
   }
   var Texture = class extends import_eventemitter3.default {
-    constructor(baseTexture, frame, orig, trim, rotate, anchor) {
+    constructor(baseTexture, frame, orig, trim, rotate, anchor, borders) {
       super();
       this.noFrame = false;
       if (!frame) {
@@ -6148,6 +6301,7 @@ ${this.fragmentSrc}`;
         throw new Error("attempt to use diamond-shaped UVs. If you are sure, set rotation manually");
       }
       this.defaultAnchor = anchor ? new Point(anchor.x, anchor.y) : new Point(0, 0);
+      this.defaultBorders = borders;
       this._updateID = 0;
       this.textureCacheIds = [];
       if (!baseTexture.valid) {
@@ -6206,7 +6360,7 @@ ${this.fragmentSrc}`;
     clone() {
       const clonedFrame = this._frame.clone();
       const clonedOrig = this._frame === this.orig ? clonedFrame : this.orig.clone();
-      const clonedTexture = new Texture(this.baseTexture, !this.noFrame && clonedFrame, clonedOrig, this.trim?.clone(), this.rotate, this.defaultAnchor);
+      const clonedTexture = new Texture(this.baseTexture, !this.noFrame && clonedFrame, clonedOrig, this.trim?.clone(), this.rotate, this.defaultAnchor, this.defaultBorders);
       if (this.noFrame) {
         clonedTexture._frame = clonedFrame;
       }
@@ -6270,7 +6424,7 @@ ${this.fragmentSrc}`;
     }
     static fromLoader(source, imageUrl, name, options) {
       const baseTexture = new BaseTexture(source, Object.assign({
-        scaleMode: settings.SCALE_MODE,
+        scaleMode: BaseTexture.defaultOptions.scaleMode,
         resolution: getResolutionOfUrl(imageUrl)
       }, options));
       const { resource } = baseTexture;
@@ -6317,9 +6471,9 @@ ${this.fragmentSrc}`;
           return textureFromCache;
         }
       } else if (texture?.textureCacheIds) {
-        for (let i = 0; i < texture.textureCacheIds.length; ++i) {
-          if (TextureCache[texture.textureCacheIds[i]] === texture) {
-            delete TextureCache[texture.textureCacheIds[i]];
+        for (let i2 = 0; i2 < texture.textureCacheIds.length; ++i2) {
+          if (TextureCache[texture.textureCacheIds[i2]] === texture) {
+            delete TextureCache[texture.textureCacheIds[i2]];
           }
         }
         texture.textureCacheIds.length = 0;
@@ -6336,13 +6490,13 @@ ${this.fragmentSrc}`;
     set frame(frame) {
       this._frame = frame;
       this.noFrame = false;
-      const { x, y, width, height } = frame;
-      const xNotFit = x + width > this.baseTexture.width;
-      const yNotFit = y + height > this.baseTexture.height;
+      const { x: x2, y: y2, width, height } = frame;
+      const xNotFit = x2 + width > this.baseTexture.width;
+      const yNotFit = y2 + height > this.baseTexture.height;
       if (xNotFit || yNotFit) {
         const relationship = xNotFit && yNotFit ? "and" : "or";
-        const errorX = `X: ${x} + ${width} = ${x + width} > ${this.baseTexture.width}`;
-        const errorY = `Y: ${y} + ${height} = ${y + height} > ${this.baseTexture.height}`;
+        const errorX = `X: ${x2} + ${width} = ${x2 + width} > ${this.baseTexture.width}`;
+        const errorY = `Y: ${y2} + ${height} = ${y2 + height} > ${this.baseTexture.height}`;
         throw new Error(`Texture Error: frame does not fit inside the base Texture dimensions: ${errorX} ${relationship} ${errorY}`);
       }
       this.valid = width && height && this.baseTexture.valid;
@@ -6497,11 +6651,11 @@ ${this.fragmentSrc}`;
     clear(destroyTextures) {
       destroyTextures = destroyTextures !== false;
       if (destroyTextures) {
-        for (const i in this.texturePool) {
-          const textures = this.texturePool[i];
+        for (const i2 in this.texturePool) {
+          const textures = this.texturePool[i2];
           if (textures) {
-            for (let j = 0; j < textures.length; j++) {
-              textures[j].destroy(true);
+            for (let j2 = 0; j2 < textures.length; j2++) {
+              textures[j2].destroy(true);
             }
           }
         }
@@ -6513,17 +6667,17 @@ ${this.fragmentSrc}`;
         return;
       }
       this.enableFullScreen = size.width > 0 && size.height > 0;
-      for (const i in this.texturePool) {
-        if (!(Number(i) < 0)) {
+      for (const i2 in this.texturePool) {
+        if (!(Number(i2) < 0)) {
           continue;
         }
-        const textures = this.texturePool[i];
+        const textures = this.texturePool[i2];
         if (textures) {
-          for (let j = 0; j < textures.length; j++) {
-            textures[j].destroy(true);
+          for (let j2 = 0; j2 < textures.length; j2++) {
+            textures[j2].destroy(true);
           }
         }
-        this.texturePool[i] = [];
+        this.texturePool[i2] = [];
       }
       this._pixelsWidth = size.width;
       this._pixelsHeight = size.height;
@@ -6577,26 +6731,26 @@ ${this.fragmentSrc}`;
       this.addAttribute("aVertexPosition", this.vertexBuffer).addAttribute("aTextureCoord", this.uvBuffer).addIndex([0, 1, 2, 0, 2, 3]);
     }
     map(targetTextureFrame, destinationFrame) {
-      let x = 0;
-      let y = 0;
-      this.uvs[0] = x;
-      this.uvs[1] = y;
-      this.uvs[2] = x + destinationFrame.width / targetTextureFrame.width;
-      this.uvs[3] = y;
-      this.uvs[4] = x + destinationFrame.width / targetTextureFrame.width;
-      this.uvs[5] = y + destinationFrame.height / targetTextureFrame.height;
-      this.uvs[6] = x;
-      this.uvs[7] = y + destinationFrame.height / targetTextureFrame.height;
-      x = destinationFrame.x;
-      y = destinationFrame.y;
-      this.vertices[0] = x;
-      this.vertices[1] = y;
-      this.vertices[2] = x + destinationFrame.width;
-      this.vertices[3] = y;
-      this.vertices[4] = x + destinationFrame.width;
-      this.vertices[5] = y + destinationFrame.height;
-      this.vertices[6] = x;
-      this.vertices[7] = y + destinationFrame.height;
+      let x2 = 0;
+      let y2 = 0;
+      this.uvs[0] = x2;
+      this.uvs[1] = y2;
+      this.uvs[2] = x2 + destinationFrame.width / targetTextureFrame.width;
+      this.uvs[3] = y2;
+      this.uvs[4] = x2 + destinationFrame.width / targetTextureFrame.width;
+      this.uvs[5] = y2 + destinationFrame.height / targetTextureFrame.height;
+      this.uvs[6] = x2;
+      this.uvs[7] = y2 + destinationFrame.height / targetTextureFrame.height;
+      x2 = destinationFrame.x;
+      y2 = destinationFrame.y;
+      this.vertices[0] = x2;
+      this.vertices[1] = y2;
+      this.vertices[2] = x2 + destinationFrame.width;
+      this.vertices[3] = y2;
+      this.vertices[4] = x2 + destinationFrame.width;
+      this.vertices[5] = y2 + destinationFrame.height;
+      this.vertices[6] = x2;
+      this.vertices[7] = y2 + destinationFrame.height;
       this.invalidate();
       return this;
     }
@@ -6667,8 +6821,8 @@ ${this.fragmentSrc}`;
       let padding = filters[0].padding;
       let autoFit = filters[0].autoFit;
       let legacy = filters[0].legacy ?? true;
-      for (let i = 1; i < filters.length; i++) {
-        const filter = filters[i];
+      for (let i2 = 1; i2 < filters.length; i2++) {
+        const filter = filters[i2];
         resolution = Math.min(resolution, filter.resolution);
         multisample = Math.min(multisample, filter.multisample);
         padding = this.useMaxPadding ? Math.max(padding, filter.padding) : padding + filter.padding;
@@ -6758,19 +6912,19 @@ ${this.fragmentSrc}`;
         let flip = state.renderTexture;
         let flop = this.getOptimalFilterTexture(flip.width, flip.height, state.resolution);
         flop.filterFrame = flip.filterFrame;
-        let i = 0;
-        for (i = 0; i < filters.length - 1; ++i) {
-          if (i === 1 && state.multisample > 1) {
+        let i2 = 0;
+        for (i2 = 0; i2 < filters.length - 1; ++i2) {
+          if (i2 === 1 && state.multisample > 1) {
             flop = this.getOptimalFilterTexture(flip.width, flip.height, state.resolution);
             flop.filterFrame = flip.filterFrame;
           }
-          filters[i].apply(this, flip, flop, CLEAR_MODES.CLEAR, state);
-          const t = flip;
+          filters[i2].apply(this, flip, flop, CLEAR_MODES.CLEAR, state);
+          const t2 = flip;
           flip = flop;
-          flop = t;
+          flop = t2;
         }
-        filters[i].apply(this, flip, lastState.renderTexture, CLEAR_MODES.BLEND, state);
-        if (i > 1 && state.multisample > 1) {
+        filters[i2].apply(this, flip, lastState.renderTexture, CLEAR_MODES.BLEND, state);
+        if (i2 > 1 && state.multisample > 1) {
           this.returnFilterTexture(state.renderTexture);
         }
         this.returnFilterTexture(flip);
@@ -6888,8 +7042,8 @@ ${this.fragmentSrc}`;
         return;
       }
       if (transform) {
-        const { a, b, c, d } = transform;
-        if ((Math.abs(b) > 1e-4 || Math.abs(c) > 1e-4) && (Math.abs(a) > 1e-4 || Math.abs(d) > 1e-4)) {
+        const { a: a2, b: b2, c: c2, d: d2 } = transform;
+        if ((Math.abs(b2) > 1e-4 || Math.abs(c2) > 1e-4) && (Math.abs(a2) > 1e-4 || Math.abs(d2) > 1e-4)) {
           return;
         }
       }
@@ -6983,8 +7137,8 @@ ${this.fragmentSrc}`;
             this.resizeFramebuffer(framebuffer);
           }
         }
-        for (let i = 0; i < framebuffer.colorTextures.length; i++) {
-          const tex = framebuffer.colorTextures[i];
+        for (let i2 = 0; i2 < framebuffer.colorTextures.length; i2++) {
+          const tex = framebuffer.colorTextures[i2];
           this.renderer.texture.unbind(tex.parentTextureArray || tex);
         }
         if (framebuffer.depthTexture) {
@@ -7012,18 +7166,18 @@ ${this.fragmentSrc}`;
         }
       }
     }
-    setViewport(x, y, width, height) {
-      const v = this.viewport;
-      x = Math.round(x);
-      y = Math.round(y);
+    setViewport(x2, y2, width, height) {
+      const v2 = this.viewport;
+      x2 = Math.round(x2);
+      y2 = Math.round(y2);
       width = Math.round(width);
       height = Math.round(height);
-      if (v.width !== width || v.height !== height || v.x !== x || v.y !== y) {
-        v.x = x;
-        v.y = y;
-        v.width = width;
-        v.height = height;
-        this.gl.viewport(x, y, width, height);
+      if (v2.width !== width || v2.height !== height || v2.x !== x2 || v2.y !== y2) {
+        v2.x = x2;
+        v2.y = y2;
+        v2.width = width;
+        v2.height = height;
+        this.gl.viewport(x2, y2, width, height);
       }
     }
     get size() {
@@ -7032,9 +7186,9 @@ ${this.fragmentSrc}`;
       }
       return { x: 0, y: 0, width: this.renderer.width, height: this.renderer.height };
     }
-    clear(r, g, b, a, mask = BUFFER_BITS.COLOR | BUFFER_BITS.DEPTH) {
+    clear(r2, g2, b2, a2, mask = BUFFER_BITS.COLOR | BUFFER_BITS.DEPTH) {
       const { gl } = this;
-      gl.clearColor(r, g, b, a);
+      gl.clearColor(r2, g2, b2, a2);
       gl.clear(mask);
     }
     initFramebuffer(framebuffer) {
@@ -7062,11 +7216,11 @@ ${this.fragmentSrc}`;
       if (!gl.drawBuffers) {
         count = Math.min(count, 1);
       }
-      for (let i = 0; i < count; i++) {
-        const texture = colorTextures[i];
+      for (let i2 = 0; i2 < count; i2++) {
+        const texture = colorTextures[i2];
         const parentTexture = texture.parentTextureArray || texture;
         this.renderer.texture.bind(parentTexture, 0);
-        if (i === 0 && fbo.msaaBuffer) {
+        if (i2 === 0 && fbo.msaaBuffer) {
           gl.bindRenderbuffer(gl.RENDERBUFFER, fbo.msaaBuffer);
           gl.renderbufferStorageMultisample(gl.RENDERBUFFER, fbo.multisample, parentTexture._glTextures[this.CONTEXT_UID].internalFormat, framebuffer.width, framebuffer.height);
         }
@@ -7094,17 +7248,17 @@ ${this.fragmentSrc}`;
         }
       }
       const activeTextures = [];
-      for (let i = 0; i < count; i++) {
-        const texture = colorTextures[i];
+      for (let i2 = 0; i2 < count; i2++) {
+        const texture = colorTextures[i2];
         const parentTexture = texture.parentTextureArray || texture;
         this.renderer.texture.bind(parentTexture, 0);
-        if (i === 0 && fbo.msaaBuffer) {
+        if (i2 === 0 && fbo.msaaBuffer) {
           gl.bindRenderbuffer(gl.RENDERBUFFER, fbo.msaaBuffer);
           gl.renderbufferStorageMultisample(gl.RENDERBUFFER, fbo.multisample, parentTexture._glTextures[this.CONTEXT_UID].internalFormat, framebuffer.width, framebuffer.height);
           gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.RENDERBUFFER, fbo.msaaBuffer);
         } else {
-          gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0 + i, texture.target, parentTexture._glTextures[this.CONTEXT_UID].texture, mipLevel);
-          activeTextures.push(gl.COLOR_ATTACHMENT0 + i);
+          gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0 + i2, texture.target, parentTexture._glTextures[this.CONTEXT_UID].texture, mipLevel);
+          activeTextures.push(gl.COLOR_ATTACHMENT0 + i2);
         }
       }
       if (activeTextures.length > 1) {
@@ -7141,9 +7295,9 @@ ${this.fragmentSrc}`;
       if (samples <= 1 || msaaSamples === null) {
         return res;
       }
-      for (let i = 0; i < msaaSamples.length; i++) {
-        if (msaaSamples[i] <= samples) {
-          res = msaaSamples[i];
+      for (let i2 = 0; i2 < msaaSamples.length; i2++) {
+        if (msaaSamples[i2] <= samples) {
+          res = msaaSamples[i2];
           break;
         }
       }
@@ -7201,6 +7355,7 @@ ${this.fragmentSrc}`;
       this.bind(framebuffer);
       gl.bindFramebuffer(gl.READ_FRAMEBUFFER, fbo.framebuffer);
       gl.blitFramebuffer(sourcePixels.left, sourcePixels.top, sourcePixels.right, sourcePixels.bottom, destPixels.left, destPixels.top, destPixels.right, destPixels.bottom, gl.COLOR_BUFFER_BIT, sameSize ? gl.NEAREST : gl.LINEAR);
+      gl.bindFramebuffer(gl.READ_FRAMEBUFFER, framebuffer.glFramebuffers[this.CONTEXT_UID].framebuffer);
     }
     disposeFramebuffer(framebuffer, contextLost) {
       const fbo = framebuffer.glFramebuffers[this.CONTEXT_UID];
@@ -7224,14 +7379,14 @@ ${this.fragmentSrc}`;
         }
       }
       if (fbo.blitFramebuffer) {
-        fbo.blitFramebuffer.dispose();
+        this.disposeFramebuffer(fbo.blitFramebuffer, contextLost);
       }
     }
     disposeAll(contextLost) {
       const list = this.managedFramebuffers;
       this.managedFramebuffers = [];
-      for (let i = 0; i < list.length; i++) {
-        this.disposeFramebuffer(list[i], contextLost);
+      for (let i2 = 0; i2 < list.length; i2++) {
+        this.disposeFramebuffer(list[i2], contextLost);
       }
     }
     forceStencil() {
@@ -7244,15 +7399,15 @@ ${this.fragmentSrc}`;
         return;
       }
       framebuffer.stencil = true;
-      const w = framebuffer.width;
-      const h = framebuffer.height;
+      const w2 = framebuffer.width;
+      const h2 = framebuffer.height;
       const gl = this.gl;
       const stencil = gl.createRenderbuffer();
       gl.bindRenderbuffer(gl.RENDERBUFFER, stencil);
       if (fbo.msaaBuffer) {
-        gl.renderbufferStorageMultisample(gl.RENDERBUFFER, fbo.multisample, gl.DEPTH24_STENCIL8, w, h);
+        gl.renderbufferStorageMultisample(gl.RENDERBUFFER, fbo.multisample, gl.DEPTH24_STENCIL8, w2, h2);
       } else {
-        gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_STENCIL, w, h);
+        gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_STENCIL, w2, h2);
       }
       fbo.stencil = stencil;
       gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_STENCIL_ATTACHMENT, gl.RENDERBUFFER, stencil);
@@ -7307,9 +7462,9 @@ ${this.fragmentSrc}`;
       if (context2.webGLVersion !== 2) {
         const instanceExt = gl.getExtension("ANGLE_instanced_arrays");
         if (instanceExt) {
-          gl.vertexAttribDivisor = (a, b) => instanceExt.vertexAttribDivisorANGLE(a, b);
-          gl.drawElementsInstanced = (a, b, c, d, e) => instanceExt.drawElementsInstancedANGLE(a, b, c, d, e);
-          gl.drawArraysInstanced = (a, b, c, d) => instanceExt.drawArraysInstancedANGLE(a, b, c, d);
+          gl.vertexAttribDivisor = (a2, b2) => instanceExt.vertexAttribDivisorANGLE(a2, b2);
+          gl.drawElementsInstanced = (a2, b2, c2, d2, e2) => instanceExt.drawElementsInstancedANGLE(a2, b2, c2, d2, e2);
+          gl.drawArraysInstanced = (a2, b2, c2, d2) => instanceExt.drawArraysInstancedANGLE(a2, b2, c2, d2);
         } else {
           this.hasInstance = false;
         }
@@ -7345,17 +7500,17 @@ ${this.fragmentSrc}`;
     updateBuffers() {
       const geometry = this._activeGeometry;
       const bufferSystem = this.renderer.buffer;
-      for (let i = 0; i < geometry.buffers.length; i++) {
-        const buffer = geometry.buffers[i];
+      for (let i2 = 0; i2 < geometry.buffers.length; i2++) {
+        const buffer = geometry.buffers[i2];
         bufferSystem.update(buffer);
       }
     }
     checkCompatibility(geometry, program) {
       const geometryAttributes = geometry.attributes;
       const shaderAttributes = program.attributeData;
-      for (const j in shaderAttributes) {
-        if (!geometryAttributes[j]) {
-          throw new Error(`shader and geometry incompatible, geometry missing the "${j}" attribute`);
+      for (const j2 in shaderAttributes) {
+        if (!geometryAttributes[j2]) {
+          throw new Error(`shader and geometry incompatible, geometry missing the "${j2}" attribute`);
         }
       }
     }
@@ -7363,9 +7518,9 @@ ${this.fragmentSrc}`;
       const attribs = geometry.attributes;
       const shaderAttributes = program.attributeData;
       const strings = ["g", geometry.id];
-      for (const i in attribs) {
-        if (shaderAttributes[i]) {
-          strings.push(i, shaderAttributes[i].location);
+      for (const i2 in attribs) {
+        if (shaderAttributes[i2]) {
+          strings.push(i2, shaderAttributes[i2].location);
         }
       }
       return strings.join("-");
@@ -7390,20 +7545,20 @@ ${this.fragmentSrc}`;
       const attributes = geometry.attributes;
       const tempStride = {};
       const tempStart = {};
-      for (const j in buffers) {
-        tempStride[j] = 0;
-        tempStart[j] = 0;
+      for (const j2 in buffers) {
+        tempStride[j2] = 0;
+        tempStart[j2] = 0;
       }
-      for (const j in attributes) {
-        if (!attributes[j].size && program.attributeData[j]) {
-          attributes[j].size = program.attributeData[j].size;
-        } else if (!attributes[j].size) {
-          console.warn(`PIXI Geometry attribute '${j}' size cannot be determined (likely the bound shader does not have the attribute)`);
+      for (const j2 in attributes) {
+        if (!attributes[j2].size && program.attributeData[j2]) {
+          attributes[j2].size = program.attributeData[j2].size;
+        } else if (!attributes[j2].size) {
+          console.warn(`PIXI Geometry attribute '${j2}' size cannot be determined (likely the bound shader does not have the attribute)`);
         }
-        tempStride[attributes[j].buffer] += attributes[j].size * byteSizeMap2[attributes[j].type];
+        tempStride[attributes[j2].buffer] += attributes[j2].size * byteSizeMap2[attributes[j2].type];
       }
-      for (const j in attributes) {
-        const attribute = attributes[j];
+      for (const j2 in attributes) {
+        const attribute = attributes[j2];
         const attribSize = attribute.size;
         if (attribute.stride === void 0) {
           if (tempStride[attribute.buffer] === attribSize * byteSizeMap2[attribute.type]) {
@@ -7419,8 +7574,8 @@ ${this.fragmentSrc}`;
       }
       vao = gl.createVertexArray();
       gl.bindVertexArray(vao);
-      for (let i = 0; i < buffers.length; i++) {
-        const buffer = buffers[i];
+      for (let i2 = 0; i2 < buffers.length; i2++) {
+        const buffer = buffers[i2];
         bufferSystem.bind(buffer);
         if (incRefCount) {
           buffer._glBuffers[CONTEXT_UID].refCount++;
@@ -7447,12 +7602,12 @@ ${this.fragmentSrc}`;
         return;
       }
       if (bufferSystem) {
-        for (let i = 0; i < buffers.length; i++) {
-          const buf = buffers[i]._glBuffers[this.CONTEXT_UID];
+        for (let i2 = 0; i2 < buffers.length; i2++) {
+          const buf = buffers[i2]._glBuffers[this.CONTEXT_UID];
           if (buf) {
             buf.refCount--;
             if (buf.refCount === 0 && !contextLost) {
-              bufferSystem.dispose(buffers[i], contextLost);
+              bufferSystem.dispose(buffers[i2], contextLost);
             }
           }
         }
@@ -7472,8 +7627,8 @@ ${this.fragmentSrc}`;
     }
     disposeAll(contextLost) {
       const all = Object.keys(this.managedGeometries);
-      for (let i = 0; i < all.length; i++) {
-        this.disposeGeometry(this.managedGeometries[all[i]], contextLost);
+      for (let i2 = 0; i2 < all.length; i2++) {
+        this.disposeGeometry(this.managedGeometries[all[i2]], contextLost);
       }
     }
     activateVao(geometry, program) {
@@ -7486,16 +7641,16 @@ ${this.fragmentSrc}`;
         bufferSystem.bind(geometry.indexBuffer);
       }
       let lastBuffer = null;
-      for (const j in attributes) {
-        const attribute = attributes[j];
+      for (const j2 in attributes) {
+        const attribute = attributes[j2];
         const buffer = buffers[attribute.buffer];
         const glBuffer = buffer._glBuffers[CONTEXT_UID];
-        if (program.attributeData[j]) {
+        if (program.attributeData[j2]) {
           if (lastBuffer !== glBuffer) {
             bufferSystem.bind(buffer);
             lastBuffer = glBuffer;
           }
-          const location = program.attributeData[j].location;
+          const location = program.attributeData[j2].location;
           gl.enableVertexAttribArray(location);
           gl.vertexAttribPointer(location, attribute.size, attribute.type || gl.FLOAT, attribute.normalized, attribute.stride, attribute.start);
           if (attribute.instance) {
@@ -7571,11 +7726,11 @@ ${this.fragmentSrc}`;
         out = uvs;
       }
       const mat = this.mapCoord;
-      for (let i = 0; i < uvs.length; i += 2) {
-        const x = uvs[i];
-        const y = uvs[i + 1];
-        out[i] = x * mat.a + y * mat.c + mat.tx;
-        out[i + 1] = x * mat.b + y * mat.d + mat.ty;
+      for (let i2 = 0; i2 < uvs.length; i2 += 2) {
+        const x2 = uvs[i2];
+        const y2 = uvs[i2 + 1];
+        out[i2] = x2 * mat.a + y2 * mat.c + mat.tx;
+        out[i2 + 1] = x2 * mat.b + y2 * mat.d + mat.ty;
       }
       return out;
     }
@@ -7669,7 +7824,7 @@ ${this.fragmentSrc}`;
       this.pooled = false;
       this.isMaskData = true;
       this.resolution = null;
-      this.multisample = settings.FILTER_MULTISAMPLE;
+      this.multisample = Filter.defaultMultisample;
       this.enabled = true;
       this.colorMask = 15;
       this._filters = null;
@@ -7734,10 +7889,10 @@ ${this.fragmentSrc}`;
     push(target, maskDataOrTarget) {
       let maskData = maskDataOrTarget;
       if (!maskData.isMaskData) {
-        const d = this.maskDataPool.pop() || new MaskData();
-        d.pooled = true;
-        d.maskObject = maskDataOrTarget;
-        maskData = d;
+        const d2 = this.maskDataPool.pop() || new MaskData();
+        d2.pooled = true;
+        d2.maskObject = maskDataOrTarget;
+        maskData = d2;
       }
       const maskAbove = this.maskStack.length !== 0 ? this.maskStack[this.maskStack.length - 1] : null;
       maskData.copyCountersOrReset(maskAbove);
@@ -7950,8 +8105,8 @@ ${this.fragmentSrc}`;
       if (!matrix) {
         return false;
       }
-      const { a, b, c, d } = matrix;
-      return (Math.abs(b) > 1e-4 || Math.abs(c) > 1e-4) && (Math.abs(a) > 1e-4 || Math.abs(d) > 1e-4);
+      const { a: a2, b: b2, c: c2, d: d2 } = matrix;
+      return (Math.abs(b2) > 1e-4 || Math.abs(c2) > 1e-4) && (Math.abs(a2) > 1e-4 || Math.abs(d2) > 1e-4);
     }
     testScissor(maskData) {
       const { maskObject } = maskData;
@@ -8006,13 +8161,13 @@ ${this.fragmentSrc}`;
     }
     _useCurrent() {
       const rect = this.maskStack[this.maskStack.length - 1]._scissorRect;
-      let y;
+      let y2;
       if (this.renderer.renderTexture.current) {
-        y = rect.y;
+        y2 = rect.y;
       } else {
-        y = this.renderer.height - rect.height - rect.y;
+        y2 = this.renderer.height - rect.height - rect.y;
       }
-      this.renderer.gl.scissor(rect.x, y, rect.width, rect.height);
+      this.renderer.gl.scissor(rect.x, y2, rect.width, rect.height);
     }
   };
   var ScissorSystem = _ScissorSystem;
@@ -8127,15 +8282,16 @@ ${this.fragmentSrc}`;
         }
       });
     }
-    init(staticMap) {
-      for (const o in staticMap) {
-        this.plugins[o] = new staticMap[o](this.renderer);
+    init() {
+      const staticMap = this.rendererPlugins;
+      for (const o2 in staticMap) {
+        this.plugins[o2] = new staticMap[o2](this.renderer);
       }
     }
     destroy() {
-      for (const o in this.plugins) {
-        this.plugins[o].destroy();
-        this.plugins[o] = null;
+      for (const o2 in this.plugins) {
+        this.plugins[o2].destroy();
+        this.plugins[o2] = null;
       }
     }
   };
@@ -8249,6 +8405,10 @@ ${this.fragmentSrc}`;
       this.destinationFrame = new Rectangle();
       this.viewportFrame = new Rectangle();
     }
+    contextChange() {
+      const attributes = this.renderer?.gl.getContextAttributes();
+      this._rendererPremultipliedAlpha = !!(attributes && attributes.alpha && attributes.premultipliedAlpha);
+    }
     bind(renderTexture = null, sourceFrame, destinationFrame) {
       const renderer = this.renderer;
       this.current = renderTexture;
@@ -8304,24 +8464,24 @@ ${this.fragmentSrc}`;
       this.destinationFrame.copyFrom(destinationFrame);
     }
     clear(clearColor, mask) {
-      if (this.current) {
-        clearColor = clearColor || this.current.baseTexture.clearColor;
-      } else {
-        clearColor = clearColor || this.renderer.background.colorRgba;
+      const fallbackColor = this.current ? this.current.baseTexture.clear : this.renderer.background.backgroundColor;
+      const color = Color.shared.setValue(clearColor ? clearColor : fallbackColor);
+      if (this.current && this.current.baseTexture.alphaMode > 0 || !this.current && this._rendererPremultipliedAlpha) {
+        color.premultiply(color.alpha);
       }
       const destinationFrame = this.destinationFrame;
       const baseFrame = this.current ? this.current.baseTexture : this.renderer._view.screen;
       const clearMask = destinationFrame.width !== baseFrame.width || destinationFrame.height !== baseFrame.height;
       if (clearMask) {
-        let { x, y, width, height } = this.viewportFrame;
-        x = Math.round(x);
-        y = Math.round(y);
+        let { x: x2, y: y2, width, height } = this.viewportFrame;
+        x2 = Math.round(x2);
+        y2 = Math.round(y2);
         width = Math.round(width);
         height = Math.round(height);
         this.renderer.gl.enable(this.renderer.gl.SCISSOR_TEST);
-        this.renderer.gl.scissor(x, y, width, height);
+        this.renderer.gl.scissor(x2, y2, width, height);
       }
-      this.renderer.framebuffer.clear(clearColor[0], clearColor[1], clearColor[2], clearColor[3], mask);
+      this.renderer.framebuffer.clear(color.red, color.green, color.blue, color.alpha, mask);
       if (clearMask) {
         this.renderer.scissor.pop();
       }
@@ -8364,8 +8524,8 @@ ${this.fragmentSrc}`;
   function getAttributeData(program, gl) {
     const attributes = {};
     const totalAttributes = gl.getProgramParameter(program, gl.ACTIVE_ATTRIBUTES);
-    for (let i = 0; i < totalAttributes; i++) {
-      const attribData = gl.getActiveAttrib(program, i);
+    for (let i2 = 0; i2 < totalAttributes; i2++) {
+      const attribData = gl.getActiveAttrib(program, i2);
       if (attribData.name.startsWith("gl_")) {
         continue;
       }
@@ -8385,14 +8545,14 @@ ${this.fragmentSrc}`;
   function getUniformData(program, gl) {
     const uniforms = {};
     const totalUniforms = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
-    for (let i = 0; i < totalUniforms; i++) {
-      const uniformData = gl.getActiveUniform(program, i);
+    for (let i2 = 0; i2 < totalUniforms; i2++) {
+      const uniformData = gl.getActiveUniform(program, i2);
       const name = uniformData.name.replace(/\[.*?\]$/, "");
       const isArray = !!uniformData.name.match(/\[.*?\]$/);
       const type = mapType(gl, uniformData.type);
       uniforms[name] = {
         name,
-        index: i,
+        index: i2,
         type,
         size: uniformData.size,
         isArray,
@@ -8425,20 +8585,20 @@ ${this.fragmentSrc}`;
     program.uniformData = getUniformData(webGLProgram, gl);
     if (!/^[ \t]*#[ \t]*version[ \t]+300[ \t]+es[ \t]*$/m.test(program.vertexSrc)) {
       const keys = Object.keys(program.attributeData);
-      keys.sort((a, b) => a > b ? 1 : -1);
-      for (let i = 0; i < keys.length; i++) {
-        program.attributeData[keys[i]].location = i;
-        gl.bindAttribLocation(webGLProgram, i, keys[i]);
+      keys.sort((a2, b2) => a2 > b2 ? 1 : -1);
+      for (let i2 = 0; i2 < keys.length; i2++) {
+        program.attributeData[keys[i2]].location = i2;
+        gl.bindAttribLocation(webGLProgram, i2, keys[i2]);
       }
       gl.linkProgram(webGLProgram);
     }
     gl.deleteShader(glVertShader);
     gl.deleteShader(glFragShader);
     const uniformData = {};
-    for (const i in program.uniformData) {
-      const data = program.uniformData[i];
-      uniformData[i] = {
-        location: gl.getUniformLocation(webGLProgram, i),
+    for (const i2 in program.uniformData) {
+      const data = program.uniformData[i2];
+      uniformData[i2] = {
+        location: gl.getUniformLocation(webGLProgram, i2),
         value: defaultValue(data.type, data.size)
       };
     }
@@ -8528,8 +8688,8 @@ ${this.fragmentSrc}`;
     let size = 0;
     let chunkSize = 0;
     let offset = 0;
-    for (let i = 0; i < uboElements.length; i++) {
-      const uboElement = uboElements[i];
+    for (let i2 = 0; i2 < uboElements.length; i2++) {
+      const uboElement = uboElements[i2];
       size = GLSL_TO_STD40_SIZE[uboElement.data.type];
       if (uboElement.data.size > 1) {
         size = Math.max(size, 16) * uboElement.data.size;
@@ -8556,12 +8716,12 @@ ${this.fragmentSrc}`;
   }
   function getUBOData(uniforms, uniformData) {
     const usedUniformDatas = [];
-    for (const i in uniforms) {
-      if (uniformData[i]) {
-        usedUniformDatas.push(uniformData[i]);
+    for (const i2 in uniforms) {
+      if (uniformData[i2]) {
+        usedUniformDatas.push(uniformData[i2]);
       }
     }
-    usedUniformDatas.sort((a, b) => a.index - b.index);
+    usedUniformDatas.sort((a2, b2) => a2.index - b2.index);
     return usedUniformDatas;
   }
   function generateUniformBufferSync(group, uniformData) {
@@ -8579,15 +8739,15 @@ ${this.fragmentSrc}`;
     var index = 0;
     var data = buffer.data;
     `];
-    for (let i = 0; i < uboElements.length; i++) {
-      const uboElement = uboElements[i];
+    for (let i2 = 0; i2 < uboElements.length; i2++) {
+      const uboElement = uboElements[i2];
       const uniform = group.uniforms[uboElement.data.name];
       const name = uboElement.data.name;
       let parsed = false;
-      for (let j = 0; j < uniformParsers.length; j++) {
-        const uniformParser = uniformParsers[j];
+      for (let j2 = 0; j2 < uniformParsers.length; j2++) {
+        const uniformParser = uniformParsers[j2];
         if (uniformParser.codeUbo && uniformParser.test(uboElement.data, uniform)) {
-          funcFragments.push(`offset = ${uboElement.offset / 4};`, uniformParsers[j].codeUbo(uboElement.data.name, uniform));
+          funcFragments.push(`offset = ${uboElement.offset / 4};`, uniformParsers[j2].codeUbo(uboElement.data.name, uniform));
           parsed = true;
           break;
         }
@@ -8732,10 +8892,10 @@ ${this.fragmentSrc}`;
     getSignature(group, uniformData, preFix) {
       const uniforms = group.uniforms;
       const strings = [`${preFix}-`];
-      for (const i in uniforms) {
-        strings.push(i);
-        if (uniformData[i]) {
-          strings.push(uniformData[i].type);
+      for (const i2 in uniforms) {
+        strings.push(i2);
+        if (uniformData[i2]) {
+          strings.push(uniformData[i2].type);
         }
       }
       return strings.join("-");
@@ -8779,15 +8939,18 @@ ${this.fragmentSrc}`;
       this.renderer = renderer;
     }
     run(options) {
-      const renderer = this.renderer;
-      renderer.emitWithCustomOptions(renderer.runners.init, options);
+      const { renderer } = this;
+      renderer.runners.init.emit(renderer.options);
       if (options.hello) {
-        console.log(`PixiJS ${"7.1.0"} - ${renderer.rendererLogId} - https://pixijs.com`);
+        console.log(`PixiJS ${"7.2.4"} - ${renderer.rendererLogId} - https://pixijs.com`);
       }
-      renderer.resize(this.renderer.screen.width, this.renderer.screen.height);
+      renderer.resize(renderer.screen.width, renderer.screen.height);
     }
     destroy() {
     }
+  };
+  StartupSystem.defaultOptions = {
+    hello: false
   };
   StartupSystem.extension = {
     type: [
@@ -8868,27 +9031,27 @@ ${this.fragmentSrc}`;
       state = state || this.defaultState;
       if (this.stateId !== state.data) {
         let diff = this.stateId ^ state.data;
-        let i = 0;
+        let i2 = 0;
         while (diff) {
           if (diff & 1) {
-            this.map[i].call(this, !!(state.data & 1 << i));
+            this.map[i2].call(this, !!(state.data & 1 << i2));
           }
           diff = diff >> 1;
-          i++;
+          i2++;
         }
         this.stateId = state.data;
       }
-      for (let i = 0; i < this.checks.length; i++) {
-        this.checks[i](this, state);
+      for (let i2 = 0; i2 < this.checks.length; i2++) {
+        this.checks[i2](this, state);
       }
     }
     forceState(state) {
       state = state || this.defaultState;
-      for (let i = 0; i < this.map.length; i++) {
-        this.map[i].call(this, !!(state.data & 1 << i));
+      for (let i2 = 0; i2 < this.map.length; i2++) {
+        this.map[i2].call(this, !!(state.data & 1 << i2));
       }
-      for (let i = 0; i < this.checks.length; i++) {
-        this.checks[i](this, state);
+      for (let i2 = 0; i2 < this.checks.length; i2++) {
+        this.checks[i2](this, state);
       }
       this.stateId = state.data;
     }
@@ -8981,8 +9144,8 @@ ${this.fragmentSrc}`;
         ...priority,
         ...Object.keys(config.systems).filter((key) => !priority.includes(key))
       ];
-      for (const i of orderByPriority) {
-        this.addSystem(config.systems[i], i);
+      for (const i2 of orderByPriority) {
+        this.addSystem(config.systems[i2], i2);
       }
     }
     addRunners(...runnerIds) {
@@ -8997,8 +9160,8 @@ ${this.fragmentSrc}`;
       }
       this[name] = system;
       this._systemsHash[name] = system;
-      for (const i in this.runners) {
-        this.runners[i].add(system);
+      for (const i2 in this.runners) {
+        this.runners[i2].add(system);
       }
       return this;
     }
@@ -9045,22 +9208,22 @@ ${this.fragmentSrc}`;
       const tm = this.renderer.texture;
       const managedTextures = tm.managedTextures;
       let wasRemoved = false;
-      for (let i = 0; i < managedTextures.length; i++) {
-        const texture = managedTextures[i];
+      for (let i2 = 0; i2 < managedTextures.length; i2++) {
+        const texture = managedTextures[i2];
         if (!texture.framebuffer && this.count - texture.touched > this.maxIdle) {
           tm.destroyTexture(texture, true);
-          managedTextures[i] = null;
+          managedTextures[i2] = null;
           wasRemoved = true;
         }
       }
       if (wasRemoved) {
-        let j = 0;
-        for (let i = 0; i < managedTextures.length; i++) {
-          if (managedTextures[i] !== null) {
-            managedTextures[j++] = managedTextures[i];
+        let j2 = 0;
+        for (let i2 = 0; i2 < managedTextures.length; i2++) {
+          if (managedTextures[i2] !== null) {
+            managedTextures[j2++] = managedTextures[i2];
           }
         }
-        managedTextures.length = j;
+        managedTextures.length = j2;
       }
     }
     unload(displayObject) {
@@ -9069,8 +9232,8 @@ ${this.fragmentSrc}`;
       if (texture && !texture.framebuffer) {
         tm.destroyTexture(texture);
       }
-      for (let i = displayObject.children.length - 1; i >= 0; i--) {
-        this.unload(displayObject.children[i]);
+      for (let i2 = displayObject.children.length - 1; i2 >= 0; i2--) {
+        this.unload(displayObject.children[i2]);
       }
     }
     destroy() {
@@ -9237,8 +9400,8 @@ ${this.fragmentSrc}`;
       this.internalFormats = mapTypeAndFormatToInternalFormat(gl);
       const maxTextures = gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS);
       this.boundTextures.length = maxTextures;
-      for (let i = 0; i < maxTextures; i++) {
-        this.boundTextures[i] = null;
+      for (let i2 = 0; i2 < maxTextures; i2++) {
+        this.boundTextures[i2] = null;
       }
       this.emptyTextures = {};
       const emptyTexture2D = new GLTexture(gl.createTexture());
@@ -9247,13 +9410,13 @@ ${this.fragmentSrc}`;
       this.emptyTextures[gl.TEXTURE_2D] = emptyTexture2D;
       this.emptyTextures[gl.TEXTURE_CUBE_MAP] = new GLTexture(gl.createTexture());
       gl.bindTexture(gl.TEXTURE_CUBE_MAP, this.emptyTextures[gl.TEXTURE_CUBE_MAP].texture);
-      for (let i = 0; i < 6; i++) {
-        gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+      for (let i2 = 0; i2 < 6; i2++) {
+        gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + i2, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
       }
       gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-      for (let i = 0; i < this.boundTextures.length; i++) {
-        this.bind(null, i);
+      for (let i2 = 0; i2 < this.boundTextures.length; i2++) {
+        this.bind(null, i2);
       }
     }
     bind(texture, location = 0) {
@@ -9292,28 +9455,28 @@ ${this.fragmentSrc}`;
       this._unknownBoundTextures = true;
       this.hasIntegerTextures = false;
       this.currentLocation = -1;
-      for (let i = 0; i < this.boundTextures.length; i++) {
-        this.boundTextures[i] = this.unknownTexture;
+      for (let i2 = 0; i2 < this.boundTextures.length; i2++) {
+        this.boundTextures[i2] = this.unknownTexture;
       }
     }
     unbind(texture) {
       const { gl, boundTextures } = this;
       if (this._unknownBoundTextures) {
         this._unknownBoundTextures = false;
-        for (let i = 0; i < boundTextures.length; i++) {
-          if (boundTextures[i] === this.unknownTexture) {
-            this.bind(null, i);
+        for (let i2 = 0; i2 < boundTextures.length; i2++) {
+          if (boundTextures[i2] === this.unknownTexture) {
+            this.bind(null, i2);
           }
         }
       }
-      for (let i = 0; i < boundTextures.length; i++) {
-        if (boundTextures[i] === texture) {
-          if (this.currentLocation !== i) {
-            gl.activeTexture(gl.TEXTURE0 + i);
-            this.currentLocation = i;
+      for (let i2 = 0; i2 < boundTextures.length; i2++) {
+        if (boundTextures[i2] === texture) {
+          if (this.currentLocation !== i2) {
+            gl.activeTexture(gl.TEXTURE0 + i2);
+            this.currentLocation = i2;
           }
           gl.bindTexture(texture.target, this.emptyTextures[texture.target].texture);
-          boundTextures[i] = null;
+          boundTextures[i2] = null;
         }
       }
     }
@@ -9322,8 +9485,8 @@ ${this.fragmentSrc}`;
       if (!hasIntegerTextures) {
         return;
       }
-      for (let i = maxTextures - 1; i >= 0; --i) {
-        const tex = boundTextures[i];
+      for (let i2 = maxTextures - 1; i2 >= 0; --i2) {
+        const tex = boundTextures[i2];
         if (tex) {
           const glTexture = tex._glTextures[CONTEXT_UID];
           if (glTexture.samplerType !== SAMPLER_TYPES.FLOAT) {
@@ -9383,9 +9546,9 @@ ${this.fragmentSrc}`;
         texture.off("dispose", this.destroyTexture, this);
         delete texture._glTextures[this.CONTEXT_UID];
         if (!skipRemove) {
-          const i = this.managedTextures.indexOf(texture);
-          if (i !== -1) {
-            removeItems(this.managedTextures, i, 1);
+          const i2 = this.managedTextures.indexOf(texture);
+          if (i2 !== -1) {
+            removeItems(this.managedTextures, i2, 1);
           }
         }
       }
@@ -9474,13 +9637,13 @@ ${this.fragmentSrc}`;
       const glTransformFeedback = gl.createTransformFeedback();
       tf._glTransformFeedbacks[CONTEXT_UID] = glTransformFeedback;
       gl.bindTransformFeedback(gl.TRANSFORM_FEEDBACK, glTransformFeedback);
-      for (let i = 0; i < tf.buffers.length; i++) {
-        const buffer = tf.buffers[i];
+      for (let i2 = 0; i2 < tf.buffers.length; i2++) {
+        const buffer = tf.buffers[i2];
         if (!buffer)
           continue;
         renderer.buffer.update(buffer);
         buffer._glBuffers[CONTEXT_UID].refCount++;
-        gl.bindBufferBase(gl.TRANSFORM_FEEDBACK_BUFFER, i, buffer._glBuffers[CONTEXT_UID].buffer || null);
+        gl.bindBufferBase(gl.TRANSFORM_FEEDBACK_BUFFER, i2, buffer._glBuffers[CONTEXT_UID].buffer || null);
       }
       gl.bindTransformFeedback(gl.TRANSFORM_FEEDBACK, null);
       tf.disposeRunner.add(this);
@@ -9492,8 +9655,8 @@ ${this.fragmentSrc}`;
       tf.disposeRunner.remove(this);
       const bufferSystem = this.renderer.buffer;
       if (bufferSystem) {
-        for (let i = 0; i < tf.buffers.length; i++) {
-          const buffer = tf.buffers[i];
+        for (let i2 = 0; i2 < tf.buffers.length; i2++) {
+          const buffer = tf.buffers[i2];
           if (!buffer)
             continue;
           const buf = buffer._glBuffers[this.CONTEXT_UID];
@@ -9557,6 +9720,12 @@ ${this.fragmentSrc}`;
       this.screen = null;
     }
   };
+  ViewSystem.defaultOptions = {
+    width: 800,
+    height: 600,
+    resolution: settings.RESOLUTION,
+    autoDensity: false
+  };
   ViewSystem.extension = {
     type: [
       ExtensionType.RendererSystem,
@@ -9569,13 +9738,19 @@ ${this.fragmentSrc}`;
   // node_modules/@pixi/core/lib/settings.mjs
   settings.PREFER_ENV = ENV.WEBGL2;
   settings.STRICT_TEXTURE_CACHE = false;
+  settings.RENDER_OPTIONS = {
+    ...ContextSystem.defaultOptions,
+    ...BackgroundSystem.defaultOptions,
+    ...ViewSystem.defaultOptions,
+    ...StartupSystem.defaultOptions
+  };
   Object.defineProperties(settings, {
     WRAP_MODE: {
       get() {
         return BaseTexture.defaultOptions.wrapMode;
       },
       set(value) {
-        deprecation("7.1.0", "settings.WRAP_MODE is deprecated, use BaseTeture.defaultOptions.wrapMode");
+        deprecation("7.1.0", "settings.WRAP_MODE is deprecated, use BaseTexture.defaultOptions.wrapMode");
         BaseTexture.defaultOptions.wrapMode = value;
       }
     },
@@ -9584,7 +9759,7 @@ ${this.fragmentSrc}`;
         return BaseTexture.defaultOptions.scaleMode;
       },
       set(value) {
-        deprecation("7.1.0", "settings.SCALE_MODE is deprecated, use BaseTeture.defaultOptions.scaleMode");
+        deprecation("7.1.0", "settings.SCALE_MODE is deprecated, use BaseTexture.defaultOptions.scaleMode");
         BaseTexture.defaultOptions.scaleMode = value;
       }
     },
@@ -9593,7 +9768,7 @@ ${this.fragmentSrc}`;
         return BaseTexture.defaultOptions.mipmap;
       },
       set(value) {
-        deprecation("7.1.0", "settings.MIPMAP_TEXTURES is deprecated, use BaseTeture.defaultOptions.mipmap");
+        deprecation("7.1.0", "settings.MIPMAP_TEXTURES is deprecated, use BaseTexture.defaultOptions.mipmap");
         BaseTexture.defaultOptions.mipmap = value;
       }
     },
@@ -9602,7 +9777,7 @@ ${this.fragmentSrc}`;
         return BaseTexture.defaultOptions.anisotropicLevel;
       },
       set(value) {
-        deprecation("7.1.0", "settings.ANISOTROPIC_LEVEL is deprecated, use BaseTeture.defaultOptions.anisotropicLevel");
+        deprecation("7.1.0", "settings.ANISOTROPIC_LEVEL is deprecated, use BaseTexture.defaultOptions.anisotropicLevel");
         BaseTexture.defaultOptions.anisotropicLevel = value;
       }
     },
@@ -9700,6 +9875,7 @@ ${this.fragmentSrc}`;
 
   // node_modules/@pixi/ticker/lib/const.mjs
   var UPDATE_PRIORITY = /* @__PURE__ */ ((UPDATE_PRIORITY2) => {
+    UPDATE_PRIORITY2[UPDATE_PRIORITY2["INTERACTION"] = 50] = "INTERACTION";
     UPDATE_PRIORITY2[UPDATE_PRIORITY2["HIGH"] = 25] = "HIGH";
     UPDATE_PRIORITY2[UPDATE_PRIORITY2["NORMAL"] = 0] = "NORMAL";
     UPDATE_PRIORITY2[UPDATE_PRIORITY2["LOW"] = -25] = "LOW";
@@ -10139,8 +10315,8 @@ ${this.fragmentSrc}`;
     }
     disposeAll(contextLost) {
       const all = Object.keys(this.managedBuffers);
-      for (let i = 0; i < all.length; i++) {
-        this.dispose(this.managedBuffers[all[i]], contextLost);
+      for (let i2 = 0; i2 < all.length; i2++) {
+        this.dispose(this.managedBuffers[all[i2]], contextLost);
       }
     }
     createGLBuffer(buffer) {
@@ -10221,6 +10397,7 @@ ${this.fragmentSrc}`;
   var _Renderer = class extends SystemManager {
     constructor(options) {
       super();
+      this.type = RENDERER_TYPE.WEBGL;
       options = Object.assign({}, settings.RENDER_OPTIONS, options);
       this.gl = null;
       this.CONTEXT_UID = 0;
@@ -10271,31 +10448,9 @@ ${this.fragmentSrc}`;
         options.premultipliedAlpha = options.useContextAlpha && options.useContextAlpha !== "notMultiplied";
         options.backgroundAlpha = options.useContextAlpha === false ? 1 : options.backgroundAlpha;
       }
-      const startupOptions = {
-        hello: options.hello,
-        _plugin: _Renderer.__plugins,
-        background: {
-          alpha: options.backgroundAlpha,
-          color: options.background ?? options.backgroundColor,
-          clearBeforeRender: options.clearBeforeRender
-        },
-        _view: {
-          height: options.height,
-          width: options.width,
-          autoDensity: options.autoDensity,
-          resolution: options.resolution,
-          view: options.view
-        },
-        context: {
-          antialias: options.antialias,
-          context: options.context,
-          powerPreference: options.powerPreference,
-          premultipliedAlpha: options.premultipliedAlpha,
-          preserveDrawingBuffer: options.preserveDrawingBuffer
-        }
-      };
-      this.startup.run(startupOptions);
+      this._plugin.rendererPlugins = _Renderer.__plugins;
       this.options = options;
+      this.startup.run(this.options);
     }
     static test(options) {
       if (options?.forceCanvas) {
@@ -10383,7 +10538,7 @@ ${this.fragmentSrc}`;
     }
     get backgroundAlpha() {
       deprecation("7.0.0", "renderer.backgroundAlpha has been deprecated, use renderer.background.alpha instead.");
-      return this.background.color;
+      return this.background.alpha;
     }
     set backgroundAlpha(value) {
       deprecation("7.0.0", "renderer.backgroundAlpha has been deprecated, use renderer.background.alpha instead.");
@@ -10415,7 +10570,7 @@ ${this.fragmentSrc}`;
       super(width, height);
       this.items = [];
       this.itemDirtyIds = [];
-      for (let i = 0; i < length; i++) {
+      for (let i2 = 0; i2 < length; i2++) {
         const partTexture = new BaseTexture();
         this.items.push(partTexture);
         this.itemDirtyIds.push(-2);
@@ -10425,22 +10580,22 @@ ${this.fragmentSrc}`;
       this.baseTexture = null;
     }
     initFromArray(resources, options) {
-      for (let i = 0; i < this.length; i++) {
-        if (!resources[i]) {
+      for (let i2 = 0; i2 < this.length; i2++) {
+        if (!resources[i2]) {
           continue;
         }
-        if (resources[i].castToBaseTexture) {
-          this.addBaseTextureAt(resources[i].castToBaseTexture(), i);
-        } else if (resources[i] instanceof Resource) {
-          this.addResourceAt(resources[i], i);
+        if (resources[i2].castToBaseTexture) {
+          this.addBaseTextureAt(resources[i2].castToBaseTexture(), i2);
+        } else if (resources[i2] instanceof Resource) {
+          this.addResourceAt(resources[i2], i2);
         } else {
-          this.addResourceAt(autoDetectResource(resources[i], options), i);
+          this.addResourceAt(autoDetectResource(resources[i2], options), i2);
         }
       }
     }
     dispose() {
-      for (let i = 0, len = this.length; i < len; i++) {
-        this.items[i].destroy();
+      for (let i2 = 0, len = this.length; i2 < len; i2++) {
+        this.items[i2].destroy();
       }
       this.items = null;
       this.itemDirtyIds = null;
@@ -10461,16 +10616,16 @@ ${this.fragmentSrc}`;
         throw new Error("Only one base texture per TextureArray is allowed");
       }
       super.bind(baseTexture);
-      for (let i = 0; i < this.length; i++) {
-        this.items[i].parentTextureArray = baseTexture;
-        this.items[i].on("update", baseTexture.update, baseTexture);
+      for (let i2 = 0; i2 < this.length; i2++) {
+        this.items[i2].parentTextureArray = baseTexture;
+        this.items[i2].on("update", baseTexture.update, baseTexture);
       }
     }
     unbind(baseTexture) {
       super.unbind(baseTexture);
-      for (let i = 0; i < this.length; i++) {
-        this.items[i].parentTextureArray = null;
-        this.items[i].off("update", baseTexture.update, baseTexture);
+      for (let i2 = 0; i2 < this.length; i2++) {
+        this.items[i2].parentTextureArray = null;
+        this.items[i2].off("update", baseTexture.update, baseTexture);
       }
     }
     load() {
@@ -10523,12 +10678,12 @@ ${this.fragmentSrc}`;
       if (glTexture.dirtyId < 0) {
         gl.texImage3D(gl.TEXTURE_2D_ARRAY, 0, glTexture.internalFormat, this._width, this._height, length, 0, texture.format, glTexture.type, null);
       }
-      for (let i = 0; i < length; i++) {
-        const item = items[i];
-        if (itemDirtyIds[i] < item.dirtyId) {
-          itemDirtyIds[i] = item.dirtyId;
+      for (let i2 = 0; i2 < length; i2++) {
+        const item = items[i2];
+        if (itemDirtyIds[i2] < item.dirtyId) {
+          itemDirtyIds[i2] = item.dirtyId;
           if (item.valid) {
-            gl.texSubImage3D(gl.TEXTURE_2D_ARRAY, 0, 0, 0, i, item.resource.width, item.resource.height, 1, texture.format, glTexture.type, item.resource.source);
+            gl.texSubImage3D(gl.TEXTURE_2D_ARRAY, 0, 0, 0, i2, item.resource.width, item.resource.height, 1, texture.format, glTexture.type, item.resource.source);
           }
         }
       }
@@ -10558,8 +10713,8 @@ ${this.fragmentSrc}`;
         throw new Error(`Invalid length. Got ${source.length}, expected 6`);
       }
       super(6, { width, height });
-      for (let i = 0; i < _CubeResource.SIDES; i++) {
-        this.items[i].target = TARGETS.TEXTURE_CUBE_MAP_POSITIVE_X + i;
+      for (let i2 = 0; i2 < _CubeResource.SIDES; i2++) {
+        this.items[i2].target = TARGETS.TEXTURE_CUBE_MAP_POSITIVE_X + i2;
       }
       this.linkBaseTexture = linkBaseTexture !== false;
       if (source) {
@@ -10599,15 +10754,15 @@ ${this.fragmentSrc}`;
     }
     upload(renderer, _baseTexture, glTexture) {
       const dirty = this.itemDirtyIds;
-      for (let i = 0; i < _CubeResource.SIDES; i++) {
-        const side = this.items[i];
-        if (dirty[i] < side.dirtyId || glTexture.dirtyId < _baseTexture.dirtyId) {
+      for (let i2 = 0; i2 < _CubeResource.SIDES; i2++) {
+        const side = this.items[i2];
+        if (dirty[i2] < side.dirtyId || glTexture.dirtyId < _baseTexture.dirtyId) {
           if (side.valid && side.resource) {
             side.resource.upload(renderer, side, glTexture);
-            dirty[i] = side.dirtyId;
-          } else if (dirty[i] < -1) {
+            dirty[i2] = side.dirtyId;
+          } else if (dirty[i2] < -1) {
             renderer.gl.texImage2D(side.target, 0, glTexture.internalFormat, _baseTexture.realWidth, _baseTexture.realHeight, 0, _baseTexture.format, glTexture.type, null);
-            dirty[i] = -1;
+            dirty[i2] = -1;
           }
         }
       }
@@ -10623,17 +10778,18 @@ ${this.fragmentSrc}`;
   // node_modules/@pixi/core/lib/textures/resources/ImageBitmapResource.mjs
   var ImageBitmapResource = class extends BaseImageResource {
     constructor(source, options) {
-      var __super = (...args) => {
-        super(...args);
-      };
       options = options || {};
+      let baseSource;
+      let url2;
       if (typeof source === "string") {
-        __super(ImageBitmapResource.EMPTY);
-        this.url = source;
+        baseSource = ImageBitmapResource.EMPTY;
+        url2 = source;
       } else {
-        __super(source);
-        this.url = null;
+        baseSource = source;
+        url2 = null;
       }
+      super(baseSource);
+      this.url = url2;
       this.crossOrigin = options.crossOrigin ?? true;
       this.alphaMode = typeof options.alphaMode === "number" ? options.alphaMode : null;
       this._load = null;
@@ -10667,11 +10823,11 @@ ${this.fragmentSrc}`;
           this.source = imageBitmap;
           this.update();
           resolve2(this);
-        } catch (e) {
+        } catch (e2) {
           if (this.destroyed)
             return;
-          reject(e);
-          this.onError.emit(e);
+          reject(e2);
+          this.onError.emit(e2);
         }
       });
       return this._load;
@@ -10812,10 +10968,10 @@ ${this.fragmentSrc}`;
         }
         const firstSrc = source[0].src || source[0];
         BaseImageResource.crossOrigin(videoElement, firstSrc, options.crossorigin);
-        for (let i = 0; i < source.length; ++i) {
+        for (let i2 = 0; i2 < source.length; ++i2) {
           const sourceElement = document.createElement("source");
-          let { src, mime } = source[i];
-          src = src || source[i];
+          let { src, mime } = source[i2];
+          src = src || source[i2];
           const baseSrc = src.split("?").shift().toLowerCase();
           const ext = baseSrc.slice(baseSrc.lastIndexOf(".") + 1);
           mime = mime || _VideoResource.MIME_TYPES[ext] || `video/${ext}`;
@@ -11012,13 +11168,13 @@ ${this.fragmentSrc}`;
         );
       }
       const items = this.managedItems;
-      for (let i = 0, j = items.length; i < j; i++) {
+      for (let i2 = 0, j2 = items.length; i2 < j2; i2++) {
         this.uploadItem(
           renderer,
           baseTexture.target,
           baseTexture.format,
           baseTexture.type,
-          items[i]
+          items[i2]
         );
       }
       return true;
@@ -11037,8 +11193,26 @@ ${this.fragmentSrc}`;
         return;
       }
       const gl = renderer.gl;
-      const source = item.source;
+      const isWebGL2 = gl instanceof WebGL2RenderingContext;
       const frame = item.frame;
+      let source = item.source;
+      if (!isWebGL2) {
+        if (source instanceof ImageData) {
+          source = source.data;
+        } else if (source instanceof HTMLCanvasElement) {
+          const ctx = source.getContext("2d");
+          const [w2, h2] = [source.width, source.height];
+          source = ctx.getImageData(0, 0, w2, h2).data;
+        } else if (source instanceof HTMLImageElement) {
+          const [w2, h2] = [source.naturalWidth, source.naturalHeight];
+          const canvas = document.createElement("canvas");
+          canvas.width = w2;
+          canvas.height = h2;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(source, 0, 0);
+          source = ctx.getImageData(0, 0, w2, h2).data;
+        }
+      }
       gl.texSubImage2D(
         target,
         0,
@@ -11217,8 +11391,8 @@ ${this.fragmentSrc}`;
       const children = this.getChildren(rootArea);
       let bestCandidate = null;
       let bestCandidateScore = Infinity;
-      for (let i = 0, j = children.length; i < j; i++) {
-        const candidate = this.findAreaRecursive(children[i], aw, ah);
+      for (let i2 = 0, j2 = children.length; i2 < j2; i2++) {
+        const candidate = this.findAreaRecursive(children[i2], aw, ah);
         if (!candidate) {
           continue;
         }
@@ -11305,10 +11479,10 @@ ${this.fragmentSrc}`;
       if (axis === 0 /* HORIZONTAL */) {
         this.addChild(area, firstChild, secondChild);
       } else {
-        const i = this.getChildren(parent).indexOf(area);
+        const i2 = this.getChildren(parent).indexOf(area);
         firstChild[0] = parent;
         secondChild[0] = parent;
-        this.getChildren(parent).splice(i, 1, firstChild, secondChild);
+        this.getChildren(parent).splice(i2, 1, firstChild, secondChild);
       }
       if (holeFrame.height !== areaFrame.height) {
         const secondaryFirstChild = [
@@ -11364,10 +11538,10 @@ ${this.fragmentSrc}`;
       if (axis === 1 /* VERTICAL */) {
         this.addChild(area, primaryFirstChild, primarySecondChild);
       } else {
-        const i = this.getChildren(parent).indexOf(area);
+        const i2 = this.getChildren(parent).indexOf(area);
         primaryFirstChild[0] = parent;
         primarySecondChild[0] = parent;
-        this.getChildren(parent).splice(i, 1, primaryFirstChild, primarySecondChild);
+        this.getChildren(parent).splice(i2, 1, primaryFirstChild, primarySecondChild);
       }
       if (holeFrame.width !== areaFrame.height) {
         const secondaryFirstChild = [
@@ -11404,16 +11578,16 @@ ${this.fragmentSrc}`;
         return;
       }
       const siblings = this.getChildren(parent);
-      const i = siblings.indexOf(area);
-      const leftSibling = siblings[i - 1];
-      const rightSibling = siblings[i + 1];
+      const i2 = siblings.indexOf(area);
+      const leftSibling = siblings[i2 - 1];
+      const rightSibling = siblings[i2 + 1];
       if (rightSibling && rightSibling[2] === false) {
         area[1] = Area.setCloseOffset(area[1], Area.getCloseOffset(rightSibling[1]));
-        siblings.splice(i + 1, 1);
+        siblings.splice(i2 + 1, 1);
       }
       if (leftSibling && leftSibling[2] === false) {
         area[1] = Area.setOpenOffset(area[1], Area.getOpenOffset(leftSibling[1]));
-        siblings.splice(i - 1, 1);
+        siblings.splice(i2 - 1, 1);
       }
       if (siblings.length === 1) {
         parent[2] = false;
@@ -11424,7 +11598,7 @@ ${this.fragmentSrc}`;
       if (!this.hasChildren(area)) {
         console.log({ ...this.getFrame(area) }, area[2]);
       } else {
-        this.getChildren(area).forEach((n) => this.printState(n));
+        this.getChildren(area).forEach((n2) => this.printState(n2));
       }
     }
   };
@@ -11468,8 +11642,8 @@ ${this.fragmentSrc}`;
         return null;
       }
       const slabs = this.textureSlabs;
-      for (let i = 0, j = slabs.length; i < j; i++) {
-        const slab2 = slabs[i];
+      for (let i2 = 0, j2 = slabs.length; i2 < j2; i2++) {
+        const slab2 = slabs[i2];
         const texture = this.issueTexture(slab2, width, height, padding);
         if (texture) {
           return texture;
