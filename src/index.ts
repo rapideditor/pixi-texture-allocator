@@ -142,6 +142,8 @@ export class DashLine {
       }
 
     } else {
+      this.setLineStyle();  // Not sure why this fixes #2?
+
       // Determine where in the dash pattern the cursor is starting from.
       const origin = this.lineLength % (this.dashSize * this.scale);
       let dashIndex: number = 0;  // which dash in the pattern
