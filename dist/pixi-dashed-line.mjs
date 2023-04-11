@@ -15,7 +15,7 @@ var _DashLine = class {
    * @param graphics
    * @param [options]
    * @param [options.useTexture=false] - use the texture based render (useful for very large or very small dashed lines)
-   * @param [options.dashes=[10,5] - an array holding the dash and gap (eg, [10, 5, 20, 5, ...])
+   * @param [options.dash=[10,5] - an array holding the dash and gap (eg, [10, 5, 20, 5, ...])
    * @param [options.width=1] - width of the dashed line
    * @param [options.alpha=1] - alpha of the dashed line
    * @param [options.color=0xffffff] - color of the dashed line
@@ -61,8 +61,8 @@ var _DashLine = class {
     }
     this.scale = options.scale;
   }
-  static distance(x1, y1, x2, y2) {
-    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+  static distance(x0, y0, x1, y1) {
+    return Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2));
   }
   moveTo(x, y) {
     this.lineLength = 0;
@@ -75,54 +75,54 @@ var _DashLine = class {
     if (typeof this.lineLength === void 0) {
       this.moveTo(0, 0);
     }
-    const length = _DashLine.distance(this.cursor.x, this.cursor.y, x, y);
-    const angle = Math.atan2(y - this.cursor.y, x - this.cursor.x);
+    let [x0, y0] = [this.cursor.x, this.cursor.y];
+    const length = _DashLine.distance(x0, y0, x, y);
+    if (length < 1)
+      return this;
+    const angle = Math.atan2(y - y0, x - x0);
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
     const closed = closePath && x === this.start.x && y === this.start.y;
     if (this.useTexture) {
-      this.graphics.moveTo(this.cursor.x, this.cursor.y);
+      this.graphics.moveTo(x0, y0);
       this.adjustLineStyle(angle);
       if (closed && this.dash.length % 2 === 0) {
         const gap = Math.min(this.dash[this.dash.length - 1], length);
-        this.graphics.lineTo(x - Math.cos(angle) * gap, y - Math.sin(angle) * gap);
+        this.graphics.lineTo(x - cos * gap, y - sin * gap);
         this.graphics.closePath();
       } else {
         this.graphics.lineTo(x, y);
       }
     } else {
-      const cos = Math.cos(angle);
-      const sin = Math.sin(angle);
-      let x0 = this.cursor.x;
-      let y0 = this.cursor.y;
-      const place = this.lineLength % (this.dashSize * this.scale);
-      let dashIndex = 0, dashStart = 0;
+      this.setLineStyle();
+      const origin = this.lineLength % (this.dashSize * this.scale);
+      let dashIndex = 0;
+      let dashStart = 0;
       let dashX = 0;
       for (let i = 0; i < this.dash.length; i++) {
         const dashSize = this.dash[i] * this.scale;
-        if (place < dashX + dashSize) {
+        if (origin < dashX + dashSize) {
           dashIndex = i;
-          dashStart = place - dashX;
+          dashStart = origin - dashX;
           break;
         } else {
           dashX += dashSize;
         }
       }
       let remaining = length;
-      while (remaining > 0) {
+      while (remaining > 1) {
         const dashSize = this.dash[dashIndex] * this.scale - dashStart;
         let dist = remaining > dashSize ? dashSize : remaining;
         if (closed) {
-          const remainingDistance = _DashLine.distance(
-            x0 + cos * dist,
-            y0 + sin * dist,
-            this.start.x,
-            this.start.y
-          );
+          const remainingDistance = _DashLine.distance(x0 + cos * dist, y0 + sin * dist, this.start.x, this.start.y);
           if (remainingDistance <= dist) {
             if (dashIndex % 2 === 0) {
               const lastDash = _DashLine.distance(x0, y0, this.start.x, this.start.y) - this.dash[this.dash.length - 1] * this.scale;
               x0 += cos * lastDash;
               y0 += sin * lastDash;
               this.graphics.lineTo(x0, y0);
+              this.lineLength += lastDash;
+              this.cursor.set(x0, y0);
             }
             break;
           }
@@ -134,14 +134,14 @@ var _DashLine = class {
         } else {
           this.graphics.lineTo(x0, y0);
         }
+        this.lineLength += dist;
+        this.cursor.set(x0, y0);
         remaining -= dist;
         dashIndex++;
         dashIndex = dashIndex === this.dash.length ? 0 : dashIndex;
         dashStart = 0;
       }
     }
-    this.lineLength += length;
-    this.cursor.set(x, y);
     return this;
   }
   closePath() {
@@ -149,18 +149,17 @@ var _DashLine = class {
   }
   drawCircle(x, y, radius, points = 80, matrix) {
     const interval = Math.PI * 2 / points;
-    let angle = 0, first;
+    let angle = 0;
+    let first = new Point(x + Math.cos(angle) * radius, y + Math.sin(angle) * radius);
     if (matrix) {
-      first = new Point(x + Math.cos(angle) * radius, y + Math.sin(angle) * radius);
       matrix.apply(first, first);
       this.moveTo(first[0], first[1]);
     } else {
-      first = new Point(x + Math.cos(angle) * radius, y + Math.sin(angle) * radius);
       this.moveTo(first.x, first.y);
     }
     angle += interval;
     for (let i = 1; i < points + 1; i++) {
-      const next = i === points ? first : [x + Math.cos(angle) * radius, y + Math.sin(angle) * radius];
+      const next = i === points ? [first.x, first.y] : [x + Math.cos(angle) * radius, y + Math.sin(angle) * radius];
       this.lineTo(next[0], next[1]);
       angle += interval;
     }

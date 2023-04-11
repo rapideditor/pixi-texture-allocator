@@ -35,7 +35,7 @@ declare module "index" {
          * @param graphics
          * @param [options]
          * @param [options.useTexture=false] - use the texture based render (useful for very large or very small dashed lines)
-         * @param [options.dashes=[10,5] - an array holding the dash and gap (eg, [10, 5, 20, 5, ...])
+         * @param [options.dash=[10,5] - an array holding the dash and gap (eg, [10, 5, 20, 5, ...])
          * @param [options.width=1] - width of the dashed line
          * @param [options.alpha=1] - alpha of the dashed line
          * @param [options.color=0xffffff] - color of the dashed line
