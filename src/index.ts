@@ -27,6 +27,7 @@ const dashLineOptionsDefault: Partial<DashLineOptions> = {
   alignment: 0.5
 };
 
+
 export class DashLine {
   graphics: Graphics;
 
@@ -58,7 +59,7 @@ export class DashLine {
    * @param graphics
    * @param [options]
    * @param [options.useTexture=false] - use the texture based render (useful for very large or very small dashed lines)
-   * @param [options.dashes=[10,5] - an array holding the dash and gap (eg, [10, 5, 20, 5, ...])
+   * @param [options.dash=[10,5] - an array holding the dash and gap (eg, [10, 5, 20, 5, ...])
    * @param [options.width=1] - width of the dashed line
    * @param [options.alpha=1] - alpha of the dashed line
    * @param [options.color=0xffffff] - color of the dashed line
@@ -102,9 +103,10 @@ export class DashLine {
     this.scale = options.scale;
   }
 
-  private static distance(x1: number, y1: number, x2: number, y2: number): number {
-    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+  private static distance(x0: number, y0: number, x1: number, y1: number): number {
+    return Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2));
   }
+
 
   moveTo(x: number, y: number): this {
     this.lineLength = 0;
@@ -114,66 +116,64 @@ export class DashLine {
     return this;
   }
 
+
   lineTo(x: number, y: number, closePath?: boolean): this {
     if (typeof this.lineLength === undefined) {
       this.moveTo(0, 0);
     }
-    const length = DashLine.distance(this.cursor.x, this.cursor.y, x, y);
-    const angle = Math.atan2(y - this.cursor.y, x - this.cursor.x);
+    let [x0, y0] = [this.cursor.x, this.cursor.y];   // the position of the cursor
+    const length = DashLine.distance(x0, y0, x, y);
+    if (length < 1) return this;   // dont bother advancing the cursor less than a pixel
+
+    const angle = Math.atan2(y - y0, x - x0);
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
     const closed = closePath && x === this.start.x && y === this.start.y;
+
     if (this.useTexture) {
-      this.graphics.moveTo(this.cursor.x, this.cursor.y);
+      this.graphics.moveTo(x0, y0);
       this.adjustLineStyle(angle);
       if (closed && this.dash.length % 2 === 0) {
         const gap = Math.min(this.dash[this.dash.length - 1], length);
-        this.graphics.lineTo(x - Math.cos(angle) * gap, y - Math.sin(angle) * gap);
+        this.graphics.lineTo(x - cos * gap, y - sin * gap);
         this.graphics.closePath();
       } else {
         this.graphics.lineTo(x, y);
       }
-    } else {
-      const cos = Math.cos(angle);
-      const sin = Math.sin(angle);
-      let x0 = this.cursor.x;
-      let y0 = this.cursor.y;
 
-      // find the first part of the dash for this line
-      const place = this.lineLength % (this.dashSize * this.scale);
-      let dashIndex: number = 0,
-        dashStart: number = 0;
+    } else {
+      // Determine where in the dash pattern the cursor is starting from.
+      const origin = this.lineLength % (this.dashSize * this.scale);
+      let dashIndex: number = 0;  // which dash in the pattern
+      let dashStart: number = 0;  // how far in the dash
       let dashX = 0;
       for (let i = 0; i < this.dash.length; i++) {
         const dashSize = this.dash[i] * this.scale;
-        if (place < dashX + dashSize) {
+        if (origin < dashX + dashSize) {
           dashIndex = i;
-          dashStart = place - dashX;
+          dashStart = origin - dashX;
           break;
         } else {
           dashX += dashSize;
         }
       }
 
+      // Advance the line
       let remaining = length;
-      // let count = 0
-      while (remaining > 0) {
-        // && count++ < 1000) {
-        const dashSize = this.dash[dashIndex] * this.scale - dashStart;
-        let dist = remaining > dashSize ? dashSize : remaining;
+      while (remaining > 1) {   // stop if we are within 1 pixel
+        const dashSize = (this.dash[dashIndex] * this.scale) - dashStart;
+        let dist = (remaining > dashSize) ? dashSize : remaining;
+
         if (closed) {
-          const remainingDistance = DashLine.distance(
-            x0 + cos * dist,
-            y0 + sin * dist,
-            this.start.x,
-            this.start.y
-          );
+          const remainingDistance = DashLine.distance(x0 + cos * dist, y0 + sin * dist, this.start.x, this.start.y);
           if (remainingDistance <= dist) {
             if (dashIndex % 2 === 0) {
-              const lastDash =
-                DashLine.distance(x0, y0, this.start.x, this.start.y) -
-                this.dash[this.dash.length - 1] * this.scale;
+              const lastDash = DashLine.distance(x0, y0, this.start.x, this.start.y) - this.dash[this.dash.length - 1] * this.scale;
               x0 += cos * lastDash;
               y0 += sin * lastDash;
               this.graphics.lineTo(x0, y0);
+              this.lineLength += lastDash;
+              this.cursor.set(x0, y0);
             }
             break;
           }
@@ -181,58 +181,52 @@ export class DashLine {
 
         x0 += cos * dist;
         y0 += sin * dist;
-        if (dashIndex % 2) {
+        if (dashIndex % 2) {  // odd dashIndex = 'on', even dashIndex = 'off'
           this.graphics.moveTo(x0, y0);
         } else {
           this.graphics.lineTo(x0, y0);
         }
+        this.lineLength += dist;
+        this.cursor.set(x0, y0);
         remaining -= dist;
 
+        // Prepare for next dash (only really matters if there is remaining length)
         dashIndex++;
         dashIndex = dashIndex === this.dash.length ? 0 : dashIndex;
         dashStart = 0;
       }
-      // if (count >= 1000) console.log('failure', this.scale)
     }
-    this.lineLength += length;
-    this.cursor.set(x, y);
+
     return this;
   }
+
 
   closePath() {
     this.lineTo(this.start.x, this.start.y, true);
   }
 
+
   drawCircle(x: number, y: number, radius: number, points = 80, matrix?: Matrix): this {
     const interval = (Math.PI * 2) / points;
-    let angle = 0,
-      first: Point;
+    let angle = 0;
+    let first = new Point(x + Math.cos(angle) * radius, y + Math.sin(angle) * radius);
     if (matrix) {
-      first = new Point(x + Math.cos(angle) * radius, y + Math.sin(angle) * radius);
       matrix.apply(first, first);
       this.moveTo(first[0], first[1]);
     } else {
-      first = new Point(x + Math.cos(angle) * radius, y + Math.sin(angle) * radius);
       this.moveTo(first.x, first.y);
     }
     angle += interval;
     for (let i = 1; i < points + 1; i++) {
-      const next =
-        i === points ? [first.x, first.y] : [x + Math.cos(angle) * radius, y + Math.sin(angle) * radius];
+      const next = (i === points) ? [first.x, first.y] : [x + Math.cos(angle) * radius, y + Math.sin(angle) * radius];
       this.lineTo(next[0], next[1]);
       angle += interval;
     }
     return this;
   }
 
-  drawEllipse(
-    x: number,
-    y: number,
-    radiusX: number,
-    radiusY: number,
-    points = 80,
-    matrix?: Matrix
-  ): this {
+
+  drawEllipse(x: number, y: number, radiusX: number, radiusY: number, points = 80, matrix?: Matrix ): this {
     const interval = (Math.PI * 2) / points;
     let first: { x: number; y: number };
     const point = new Point();
@@ -256,6 +250,7 @@ export class DashLine {
     this.lineTo(first.x, first.y, true);
     return this;
   }
+
 
   drawPolygon(points: Point[] | number[], matrix?: Matrix): this {
     const p = new Point();
@@ -299,6 +294,7 @@ export class DashLine {
     return this;
   }
 
+
   drawRect(x: number, y: number, width: number, height: number, matrix?: Matrix): this {
     if (matrix) {
       const p = new Point();
@@ -337,6 +333,7 @@ export class DashLine {
     return this;
   }
 
+
   // adjust the matrix for the dashed texture
   private adjustLineStyle(angle: number) {
     const lineStyle = this.graphics.line;
@@ -352,6 +349,7 @@ export class DashLine {
     );
     this.graphics.lineStyle(lineStyle);
   }
+
 
   // creates or uses cached texture
   private static getTexture(options: DashLineOptions, dashSize: number): Texture {
