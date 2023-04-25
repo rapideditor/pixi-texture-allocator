@@ -138,10 +138,11 @@ export class AtlasResource extends Resource
         item: AtlasResourceItem
     ): void
     {
-        if (item.updateId === item.dirtyId)
-        {
-            return;
-        }
+        // see https://github.com/rapideditor/pixi-texture-allocator/issues/2
+        // if (item.updateId === item.dirtyId)
+        // {
+        //     return;
+        // }
 
         const gl: WebGLRenderingContext = renderer.gl;
         const isWebGL2 = (gl instanceof WebGL2RenderingContext);
