@@ -96,9 +96,6 @@ var AtlasResource = class extends Resource {
    * @param item - The item to upload.
    */
   uploadItem(renderer, target, format, type, item) {
-    if (item.updateId === item.dirtyId) {
-      return;
-    }
     const gl = renderer.gl;
     const isWebGL2 = gl instanceof WebGL2RenderingContext;
     const frame = item.frame;

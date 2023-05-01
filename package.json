@@ -1,6 +1,6 @@
 {
   "name": "@rapideditor/pixi-texture-allocator",
-  "version": "7.2.4",
+  "version": "7.2.5-pre.0",
   "author": "Ben Clark <bennyc@gmail.com",
   "description": "Pixi.js texture allocator",
   "repository": "github:rapideditor/pixi-texture-allocator",

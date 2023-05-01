@@ -11189,9 +11189,6 @@ ${this.fragmentSrc}`;
      * @param item - The item to upload.
      */
     uploadItem(renderer, target, format2, type, item) {
-      if (item.updateId === item.dirtyId) {
-        return;
-      }
       const gl = renderer.gl;
       const isWebGL2 = gl instanceof WebGL2RenderingContext;
       const frame = item.frame;
