@@ -9,7 +9,7 @@ var dashLineOptionsDefault = {
   useTexture: false,
   alignment: 0.5
 };
-var _DashLine = class {
+var _DashLine = class _DashLine {
   /**
    * Create a DashLine
    * @param graphics
@@ -303,9 +303,9 @@ var _DashLine = class {
     return texture;
   }
 };
-var DashLine = _DashLine;
 // cache of Textures for dashed lines
-DashLine.dashTextureCache = {};
+_DashLine.dashTextureCache = {};
+var DashLine = _DashLine;
 export {
   DashLine
 };
