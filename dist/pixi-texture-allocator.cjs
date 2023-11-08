@@ -38,7 +38,7 @@ var AreaOrientation = /* @__PURE__ */ ((AreaOrientation2) => {
   AreaOrientation2[AreaOrientation2["VERTICAL"] = 1] = "VERTICAL";
   return AreaOrientation2;
 })(AreaOrientation || {});
-var Area = class {
+var Area = class _Area {
   static makeArea(openOffset, closeOffset, orientation) {
     return openOffset | closeOffset << 15 | orientation << 30;
   }
@@ -52,17 +52,17 @@ var Area = class {
     return area >> 30 & 1;
   }
   static setOpenOffset(area, offset) {
-    return Area.makeArea(
+    return _Area.makeArea(
       offset,
-      Area.getCloseOffset(area),
-      Area.getOrientation(area)
+      _Area.getCloseOffset(area),
+      _Area.getOrientation(area)
     );
   }
   static setCloseOffset(area, offset) {
-    return Area.makeArea(
-      Area.getOpenOffset(offset),
+    return _Area.makeArea(
+      _Area.getOpenOffset(offset),
       offset,
-      Area.getOrientation(area)
+      _Area.getOrientation(area)
     );
   }
 };
