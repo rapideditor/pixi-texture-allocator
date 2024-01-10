@@ -1,7 +1,10 @@
 {
   "name": "@rapideditor/pixi-texture-allocator",
-  "version": "7.3.2",
-  "author": "Ben Clark <bennyc@gmail.com",
+  "version": "7.3.3",
+  "contributors": [
+    "Ben Clark <clarkben@fb.com> (https://github.com/bonkles)",
+    "Bryan Housel <bhousel@gmail.com> (https://github.com/bhousel)"
+  ],
   "description": "Pixi.js texture allocator",
   "repository": "github:rapideditor/pixi-texture-allocator",
   "license": "MIT",
@@ -25,15 +28,15 @@
     "require": "./dist/pixi-texture-allocator.cjs"
   },
   "dependencies": {
-    "@pixi/constants": "7.3.2",
-    "@pixi/core": "7.3.2",
-    "@pixi/math": "7.3.2"
+    "@pixi/constants": "7.3.3",
+    "@pixi/core": "7.3.3",
+    "@pixi/math": "7.3.3"
   },
   "devDependencies": {
-    "esbuild": "^0.19.5",
+    "esbuild": "^0.19.11",
     "npm-run-all": "^4.1.5",
     "shx": "^0.3.4",
-    "typescript": "^4.9.5"
+    "typescript": "^5.3.3"
   },
   "scripts": {
     "all": "run-s clean build",
