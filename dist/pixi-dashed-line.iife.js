@@ -10546,7 +10546,7 @@ void main(void)
      */
     run(options) {
       const { renderer } = this;
-      renderer.runners.init.emit(renderer.options), options.hello && console.log(`PixiJS 7.3.2 - ${renderer.rendererLogId} - https://pixijs.com`), renderer.resize(renderer.screen.width, renderer.screen.height);
+      renderer.runners.init.emit(renderer.options), options.hello && console.log(`PixiJS 7.3.3 - ${renderer.rendererLogId} - https://pixijs.com`), renderer.resize(renderer.screen.width, renderer.screen.height);
     }
     destroy() {
     }
