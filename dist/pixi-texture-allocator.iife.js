@@ -4211,7 +4211,7 @@ Deprecated since v${version}`), console.warn(stack))), warnings[message] = true;
       return extensions2.map(normalizeExtension).forEach((ext) => {
         ext.type.forEach((type) => {
           const handlers = this._addHandlers, queue = this._queue;
-          handlers[type] ? handlers[type](ext) : (queue[type] = queue[type] || [], queue[type].push(ext));
+          handlers[type] ? handlers[type]?.(ext) : (queue[type] = queue[type] || [], queue[type]?.push(ext));
         });
       }), this;
     },
@@ -4228,7 +4228,7 @@ Deprecated since v${version}`), console.warn(stack))), warnings[message] = true;
         throw new Error(`Extension type ${type} already has a handler`);
       addHandlers[type] = onAdd, removeHandlers[type] = onRemove;
       const queue = this._queue;
-      return queue[type] && (queue[type].forEach((ext) => onAdd(ext)), delete queue[type]), this;
+      return queue[type] && (queue[type]?.forEach((ext) => onAdd(ext)), delete queue[type]), this;
     },
     /**
      * Handle a type, but using a map by `name` property.
@@ -4240,10 +4240,10 @@ Deprecated since v${version}`), console.warn(stack))), warnings[message] = true;
       return this.handle(
         type,
         (extension) => {
-          map3[extension.name] = extension.ref;
+          extension.name && (map3[extension.name] = extension.ref);
         },
         (extension) => {
-          delete map3[extension.name];
+          extension.name && delete map3[extension.name];
         }
       );
     },
@@ -4477,7 +4477,7 @@ else `), i2 < maxIfs - 1 && (src += `if(test == ${i2}.0){}`);
   // node_modules/@pixi/runner/lib/Runner.mjs
   var Runner = class {
     /**
-     * @param name - The function name that will be executed on the listeners added to this Runner.
+     * @param {string} name - The function name that will be executed on the listeners added to this Runner.
      */
     constructor(name) {
       this.items = [], this._name = name, this._aliasCount = 0;
@@ -4542,7 +4542,7 @@ else `), i2 < maxIfs - 1 && (src += `if(test == ${i2}.0){}`);
     }
     /** Remove all references, don't use after this. */
     destroy() {
-      this.removeAll(), this.items = null, this._name = null;
+      this.removeAll(), this.items.length = 0, this._name = "";
     }
     /**
      * `true` if there are no this Runner contains no listeners
@@ -4553,7 +4553,7 @@ else `), i2 < maxIfs - 1 && (src += `if(test == ${i2}.0){}`);
     }
     /**
      * The name of the runner.
-     * @readonly
+     * @type {string}
      */
     get name() {
       return this._name;
@@ -4741,7 +4741,7 @@ else `), i2 < maxIfs - 1 && (src += `if(test == ${i2}.0){}`);
   };
   var _BaseTexture = class _BaseTexture2 extends import_eventemitter3.default {
     /**
-     * @param {PIXI.Resource|HTMLImageElement|HTMLVideoElement|ImageBitmap|ICanvas|string} [resource=null] -
+     * @param {PIXI.Resource|PIXI.ImageSource|string} [resource=null] -
      *        The current resource to use, for things that aren't Resource objects, will be converted
      *        into a Resource.
      * @param options - Collection of options, default options inherited from {@link PIXI.BaseTexture.defaultOptions}.
@@ -4919,7 +4919,7 @@ else `), i2 < maxIfs - 1 && (src += `if(test == ${i2}.0){}`);
      * source is an image url or an image element and not in the base texture
      * cache, it will be created and loaded.
      * @static
-     * @param {HTMLImageElement|HTMLVideoElement|ImageBitmap|PIXI.ICanvas|string|string[]} source - The
+     * @param {PIXI.ImageSource|string|string[]} source - The
      *        source to create base texture from.
      * @param options - See {@link PIXI.BaseTexture}'s constructor for options.
      * @param {string} [options.pixiIdPrefix=pixiid] - If a source has no id, this is the prefix of the generated id
@@ -7815,7 +7815,8 @@ void main(void)
         etc1: gl.getExtension("WEBGL_compressed_texture_etc1"),
         pvrtc: gl.getExtension("WEBGL_compressed_texture_pvrtc") || gl.getExtension("WEBKIT_WEBGL_compressed_texture_pvrtc"),
         atc: gl.getExtension("WEBGL_compressed_texture_atc"),
-        astc: gl.getExtension("WEBGL_compressed_texture_astc")
+        astc: gl.getExtension("WEBGL_compressed_texture_astc"),
+        bptc: gl.getExtension("EXT_texture_compression_bptc")
       };
       this.webGLVersion === 1 ? Object.assign(this.extensions, common, {
         drawBuffers: gl.getExtension("WEBGL_draw_buffers"),
@@ -8057,10 +8058,10 @@ void main(void)
   // node_modules/@pixi/core/lib/textures/resources/BaseImageResource.mjs
   var BaseImageResource = class extends Resource {
     /**
-     * @param {HTMLImageElement|HTMLVideoElement|ImageBitmap|PIXI.ICanvas} source
+     * @param {PIXI.ImageSourcee} source
      */
     constructor(source) {
-      const sourceAny = source, width = sourceAny.naturalWidth || sourceAny.videoWidth || sourceAny.width, height = sourceAny.naturalHeight || sourceAny.videoHeight || sourceAny.height;
+      const sourceAny = source, width = sourceAny.naturalWidth || sourceAny.videoWidth || sourceAny.displayWidth || sourceAny.width, height = sourceAny.naturalHeight || sourceAny.videoHeight || sourceAny.displayHeight || sourceAny.height;
       super(width, height), this.source = source, this.noSubImage = false;
     }
     /**
@@ -8077,7 +8078,7 @@ void main(void)
      * @param renderer - Upload to the renderer
      * @param baseTexture - Reference to parent texture
      * @param glTexture
-     * @param {HTMLImageElement|HTMLVideoElement|ImageBitmap|PIXI.ICanvas} [source] - (optional)
+     * @param {PIXI.ImageSourcee} [source] - (optional)
      * @returns - true is success
      */
     upload(renderer, baseTexture, glTexture, source) {
@@ -10589,7 +10590,7 @@ void main(void)
      */
     run(options) {
       const { renderer } = this;
-      renderer.runners.init.emit(renderer.options), options.hello && console.log(`PixiJS 7.3.3 - ${renderer.rendererLogId} - https://pixijs.com`), renderer.resize(renderer.screen.width, renderer.screen.height);
+      renderer.runners.init.emit(renderer.options), options.hello && console.log(`PixiJS 7.4.0 - ${renderer.rendererLogId} - https://pixijs.com`), renderer.resize(renderer.screen.width, renderer.screen.height);
     }
     destroy() {
     }
@@ -12898,6 +12899,25 @@ void main(void)
   _SVGResource.SVG_SIZE = /<svg[^>]*(?:\s(width|height)=('|")(\d*(?:\.\d+)?)(?:px)?('|"))[^>]*(?:\s(width|height)=('|")(\d*(?:\.\d+)?)(?:px)?('|"))[^>]*>/i;
   var SVGResource = _SVGResource;
 
+  // node_modules/@pixi/core/lib/textures/resources/VideoFrameResource.mjs
+  var VideoFrameResource = class extends BaseImageResource {
+    /**
+     * @param source - Image element to use
+     */
+    // eslint-disable-next-line @typescript-eslint/no-useless-constructor
+    constructor(source) {
+      super(source);
+    }
+    /**
+     * Used to auto-detect the type of resource.
+     * @param {*} source - The source object
+     * @returns {boolean} `true` if source is an VideoFrame
+     */
+    static test(source) {
+      return !!globalThis.VideoFrame && source instanceof globalThis.VideoFrame;
+    }
+  };
+
   // node_modules/@pixi/core/lib/textures/resources/VideoResource.mjs
   var _VideoResource = class _VideoResource2 extends BaseImageResource {
     /**
@@ -12906,7 +12926,8 @@ void main(void)
      * @param {boolean} [options.autoLoad=true] - Start loading the video immediately
      * @param {boolean} [options.autoPlay=true] - Start playing video immediately
      * @param {number} [options.updateFPS=0] - How many times a second to update the texture from the video.
-     * Leave at 0 to update at every render.
+     * If 0, `requestVideoFrameCallback` is used to update the texture.
+     * If `requestVideoFrameCallback` is not available, the texture is updated every render.
      * @param {boolean} [options.crossorigin=true] - Load image using cross origin
      * @param {boolean} [options.loop=false] - Loops the video
      * @param {boolean} [options.muted=false] - Mutes the video audio, useful for autoplay
@@ -13020,7 +13041,8 @@ void main(void)
       value !== this._autoUpdate && (this._autoUpdate = value, this._configureAutoUpdate());
     }
     /**
-     * How many times a second to update the texture from the video. Leave at 0 to update at every render.
+     * How many times a second to update the texture from the video. If 0, `requestVideoFrameCallback` is used to
+     * update the texture. If `requestVideoFrameCallback` is not available, the texture is updated every render.
      * A lower fps can help performance, as updating the texture at 60fps on a 30ps video may not be efficient.
      */
     get updateFPS() {
@@ -13061,6 +13083,7 @@ void main(void)
     ImageResource,
     CanvasResource,
     VideoResource,
+    VideoFrameResource,
     SVGResource,
     BufferResource,
     CubeResource,
