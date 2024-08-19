@@ -1,6 +1,5 @@
-import type { AreaAllocator } from './AreaAllocator';
-import type { BaseTexture, Texture } from '@pixi/core';
-import type { Rectangle } from '@pixi/math';
+import type { AreaAllocator } from '@pixi-essentials/area-allocator';
+import type { Rectangle, Texture, TextureSource } from 'pixi.js';
 
 /**
  * An entry of an issued texture from a {@link TextureSlab}.
@@ -26,7 +25,7 @@ export type TextureEntry =
  *
  * @public
  */
-export type TextureSlab =
+export type TextureSlab<T extends TextureSource> =
 {
     /**
      * The area allocator that issues texture space.
@@ -41,5 +40,5 @@ export type TextureSlab =
     /**
      * The base-texture that holds all the issued textures.
      */
-    slab: BaseTexture;
+    slab: T;
 };
