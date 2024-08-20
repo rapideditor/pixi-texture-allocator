@@ -1,6 +1,6 @@
 {
   "name": "@rapideditor/pixi-texture-allocator",
-  "version": "7.4.0",
+  "version": "8.3.3",
   "contributors": [
     "Ben Clark <clarkben@fb.com> (https://github.com/bonkles)",
     "Bryan Housel <bhousel@gmail.com> (https://github.com/bhousel)"
@@ -28,11 +28,12 @@
     "require": "./dist/pixi-texture-allocator.cjs"
   },
   "dependencies": {
-    "@pixi/constants": "7.4.0",
+    "@pixi-essentials/area-allocator": "^2.0.0",
+    "@pixi/constants": "^7.4.2",
     "@pixi/core": "^7.4.2",
     "@pixi/display": "^7.4.2",
     "@pixi/graphics": "^7.4.2",
-    "@pixi/math": "7.4.0",
+    "@pixi/math": "^7.4.2",
     "pixi.js": "^8.3.3"
   },
   "devDependencies": {
