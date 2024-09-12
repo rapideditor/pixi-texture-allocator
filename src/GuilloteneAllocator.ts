@@ -1,4 +1,4 @@
-import { Rectangle } from '@pixi/math';
+import { Rectangle } from 'pixi.js';
 import { Area, AreaOrientation } from './Area';
 
 import type { AreaAllocator } from './AreaAllocator';

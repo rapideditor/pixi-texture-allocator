@@ -1,4 +1,4 @@
-import type { AreaAllocator } from '@pixi-essentials/area-allocator';
+import type { AreaAllocator } from './AreaAllocator';
 import type { Rectangle, Texture, TextureSource } from 'pixi.js';
 
 /**

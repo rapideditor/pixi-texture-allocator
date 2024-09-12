@@ -1,4 +1,4 @@
-import { GlTextureSystem, Renderer, TextureSource } from 'pixi.js';
+import { GlTextureSystem, ImageSource, Renderer, TextureSource } from 'pixi.js';
 
 import type { GlTexture, GlRenderingContext, GLTextureUploader, GpuTextureUploader, GPU, Rectangle, Texture } from 'pixi.js';
 
@@ -89,7 +89,6 @@ const glUploadAtlasResource = {
         {
             glTexture.width = width;
             glTexture.height = height;
-
             gl.texImage2D(
                 glTexture.target,
                 0,
@@ -116,24 +115,24 @@ const glUploadAtlasResource = {
             }
 
             const frame = item.frame;
-            let source = item.source;
+            let itemSource = item.source;
 
             if (webGLVersion === 1)
             {
-                if (source instanceof ImageData)
+                if (itemSource instanceof ImageData)
                 {
-                    source = source.data; // pass the typed array directly
+                    itemSource = itemSource.data; // pass the typed array directly
                 }
-                else if (source instanceof HTMLCanvasElement)
+                else if (itemSource instanceof HTMLCanvasElement)
                 {
-                    const ctx = source.getContext('2d');
-                    const [w, h] = [source.width, source.height];
+                    const ctx = itemSource.getContext('2d');
+                    const [w, h] = [itemSource.width, itemSource.height];
 
-                    source = ctx.getImageData(0, 0, w, h).data;
+                    itemSource = ctx.getImageData(0, 0, w, h).data;
                 }
-                else if (source instanceof HTMLImageElement)
+                else if (itemSource instanceof HTMLImageElement)
                 {
-                    const [w, h] = [source.naturalWidth, source.naturalHeight];
+                    const [w, h] = [itemSource.naturalWidth, itemSource.naturalHeight];
                     const canvas = document.createElement('canvas');
 
                     canvas.width = w;
@@ -141,15 +140,17 @@ const glUploadAtlasResource = {
 
                     const ctx = canvas.getContext('2d');
 
-                    ctx.drawImage(source, 0, 0);
-                    source = ctx.getImageData(0, 0, w, h).data;
+                    ctx.drawImage(itemSource, 0, 0);
+                    itemSource = ctx.getImageData(0, 0, w, h).data;
                 }
                 else
                 if (!didWarnUnsupportedAtlasSource)
                 {
-                    console.warn('Unsupported atlas source type. Failed to upload on WebGL 1', source);
+                    console.warn('Unsupported atlas source type. Failed to upload on WebGL 1', itemSource);
                     didWarnUnsupportedAtlasSource = true;
                 }
+            } else if (webGLVersion === 2) {
+                itemSource = itemSource.resource; // pass the typed array directly
             }
 
             gl.texSubImage2D(
@@ -161,7 +162,7 @@ const glUploadAtlasResource = {
                 frame.height,
                 glTexture.format,
                 glTexture.type,
-                source as any,
+                itemSource as any,
             );
 
             item.updateId = item.dirtyId;
@@ -216,6 +217,9 @@ export function optimizeAtlasUploads(renderer: Renderer): void
     else
     {
         // eslint-disable-next-line dot-notation
-        renderer.texture['_uploads'].atlas = gpuUploadAtlasResource;
+        // TODO v8 figure out why we're always hitting the webGPU upload path
+        // the instanceof operator seems to be failing us. 
+//        renderer.texture['_uploads'].atlas = gpuUploadAtlasResource;
+        renderer.texture['_uploads'].atlas = glUploadAtlasResource;
     }
 }

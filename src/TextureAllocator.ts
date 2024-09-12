@@ -1,5 +1,5 @@
 import { Rectangle, Texture, TextureSource } from 'pixi.js';
-import { GuilloteneAllocator } from '@pixi-essentials/area-allocator';
+import { GuilloteneAllocator } from './GuilloteneAllocator';
 
 import type { TextureSlab } from './TextureSlab';
 
