@@ -150,7 +150,9 @@ const glUploadAtlasResource = {
                     didWarnUnsupportedAtlasSource = true;
                 }
             } else if (webGLVersion === 2) {
-                itemSource = itemSource.resource; // pass the typed array directly
+                if (itemSource?.resource){
+                    itemSource = itemSource.resource; // pass the typed array directly
+                }
             }
 
             gl.texSubImage2D(
