@@ -74,7 +74,7 @@ declare module "Area" {
     }
 }
 declare module "AreaAllocator" {
-    import type { Rectangle } from '@pixi/math';
+    import type { Rectangle } from 'pixi.js';
     /**
      * @public
      * @typeParam N - The internal property for marking rectangles.
@@ -86,22 +86,21 @@ declare module "AreaAllocator" {
         free(area: N): void;
     }
 }
-declare module "AtlasResource" {
-    import { BaseTexture, GLTexture, Resource, Renderer } from '@pixi/core';
-    import type { Rectangle } from '@pixi/math';
-    import type { Texture } from '@pixi/core';
+declare module "AtlasSource" {
+    import { Renderer, TextureSource } from 'pixi.js';
+    import type { Rectangle, Texture } from 'pixi.js';
     /**
-     * Types of image sources supported by {@link AtlasResource}.
+     * Types of image sources supported by {@link AtlasSource}.
      *
      * @public
      */
-    export type AtlasResourceSource = HTMLImageElement | HTMLCanvasElement | ImageBitmap | ImageData | ArrayBufferView;
+    export type AtlasItemSource = HTMLImageElement | HTMLCanvasElement | ImageBitmap | ImageData | ArrayBufferView;
     /**
      * An item that is uploaded to the atlas texture.
      *
      * @public
      */
-    export type AtlasResourceItem = {
+    export type AtlasItem = {
         /**
          * The location of the atlas item in the base-texture's space.
          */
@@ -109,7 +108,7 @@ declare module "AtlasResource" {
         /**
          * The source of the texture data.
          */
-        source: AtlasResourceSource;
+        source: AtlasItemSource;
         /**
          * This flags when the resource is to be re-uploaded.
          */
@@ -124,15 +123,16 @@ declare module "AtlasResource" {
         texture: Texture;
     };
     /**
-     * An {@code AtlasResource} is used by {@link AtlasAllocator} to manage texture sources
+     * An {@code AtlasSource} is used by {@link AtlasAllocator} to manage texture sources.
      *
      * @public
      */
-    export class AtlasResource extends Resource {
+    export class AtlasSource extends TextureSource {
         /**
-         * The list of managed resources in the atlas.
+         * The list of managed texture sources in the atlas.
          */
-        managedItems: AtlasResourceItem[];
+        managedItems: AtlasItem[];
+        uploadMethodId: string;
         /**
          * Creates an atlas resource.
          *
@@ -140,28 +140,17 @@ declare module "AtlasResource" {
          * @param height
          */
         constructor(width: number, height: number);
-        /**
-         * Uploads the atlas.
-         *
-         * @param renderer
-         * @param baseTexture
-         * @param glTexture
-         */
-        upload(renderer: Renderer, baseTexture: BaseTexture, glTexture: GLTexture): boolean;
-        /**
-         * Uploads the atlas item to the GPU.
-         *
-         * @param renderer - The renderer holding the WebGL context.
-         * @param target - The binding point of the base-texture.
-         * @param format - The format of the base-texture.
-         * @param type - The type of the base-texture data.
-         * @param item - The item to upload.
-         */
-        protected uploadItem(renderer: Renderer, target: number, format: number, type: number, item: AtlasResourceItem): void;
     }
+    /**
+     * Registers the optimized atlas texture uploader for use in WebGL.
+     *
+     * @param renderer
+     * @public
+     */
+    export function optimizeAtlasUploads(renderer: Renderer): void;
 }
 declare module "GuilloteneAllocator" {
-    import { Rectangle } from '@pixi/math';
+    import { Rectangle } from 'pixi.js';
     import type { AreaAllocator } from "AreaAllocator";
     import type { AreaField } from "Area";
     /**
@@ -280,8 +269,7 @@ declare module "GuilloteneAllocator" {
 }
 declare module "TextureSlab" {
     import type { AreaAllocator } from "AreaAllocator";
-    import type { BaseTexture, Texture } from '@pixi/core';
-    import type { Rectangle } from '@pixi/math';
+    import type { Rectangle, Texture, TextureSource } from 'pixi.js';
     /**
      * An entry of an issued texture from a {@link TextureSlab}.
      *
@@ -303,7 +291,7 @@ declare module "TextureSlab" {
      *
      * @public
      */
-    export type TextureSlab = {
+    export type TextureSlab<T extends TextureSource> = {
         /**
          * The area allocator that issues texture space.
          */
@@ -315,12 +303,11 @@ declare module "TextureSlab" {
         /**
          * The base-texture that holds all the issued textures.
          */
-        slab: BaseTexture;
+        slab: T;
     };
 }
 declare module "TextureAllocator" {
-    import { BaseTexture, Texture } from '@pixi/core';
-    import { Rectangle } from '@pixi/math';
+    import { Rectangle, Texture, TextureSource } from 'pixi.js';
     import type { TextureSlab } from "TextureSlab";
     /**
      * The texture allocator dynamically manages space on base-texture slabs. It can be used to generate
@@ -328,7 +315,7 @@ declare module "TextureAllocator" {
      *
      * @public
      */
-    export class TextureAllocator<T extends Texture = Texture> {
+    export abstract class TextureAllocator<S extends TextureSource, T extends Texture = Texture> {
         /**
          * The width of texture slabs.
          */
@@ -340,7 +327,7 @@ declare module "TextureAllocator" {
         /**
          * The list of base-textures that are used to allocate texture space.
          */
-        protected textureSlabs: TextureSlab[];
+        protected textureSlabs: TextureSlab<S>[];
         /**
          * @param slabWidth - The width of base-texture slabs. This should be at most 2048.
          * @param slabHeight - The height of base-texture slabs. This should be at most 2048.
@@ -355,7 +342,7 @@ declare module "TextureAllocator" {
          * a new slab is created and the texture is issued from it. However, if the requested
          * dimensions are larger than slabs themselves, then `null` is always returned.
          *
-         * To upload a texture source, you will have to create an atlas-managing {@link Resource}
+         * To upload a texture source, you will have to create an atlas-managing {@link TextureSource}
          * yourself on the base-texture. The {@link AtlasAllocator} does this for you, while the
          * {@link CanvasTextureAllocator} can be used to draw on a canvas-based atlas.
          *
@@ -375,18 +362,20 @@ declare module "TextureAllocator" {
         free(texture: T): void;
         protected calculatePadding(width: number, height: number): number;
         /**
-         * Creates a texture slab. The slab's base-texture is not backed by any resource. You
-         * will have to manage that yourself. See {@link AtlasAllocator} or {@link CanvasTextureAllocator}
-         * for better resource semantics.
+         * Creates a texture slab. Uses {@link this.createSlabSource} to initialize the texture data.
          */
-        protected createSlab(): TextureSlab;
+        protected createSlab(): TextureSlab<S>;
+        /**
+         * Creates a new texture source to initialize a texture slab.
+         */
+        protected abstract createSlabSource(): S;
         /**
          * Creates a texture on the given base-texture at {@code frame}.
          *
-         * @param baseTexture - The base texture that will hold the texture's space.
+         * @param source - The atlas source that will hold the texture's space.
          * @param frame - The frame in which the texture will be stored.
          */
-        protected createTexture(baseTexture: BaseTexture, frame: Rectangle): T;
+        protected createTexture(source: S, frame: Rectangle): T;
         /**
          * Issues a texture from the given texture slab, if possible.
          *
@@ -396,25 +385,35 @@ declare module "TextureAllocator" {
          * @param padding - Padding required around the texture.
          * @return The issued texture, if successful; otherwise, `null`.
          */
-        protected issueTexture(slab: TextureSlab, width: number, height: number, padding?: number): T;
+        protected issueTexture(slab: TextureSlab<S>, width: number, height: number, padding?: number): T;
     }
 }
 declare module "AtlasAllocator" {
-    import { Texture } from '@pixi/core';
+    import { AtlasSource } from "AtlasSource";
+    import { Texture } from 'pixi.js';
     import { TextureAllocator } from "TextureAllocator";
-    import { TextureSlab } from "TextureSlab";
-    import type { AtlasResourceSource } from "AtlasResource";
+    import type { AtlasItemSource } from "AtlasSource";
+    import type { Renderer } from 'pixi.js';
     /**
-     * This texture allocator auto-manages the base-texture with an {@link AtlasResource}. You can also
+     * This texture allocator auto-manages the base-texture with an {@link AtlasSource}. You can also
      * pass a texture source to `allocate`, mimicing {@link Texture.from} functionality.
      *
      * @public
      */
-    export class AtlasAllocator extends TextureAllocator {
+    export class AtlasAllocator extends TextureAllocator<AtlasSource> {
         /**
-         * Creates a texture slab backed by an {@link AtlasResource}.
+         * Creates an atlas allocator.
+         *
+         * @param renderer - The renderer to register the atlas source uploader for. This is optional, but
+         *  the atlas textures won't work without calling {@link optimizeAtlasUploads} on the renderer.
+         * @param slabWidth
+         * @param slabHeight
          */
-        protected createSlab(): TextureSlab;
+        constructor(renderer: Renderer | null, slabWidth?: number, slabHeight?: number);
+        /**
+         * Creates a texture slab backed by an {@link AtlasSource}.
+         */
+        protected createSlabSource(): AtlasSource;
         /**
          * Allocates a texture backed by the given atlas source, with the given padding.
          *
@@ -424,7 +423,7 @@ declare module "AtlasAllocator" {
          * @param padding
          * @param source
          */
-        allocate(width: number, height: number, padding?: number, source?: AtlasResourceSource): Texture;
+        allocate(width: number, height: number, padding?: number, source?: AtlasItemSource): Texture;
         /**
          * Allocates a texture backed by the given source, with default padding.
          *
@@ -432,58 +431,53 @@ declare module "AtlasAllocator" {
          * @param height
          * @param source
          */
-        allocate(width: number, height: number, source?: AtlasResourceSource): Texture;
+        allocate(width: number, height: number, source?: AtlasItemSource): Texture;
         free(texture: Texture): void;
     }
 }
 declare module "CanvasTextureAllocator" {
+    import { CanvasSource } from 'pixi.js';
     import { TextureAllocator } from "TextureAllocator";
-    import { TextureSlab } from "TextureSlab";
     /**
-     * This allocator issues texture backed by a canvas. You can draw on to that canvas to soruce
+     * This allocator issues texture backed by a canvas. You can draw on to that canvas to source
      * each texture.
      *
      * @public
      */
-    export class CanvasTextureAllocator extends TextureAllocator {
+    export class CanvasTextureAllocator extends TextureAllocator<CanvasSource> {
         /**
          * Creates a texture slab backed by a canvas.
          */
-        protected createSlab(): TextureSlab;
+        protected createSlabSource(): CanvasSource;
     }
 }
 declare module "RenderTextureAllocator" {
-    import { RenderTexture } from '@pixi/core';
+    import { RenderTexture, TextureSource } from 'pixi.js';
     import { TextureAllocator } from "TextureAllocator";
-    import type { BaseTexture } from '@pixi/core';
-    import type { Rectangle } from '@pixi/math';
-    import type { TextureSlab } from "TextureSlab";
+    import type { Rectangle } from 'pixi.js';
     /**
      * This allocator issues render-textures, and is otherwise just like {@link TextureAllocator}.
      *
      * @public
      */
-    export class RenderTextureAllocator extends TextureAllocator<RenderTexture> {
+    export class RenderTextureAllocator extends TextureAllocator<TextureSource, RenderTexture> {
         /**
          * Creates a texture slab backed by a base render-texture.
          */
-        protected createSlab(): TextureSlab;
+        protected createSlabSource(): TextureSource;
         /**
          * Creates a render-texture from the given base render-texture.
          *
-         * @param baseTexture
+         * @param source
          * @param frame
          */
-        protected createTexture(baseTexture: BaseTexture, frame: Rectangle): RenderTexture;
+        protected createTexture(source: TextureSource, frame: Rectangle): RenderTexture;
     }
 }
 declare module "index" {
-    export * from "Area";
-    export * from "AreaAllocator";
     export * from "AtlasAllocator";
-    export * from "AtlasResource";
+    export * from "AtlasSource";
     export * from "CanvasTextureAllocator";
-    export * from "GuilloteneAllocator";
     export * from "RenderTextureAllocator";
     export * from "TextureAllocator";
     export * from "TextureSlab";

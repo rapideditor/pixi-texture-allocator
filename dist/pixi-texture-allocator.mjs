@@ -1,9 +1,105 @@
+// src/AtlasSource.ts
+import { GlTextureSystem, TextureSource } from "pixi.js";
+var AtlasSource = class extends TextureSource {
+  /**
+   * Creates an atlas resource.
+   *
+   * @param width
+   * @param height
+   */
+  constructor(width, height) {
+    super({
+      width,
+      height
+    });
+    this.uploadMethodId = "atlas";
+    this.managedItems = [];
+  }
+};
+var didWarnUnsupportedAtlasSource = false;
+var glUploadAtlasResource = {
+  id: "atlas",
+  upload(source, glTexture, gl, webGLVersion) {
+    const { width, height } = source;
+    const premultipliedAlpha = source.alphaMode === "premultiply-alpha-on-upload";
+    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, premultipliedAlpha);
+    if (glTexture.width !== width || glTexture.height !== height) {
+      glTexture.width = width;
+      glTexture.height = height;
+      gl.texImage2D(
+        glTexture.target,
+        0,
+        glTexture.format,
+        width,
+        height,
+        0,
+        glTexture.format,
+        glTexture.type,
+        void 0
+      );
+    }
+    const items = source.managedItems;
+    for (let i = 0, j = items.length; i < j; i++) {
+      const item = items[i];
+      if (item.updateId === item.dirtyId) {
+        continue;
+      }
+      const frame = item.frame;
+      let itemSource = item.source;
+      if (webGLVersion === 1) {
+        if (itemSource instanceof ImageData) {
+          itemSource = itemSource.data;
+        } else if (itemSource instanceof HTMLCanvasElement) {
+          const ctx = itemSource.getContext("2d");
+          const [w, h] = [itemSource.width, itemSource.height];
+          itemSource = ctx.getImageData(0, 0, w, h).data;
+        } else if (itemSource instanceof HTMLImageElement) {
+          const [w, h] = [itemSource.naturalWidth, itemSource.naturalHeight];
+          const canvas = document.createElement("canvas");
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(itemSource, 0, 0);
+          itemSource = ctx.getImageData(0, 0, w, h).data;
+        } else if (!didWarnUnsupportedAtlasSource) {
+          console.warn("Unsupported atlas source type. Failed to upload on WebGL 1", itemSource);
+          didWarnUnsupportedAtlasSource = true;
+        }
+      } else if (webGLVersion === 2) {
+        if (itemSource?.resource) {
+          itemSource = itemSource.resource;
+        }
+      }
+      gl.texSubImage2D(
+        glTexture.target,
+        0,
+        frame.x,
+        frame.y,
+        frame.width,
+        frame.height,
+        glTexture.format,
+        glTexture.type,
+        itemSource
+      );
+      item.updateId = item.dirtyId;
+    }
+  }
+};
+function optimizeAtlasUploads(renderer) {
+  if (renderer.texture instanceof GlTextureSystem) {
+    renderer.texture["_uploads"].atlas = glUploadAtlasResource;
+  } else {
+    renderer.texture["_uploads"].atlas = glUploadAtlasResource;
+  }
+}
+
+// src/TextureAllocator.ts
+import { Rectangle as Rectangle2, Texture } from "pixi.js";
+
+// src/GuilloteneAllocator.ts
+import { Rectangle } from "pixi.js";
+
 // src/Area.ts
-var AreaOrientation = /* @__PURE__ */ ((AreaOrientation2) => {
-  AreaOrientation2[AreaOrientation2["HORIZONTAL"] = 0] = "HORIZONTAL";
-  AreaOrientation2[AreaOrientation2["VERTICAL"] = 1] = "VERTICAL";
-  return AreaOrientation2;
-})(AreaOrientation || {});
 var Area = class _Area {
   static makeArea(openOffset, closeOffset, orientation) {
     return openOffset | closeOffset << 15 | orientation << 30;
@@ -33,116 +129,7 @@ var Area = class _Area {
   }
 };
 
-// src/AtlasResource.ts
-import { ALPHA_MODES } from "@pixi/constants";
-import { Resource } from "@pixi/core";
-var AtlasResource = class extends Resource {
-  /**
-   * Creates an atlas resource.
-   *
-   * @param width
-   * @param height
-   */
-  constructor(width, height) {
-    super(width, height);
-    this.managedItems = [];
-  }
-  /**
-   * Uploads the atlas.
-   *
-   * @param renderer
-   * @param baseTexture
-   * @param glTexture
-   */
-  upload(renderer, baseTexture, glTexture) {
-    const gl = renderer.gl;
-    const width = baseTexture.realWidth;
-    const height = baseTexture.realHeight;
-    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, baseTexture.alphaMode === ALPHA_MODES.UNPACK);
-    if (glTexture.width !== width || glTexture.height !== height) {
-      glTexture.width = width;
-      glTexture.height = height;
-      gl.texImage2D(
-        baseTexture.target,
-        0,
-        baseTexture.format,
-        width,
-        height,
-        0,
-        baseTexture.format,
-        baseTexture.type,
-        void 0
-      );
-    }
-    const items = this.managedItems;
-    for (let i = 0, j = items.length; i < j; i++) {
-      this.uploadItem(
-        renderer,
-        baseTexture.target,
-        baseTexture.format,
-        baseTexture.type,
-        items[i]
-      );
-    }
-    return true;
-  }
-  /**
-   * Uploads the atlas item to the GPU.
-   *
-   * @param renderer - The renderer holding the WebGL context.
-   * @param target - The binding point of the base-texture.
-   * @param format - The format of the base-texture.
-   * @param type - The type of the base-texture data.
-   * @param item - The item to upload.
-   */
-  uploadItem(renderer, target, format, type, item) {
-    const gl = renderer.gl;
-    const isWebGL2 = gl instanceof WebGL2RenderingContext;
-    const frame = item.frame;
-    let source = item.source;
-    if (!isWebGL2) {
-      if (source instanceof ImageData) {
-        source = source.data;
-      } else if (source instanceof HTMLCanvasElement) {
-        const ctx = source.getContext("2d");
-        const [w, h] = [source.width, source.height];
-        source = ctx.getImageData(0, 0, w, h).data;
-      } else if (source instanceof HTMLImageElement) {
-        const [w, h] = [source.naturalWidth, source.naturalHeight];
-        const canvas = document.createElement("canvas");
-        canvas.width = w;
-        canvas.height = h;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(source, 0, 0);
-        source = ctx.getImageData(0, 0, w, h).data;
-      }
-    }
-    gl.texSubImage2D(
-      target,
-      0,
-      frame.x,
-      frame.y,
-      frame.width,
-      frame.height,
-      format,
-      type,
-      source
-    );
-    item.updateId = item.dirtyId;
-  }
-};
-
-// src/AtlasAllocator.ts
-import { BaseTexture as BaseTexture3 } from "@pixi/core";
-
 // src/GuilloteneAllocator.ts
-import { Rectangle } from "@pixi/math";
-var SPLIT_ORIENTATION = /* @__PURE__ */ ((SPLIT_ORIENTATION2) => {
-  SPLIT_ORIENTATION2[SPLIT_ORIENTATION2["HOR"] = 0] = "HOR";
-  SPLIT_ORIENTATION2[SPLIT_ORIENTATION2["VERT"] = 1] = "VERT";
-  SPLIT_ORIENTATION2[SPLIT_ORIENTATION2["NONE"] = 2] = "NONE";
-  return SPLIT_ORIENTATION2;
-})(SPLIT_ORIENTATION || {});
 var tempRect = new Rectangle();
 var GuilloteneAllocator = class {
   constructor(width, height) {
@@ -512,9 +499,10 @@ var GuilloteneAllocator = class {
 };
 
 // src/TextureAllocator.ts
-import { BaseTexture as BaseTexture2, Texture } from "@pixi/core";
-import { Rectangle as Rectangle2 } from "@pixi/math";
 var tempRect2 = new Rectangle2();
+function padded(val, padding) {
+  return val + 2 * padding;
+}
 var TextureAllocator = class {
   /**
    * @param slabWidth - The width of base-texture slabs. This should be at most 2048.
@@ -538,7 +526,7 @@ var TextureAllocator = class {
    * a new slab is created and the texture is issued from it. However, if the requested
    * dimensions are larger than slabs themselves, then `null` is always returned.
    *
-   * To upload a texture source, you will have to create an atlas-managing {@link Resource}
+   * To upload a texture source, you will have to create an atlas-managing {@link TextureSource}
    * yourself on the base-texture. The {@link AtlasAllocator} does this for you, while the
    * {@link CanvasTextureAllocator} can be used to draw on a canvas-based atlas.
    *
@@ -548,7 +536,7 @@ var TextureAllocator = class {
    * @return The allocated texture, if successful; otherwise, `null`.
    */
   allocate(width, height, padding = this.calculatePadding(width, height)) {
-    if (width + 2 * padding > this.slabWidth || height + 2 * padding > this.slabHeight) {
+    if (padded(width, padding) > this.slabWidth || padded(height, padding) > this.slabHeight) {
       return null;
     }
     const slabs = this.textureSlabs;
@@ -571,8 +559,7 @@ var TextureAllocator = class {
    * @throws When the texture was not located in this allocator.
    */
   free(texture) {
-    const baseTexture = texture.baseTexture;
-    const slab = this.textureSlabs.find((sl) => sl.slab === baseTexture);
+    const slab = this.textureSlabs.find((sl) => sl.slab === texture.source);
     if (!slab) {
       throw new Error("The texture cannot be freed because its base-texture is not pooled by this allocator. This is either a bug in TextureAllocator or you tried to free a texture that was never allocated by one.");
     }
@@ -591,36 +578,27 @@ var TextureAllocator = class {
       return 4;
     } else if (dimen < 1024) {
       return 8;
-    } else {
-      return 16;
     }
+    return 16;
   }
   /**
-   * Creates a texture slab. The slab's base-texture is not backed by any resource. You
-   * will have to manage that yourself. See {@link AtlasAllocator} or {@link CanvasTextureAllocator}
-   * for better resource semantics.
+   * Creates a texture slab. Uses {@link this.createSlabSource} to initialize the texture data.
    */
   createSlab() {
     return {
       managedArea: new GuilloteneAllocator(this.slabWidth, this.slabHeight),
       managedTextures: [],
-      slab: new BaseTexture2(
-        null,
-        {
-          width: this.slabWidth,
-          height: this.slabHeight
-        }
-      )
+      slab: this.createSlabSource()
     };
   }
   /**
    * Creates a texture on the given base-texture at {@code frame}.
    *
-   * @param baseTexture - The base texture that will hold the texture's space.
+   * @param source - The atlas source that will hold the texture's space.
    * @param frame - The frame in which the texture will be stored.
    */
-  createTexture(baseTexture, frame) {
-    return new Texture(baseTexture, frame);
+  createTexture(source, frame) {
+    return new Texture({ source, frame });
   }
   /**
    * Issues a texture from the given texture slab, if possible.
@@ -638,8 +616,7 @@ var TextureAllocator = class {
     }
     tempRect2.copyFrom(area);
     tempRect2.pad(-padding);
-    const baseTexture = slab.slab;
-    const issuedTexture = this.createTexture(baseTexture, tempRect2.clone());
+    const issuedTexture = this.createTexture(slab.slab, tempRect2.clone());
     slab.managedTextures.push({
       area,
       texture: issuedTexture
@@ -651,20 +628,24 @@ var TextureAllocator = class {
 // src/AtlasAllocator.ts
 var AtlasAllocator = class extends TextureAllocator {
   /**
-   * Creates a texture slab backed by an {@link AtlasResource}.
+   * Creates an atlas allocator.
+   *
+   * @param renderer - The renderer to register the atlas source uploader for. This is optional, but
+   *  the atlas textures won't work without calling {@link optimizeAtlasUploads} on the renderer.
+   * @param slabWidth
+   * @param slabHeight
    */
-  createSlab() {
-    return {
-      managedArea: new GuilloteneAllocator(this.slabWidth, this.slabHeight),
-      managedTextures: [],
-      slab: new BaseTexture3(
-        new AtlasResource(this.slabWidth, this.slabHeight),
-        {
-          width: this.slabWidth,
-          height: this.slabHeight
-        }
-      )
-    };
+  constructor(renderer, slabWidth = 2048, slabHeight = 2048) {
+    super(slabWidth, slabHeight);
+    if (renderer) {
+      optimizeAtlasUploads(renderer);
+    }
+  }
+  /**
+   * Creates a texture slab backed by an {@link AtlasSource}.
+   */
+  createSlabSource() {
+    return new AtlasSource(this.slabWidth, this.slabHeight);
   }
   allocate(width, height, paddingOrSource, source) {
     let padding;
@@ -676,7 +657,7 @@ var AtlasAllocator = class extends TextureAllocator {
     }
     const texture = super.allocate(width, height, padding);
     if (source) {
-      const atlas = texture.baseTexture.resource;
+      const atlas = texture.source;
       const item = {
         frame: texture.frame,
         source,
@@ -688,19 +669,22 @@ var AtlasAllocator = class extends TextureAllocator {
       atlas.managedItems.push(item);
       if (source instanceof HTMLImageElement && !source.complete) {
         source.addEventListener("load", () => {
-          if (texture.baseTexture.valid && !texture.baseTexture.destroyed && atlas.managedItems.indexOf(item) >= 0) {
+          if (!texture.source.destroyed && atlas.managedItems.indexOf(item) >= 0) {
             item.dirtyId++;
-            texture.baseTexture.update();
+            atlas.update();
+            texture.update();
+          } else {
+            console.warn("Image loaded after texture was destroyed");
           }
         });
       }
-      texture.baseTexture.update();
+      atlas.update();
     }
     return texture;
   }
   free(texture) {
     super.free(texture);
-    const atlas = texture.baseTexture.resource;
+    const atlas = texture.source;
     const item = atlas.managedItems.find((item2) => item2.texture === texture);
     if (item) {
       atlas.managedItems.splice(atlas.managedItems.indexOf(item), 1);
@@ -709,61 +693,50 @@ var AtlasAllocator = class extends TextureAllocator {
 };
 
 // src/CanvasTextureAllocator.ts
-import { BaseTexture as BaseTexture4 } from "@pixi/core";
+import { CanvasSource } from "pixi.js";
 var CanvasTextureAllocator = class extends TextureAllocator {
   /**
    * Creates a texture slab backed by a canvas.
    */
-  createSlab() {
-    const canvas = document.createElement("canvas");
-    canvas.width = this.slabWidth;
-    canvas.height = this.slabHeight;
-    return {
-      managedArea: new GuilloteneAllocator(this.slabWidth, this.slabHeight),
-      managedTextures: [],
-      slab: new BaseTexture4(canvas, {
-        width: this.slabWidth,
-        height: this.slabHeight
-      })
-    };
+  createSlabSource() {
+    return new CanvasSource({
+      height: this.slabHeight,
+      width: this.slabWidth
+    });
   }
 };
 
 // src/RenderTextureAllocator.ts
-import { BaseRenderTexture, RenderTexture } from "@pixi/core";
+import { RenderTexture, TextureSource as TextureSource3 } from "pixi.js";
 var RenderTextureAllocator = class extends TextureAllocator {
   /**
    * Creates a texture slab backed by a base render-texture.
    */
-  createSlab() {
-    return {
-      managedArea: new GuilloteneAllocator(this.slabWidth, this.slabHeight),
-      managedTextures: [],
-      slab: new BaseRenderTexture({
-        width: this.slabWidth,
-        height: this.slabHeight
-      })
-    };
+  createSlabSource() {
+    return new TextureSource3({
+      height: this.slabHeight,
+      width: this.slabWidth
+    });
   }
   /**
    * Creates a render-texture from the given base render-texture.
    *
-   * @param baseTexture
+   * @param source
    * @param frame
    */
-  createTexture(baseTexture, frame) {
-    return new RenderTexture(baseTexture, frame);
+  createTexture(source, frame) {
+    return new RenderTexture({
+      frame,
+      source
+    });
   }
 };
 export {
-  Area,
-  AreaOrientation,
   AtlasAllocator,
-  AtlasResource,
+  AtlasSource,
   CanvasTextureAllocator,
-  GuilloteneAllocator,
   RenderTextureAllocator,
-  SPLIT_ORIENTATION,
-  TextureAllocator
+  TextureAllocator,
+  optimizeAtlasUploads
 };
 //# sourceMappingURL=pixi-texture-allocator.mjs.map
