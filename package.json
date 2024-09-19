@@ -1,6 +1,6 @@
 {
   "name": "@rapideditor/pixi-texture-allocator",
-  "version": "8.4.0",
+  "version": "8.4.1",
   "contributors": [
     "Ben Clark <clarkben@fb.com> (https://github.com/bonkles)",
     "Bryan Housel <bhousel@gmail.com> (https://github.com/bhousel)"
@@ -28,7 +28,7 @@
     "require": "./dist/pixi-texture-allocator.cjs"
   },
   "dependencies": {
-    "pixi.js": "8.4.0"
+    "pixi.js": "8.4.1"
   },
   "devDependencies": {
     "esbuild": "^0.23.1",
