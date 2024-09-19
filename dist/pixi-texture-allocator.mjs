@@ -1,5 +1,5 @@
 // src/AtlasSource.ts
-import { GlTextureSystem, TextureSource } from "pixi.js";
+import { RendererType, TextureSource } from "pixi.js";
 var AtlasSource = class extends TextureSource {
   /**
    * Creates an atlas resource.
@@ -41,9 +41,6 @@ var glUploadAtlasResource = {
     const items = source.managedItems;
     for (let i = 0, j = items.length; i < j; i++) {
       const item = items[i];
-      if (item.updateId === item.dirtyId) {
-        continue;
-      }
       const frame = item.frame;
       let itemSource = item.source;
       if (webGLVersion === 1) {
@@ -65,10 +62,6 @@ var glUploadAtlasResource = {
           console.warn("Unsupported atlas source type. Failed to upload on WebGL 1", itemSource);
           didWarnUnsupportedAtlasSource = true;
         }
-      } else if (webGLVersion === 2) {
-        if (itemSource?.resource) {
-          itemSource = itemSource.resource;
-        }
       }
       gl.texSubImage2D(
         glTexture.target,
@@ -85,11 +78,34 @@ var glUploadAtlasResource = {
     }
   }
 };
+var gpuUploadAtlasResource = {
+  type: "atlas",
+  upload(source, gpuTexture, gpu) {
+    const premultipliedAlpha = source.alphaMode === "premultiply-alpha-on-upload";
+    for (const item of source.managedItems) {
+      gpu.device.queue.copyExternalImageToTexture(
+        { source: item.source },
+        {
+          texture: gpuTexture,
+          premultipliedAlpha,
+          origin: {
+            x: item.frame.x,
+            y: item.frame.y
+          }
+        },
+        {
+          height: item.frame.height,
+          width: item.frame.width
+        }
+      );
+    }
+  }
+};
 function optimizeAtlasUploads(renderer) {
-  if (renderer.texture instanceof GlTextureSystem) {
+  if (renderer.type === RendererType.WEBGL) {
     renderer.texture["_uploads"].atlas = glUploadAtlasResource;
   } else {
-    renderer.texture["_uploads"].atlas = glUploadAtlasResource;
+    renderer.texture["_uploads"].atlas = gpuUploadAtlasResource;
   }
 }
 

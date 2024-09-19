@@ -182,7 +182,7 @@ export abstract class TextureAllocator<S extends TextureSource, T extends Textur
     protected createTexture(source: S, frame: Rectangle): T
     {
         // Override this method to return correct texture type T.
-        return new Texture({ source, frame }) as T;
+        return new Texture({ source, frame }) as unknown as T;
     }
 
     /**

@@ -87,8 +87,8 @@ declare module "AreaAllocator" {
     }
 }
 declare module "AtlasSource" {
-    import { Renderer, TextureSource } from 'pixi.js';
-    import type { Rectangle, Texture } from 'pixi.js';
+    import { TextureSource } from 'pixi.js';
+    import type { Rectangle, Renderer, Texture } from 'pixi.js';
     /**
      * Types of image sources supported by {@link AtlasSource}.
      *

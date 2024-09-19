@@ -16,6 +16,7 @@
     "outDir": "dist",
     "outFile": "dist/index.js",
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "strict": true,
     "strictBindCallApply": true,
     "strictFunctionTypes": true,

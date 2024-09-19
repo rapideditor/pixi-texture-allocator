@@ -1,6 +1,6 @@
-import { GlTextureSystem, ImageSource, Renderer, TextureSource } from 'pixi.js';
+import { RendererType, TextureSource } from 'pixi.js';
 
-import type { GlTexture, GlRenderingContext, GLTextureUploader, GpuTextureUploader, GPU, Rectangle, Texture } from 'pixi.js';
+import type { GlTexture, GlRenderingContext, GLTextureUploader, GpuTextureUploader, GPU, Rectangle, Renderer, Texture } from 'pixi.js';
 
 /**
  * Types of image sources supported by {@link AtlasSource}.
@@ -89,6 +89,7 @@ const glUploadAtlasResource = {
         {
             glTexture.width = width;
             glTexture.height = height;
+
             gl.texImage2D(
                 glTexture.target,
                 0,
@@ -109,10 +110,11 @@ const glUploadAtlasResource = {
         {
             const item = items[i];
 
-            if (item.updateId === item.dirtyId)
-            {
-                continue;
-            }
+            // see https://github.com/rapideditor/pixi-texture-allocator/issues/2
+            // if (item.updateId === item.dirtyId)
+            // {
+            //     continue;
+            // }
 
             const frame = item.frame;
             let itemSource = item.source;
@@ -149,10 +151,6 @@ const glUploadAtlasResource = {
                     console.warn('Unsupported atlas source type. Failed to upload on WebGL 1', itemSource);
                     didWarnUnsupportedAtlasSource = true;
                 }
-            } else if (webGLVersion === 2) {
-                if (itemSource?.resource){
-                    itemSource = itemSource.resource; // pass the typed array directly
-                }
             }
 
             gl.texSubImage2D(
@@ -180,10 +178,11 @@ const gpuUploadAtlasResource = {
 
         for (const item of source.managedItems)
         {
-            if (item.updateId === item.dirtyId)
-            {
-                continue;
-            }
+            // see https://github.com/rapideditor/pixi-texture-allocator/issues/2
+            // if (item.updateId === item.dirtyId)
+            // {
+            //     continue;
+            // }
 
             gpu.device.queue.copyExternalImageToTexture(
                 { source: item.source },
@@ -211,7 +210,7 @@ const gpuUploadAtlasResource = {
  */
 export function optimizeAtlasUploads(renderer: Renderer): void
 {
-    if (renderer.texture instanceof GlTextureSystem)
+    if (renderer.type === RendererType.WEBGL)
     {
         // eslint-disable-next-line dot-notation
         renderer.texture['_uploads'].atlas = glUploadAtlasResource;
@@ -219,9 +218,6 @@ export function optimizeAtlasUploads(renderer: Renderer): void
     else
     {
         // eslint-disable-next-line dot-notation
-        // TODO v8 figure out why we're always hitting the webGPU upload path
-        // the instanceof operator seems to be failing us. 
-//        renderer.texture['_uploads'].atlas = gpuUploadAtlasResource;
-        renderer.texture['_uploads'].atlas = glUploadAtlasResource;
+        renderer.texture['_uploads'].atlas = gpuUploadAtlasResource;
     }
 }
