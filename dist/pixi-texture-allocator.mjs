@@ -146,6 +146,12 @@ var Area = class _Area {
 };
 
 // src/GuilloteneAllocator.ts
+var SPLIT_ORIENTATION = /* @__PURE__ */ ((SPLIT_ORIENTATION2) => {
+  SPLIT_ORIENTATION2[SPLIT_ORIENTATION2["HOR"] = 0] = "HOR";
+  SPLIT_ORIENTATION2[SPLIT_ORIENTATION2["VERT"] = 1] = "VERT";
+  SPLIT_ORIENTATION2[SPLIT_ORIENTATION2["NONE"] = 2] = "NONE";
+  return SPLIT_ORIENTATION2;
+})(SPLIT_ORIENTATION || {});
 var tempRect = new Rectangle();
 var GuilloteneAllocator = class {
   constructor(width, height) {
@@ -751,7 +757,9 @@ export {
   AtlasAllocator,
   AtlasSource,
   CanvasTextureAllocator,
+  GuilloteneAllocator,
   RenderTextureAllocator,
+  SPLIT_ORIENTATION,
   TextureAllocator,
   optimizeAtlasUploads
 };

@@ -23,7 +23,9 @@ __export(src_exports, {
   AtlasAllocator: () => AtlasAllocator,
   AtlasSource: () => AtlasSource,
   CanvasTextureAllocator: () => CanvasTextureAllocator,
+  GuilloteneAllocator: () => GuilloteneAllocator,
   RenderTextureAllocator: () => RenderTextureAllocator,
+  SPLIT_ORIENTATION: () => SPLIT_ORIENTATION,
   TextureAllocator: () => TextureAllocator,
   optimizeAtlasUploads: () => optimizeAtlasUploads
 });
@@ -177,6 +179,12 @@ var Area = class _Area {
 };
 
 // src/GuilloteneAllocator.ts
+var SPLIT_ORIENTATION = /* @__PURE__ */ ((SPLIT_ORIENTATION2) => {
+  SPLIT_ORIENTATION2[SPLIT_ORIENTATION2["HOR"] = 0] = "HOR";
+  SPLIT_ORIENTATION2[SPLIT_ORIENTATION2["VERT"] = 1] = "VERT";
+  SPLIT_ORIENTATION2[SPLIT_ORIENTATION2["NONE"] = 2] = "NONE";
+  return SPLIT_ORIENTATION2;
+})(SPLIT_ORIENTATION || {});
 var tempRect = new import_pixi2.Rectangle();
 var GuilloteneAllocator = class {
   constructor(width, height) {
@@ -783,7 +791,9 @@ var RenderTextureAllocator = class extends TextureAllocator {
   AtlasAllocator,
   AtlasSource,
   CanvasTextureAllocator,
+  GuilloteneAllocator,
   RenderTextureAllocator,
+  SPLIT_ORIENTATION,
   TextureAllocator,
   optimizeAtlasUploads
 });

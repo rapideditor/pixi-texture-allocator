@@ -25309,7 +25309,9 @@ ${parts.join("\n")}
     AtlasAllocator: () => AtlasAllocator,
     AtlasSource: () => AtlasSource,
     CanvasTextureAllocator: () => CanvasTextureAllocator,
+    GuilloteneAllocator: () => GuilloteneAllocator,
     RenderTextureAllocator: () => RenderTextureAllocator,
+    SPLIT_ORIENTATION: () => SPLIT_ORIENTATION,
     TextureAllocator: () => TextureAllocator,
     optimizeAtlasUploads: () => optimizeAtlasUploads
   });
@@ -25498,6 +25500,12 @@ ${parts.join("\n")}
   };
 
   // src/GuilloteneAllocator.ts
+  var SPLIT_ORIENTATION = /* @__PURE__ */ ((SPLIT_ORIENTATION2) => {
+    SPLIT_ORIENTATION2[SPLIT_ORIENTATION2["HOR"] = 0] = "HOR";
+    SPLIT_ORIENTATION2[SPLIT_ORIENTATION2["VERT"] = 1] = "VERT";
+    SPLIT_ORIENTATION2[SPLIT_ORIENTATION2["NONE"] = 2] = "NONE";
+    return SPLIT_ORIENTATION2;
+  })(SPLIT_ORIENTATION || {});
   var tempRect2 = new Rectangle();
   var GuilloteneAllocator = class {
     constructor(width, height) {
